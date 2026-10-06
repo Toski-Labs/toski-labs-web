@@ -34,7 +34,7 @@ export const studio = {
     },
   },
   ds: {
-    ready: false,
+    ready: true,
     githubUrl: 'https://github.com/Toski-Labs/toski-ds',
     npmUrl: 'https://www.npmjs.com/package/@toski-labs/ds',
     storybookUrl: 'https://toski-labs.github.io/toski-ds/',
