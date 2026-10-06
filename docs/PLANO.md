@@ -91,9 +91,40 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 - Wallpapers: 6 coleções (Minimal, Noturna, Padrão noturno, Linha, Halloween, Lick or Treat) em mobile 1320×2868 e desktop 5K, 4K, MacBook e ultrawide ✅. Downloads de desktop vêm da release mais recente de `Toski-Labs/toski-labs-wallpapers` (v2.1); nova coleção = nova release com todos os PNGs e os mesmos nomes de arquivo.
 - Estúdio: temas no ar (VS Code no Marketplace; Open VSX em revisão + pedido do namespace `toskilabs`). Toski DS: `ds.ready` quando o repositório tiver conteúdo.
 
-## Próximos passos (mapeados em 6 out 2026)
-- Antes do lançamento do app: link da App Store (página do PetHealthTracker e oferta de Black Friday), preços em inglês, política (30 dias, rede de anúncios, faixa etária, revisão jurídica) e `public/app-ads.txt`.
-- Black Friday (27–30/11): agendar ofertas no App Store Connect e ligar as duas chaves; testar antes com `?campanha=pethealthtracker.black_friday`.
-- Estúdio: `ds.ready` quando o toski-ds tiver conteúdo; Open VSX (revisão e namespace `toskilabs`).
-- Google Search Console com o `sitemap-index.xml`; Lighthouse de novo no site publicado.
-- Opcionais: domínio próprio e deploy automático pelo GitHub Actions.
+## Situação em 6 out 2026
+
+### Feito e conferido no código
+- Fases 0 a 4 completas: starter removido, tokens e Outfit locais (sem Google Fonts), i18n em `src/i18n/ui.ts`, BaseLayout com canonical, `hreflang` (pt-BR, en, x-default), Open Graph, Twitter card e `theme-color` claro/escuro; componentes de UI e marca; 7 páginas em PT e EN + 404 com `noindex`; sitemap sem a 404 e sem páginas não publicadas; `robots.txt`; imagens OG.
+- Novidades: menu de configurações (tema e idioma), aviso de idioma do navegador, campanhas por Remote Config, Estúdio com Wallpapers (6 coleções, release v2.1) e Temas (VS Code e iTerm2 publicados, `themes.ready: true`), botão de voltar ao topo.
+- No ar em `toski-labs.web.app` (as 14 páginas respondem; `/wallpapers` redireciona). `npm run deploy` publica.
+- axe-core (6 out): nenhuma violação em 15 páginas, 1280/390 px, claro e escuro.
+
+### Diferenças entre o plano e o código
+- i18n ficou num arquivo só (`ui.ts`), não em `pt.ts`/`en.ts`.
+- Rodapé: `© ano Toski Labs` sem "· Recife" (Recife aparece na Home).
+- Menu do cabeçalho: Projetos · Estúdio · Suporte (a linha antiga "Projetos · Wallpapers · Suporte" vale só para antes do Estúdio).
+
+### Falta
+**Conteúdo e revisão**
+1. Revisar todos os textos em português e em inglês (páginas, FAQ, política, Estúdio, wallpapers, campanhas, mensagens do menu e do aviso de idioma): ortografia, tom, consistência de termos (Toski, Plus, pet) e se o inglês soa natural.
+2. Preços em inglês: página do PetHealthTracker mostra "Local price" e a oferta de Black Friday em inglês ainda tem `[PRICE]` em `src/data/campaigns.ts` — **precisa ser preenchido antes de 27/11**, senão aparece no site.
+3. Política: confirmar os 30 dias, nomear a rede de anúncios, faixa etária, revisão jurídica.
+
+**App e anúncios**
+4. Link da App Store: página do PetHealthTracker ("Em breve na App Store") e `appStoreUrl: '#'` em `campaigns.ts`.
+5. `public/app-ads.txt` antes de os anúncios entrarem.
+6. Black Friday (27–30/11): ofertas no App Store Connect, chave no Remote Config do app e do site; testar antes com `?campanha=pethealthtracker.black_friday`.
+
+**Estúdio**
+7. Toski DS: mostrar no Estúdio como "em desenvolvimento", com link para o repositório `Toski-Labs/toski-ds` (hoje a faixa fica escondida com `ds.ready: false`). Desenhar no canvas e implementar.
+8. Open VSX: revisão do tema e pedido do namespace `toskilabs`.
+
+**SEO e compartilhamento**
+9. Conferir o card de compartilhamento nas redes (WhatsApp, Instagram/Facebook, X, LinkedIn, iMessage) para cada página em PT e EN: imagem, título e descrição. Avaliar imagens OG próprias para PetHealthTracker, Estúdio e Wallpapers.
+10. SEO: títulos e descrições de todas as páginas, Google Search Console com o `sitemap-index.xml`, dados estruturados (Organization e SoftwareApplication) e Lighthouse no site publicado.
+
+**Manutenção**
+11. Canvas de design: página de Wallpapers ainda na v1 (sem tamanhos de desktop, Halloween e Lick or Treat).
+
+**Opcionais**
+12. Domínio próprio e deploy automático pelo GitHub Actions.
