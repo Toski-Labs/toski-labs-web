@@ -124,7 +124,7 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 10. ~~SEO~~ ✅ (6 out): títulos e descrições, dados estruturados (Organization, WebSite, MobileApplication, BreadcrumbList), Lighthouse 98–100. Search Console: ver a seção abaixo.
 
 **Animações**
-11. ~~Animações e microinterações~~ ✅ (6 out): proposta aprovada no canvas (página "Animações") e implementada em `src/scripts/motion.ts` + `global.css`: confirmação de cópia, menus abrindo e fechando, troca de tema com View Transitions, filtro que desliza, cards que levantam (botão principal cobre o card), botão afundando (provisório até ir para o `buttonClasses()` do DS), seções do PetHealthTracker aparecendo ao rolar e bolinha pulando no logo. Tudo respeita `prefers-reduced-motion`.
+11. ~~Animações e microinterações~~ ✅ (6 out): proposta aprovada no canvas (página "Animações") e implementada em `src/scripts/motion.ts` + `global.css`: confirmação de cópia, menus abrindo e fechando, troca de tema com View Transitions, filtro que desliza, cards que levantam (botão principal cobre o card), botão afundando e abrir/fechar de menu (vêm do Toski DS 0.4.1), seções do PetHealthTracker aparecendo ao rolar e bolinha pulando no logo. Tudo respeita `prefers-reduced-motion`.
 
 **Manutenção**
 12. ~~Canvas de design~~ ✅ (6 out): Wallpapers v2, Estúdio, Suporte, PetHealthTracker e Privacidade iguais ao site.

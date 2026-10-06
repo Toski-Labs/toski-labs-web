@@ -17,6 +17,9 @@ const t = {
     copyMail: 'Copiar e-mail',
     copiedMail: 'E-mail copiado',
     mailSubject: 'Suporte PetHealthTracker',
+    mailFallback: 'Não abriu nada? Escreva pelo',
+    mailFallbackOr: 'ou pelo',
+    mailFallbackEnd: 'ou copie o e-mail.',
     codeTitle: 'Inclua o seu código de suporte',
     codeBody: 'Ele ajuda a encontrar a sua conta sem você precisar mandar dados pessoais. Para copiar no app:',
     codeSteps: ['Ajustes', 'Ajuda e feedback', 'Sua conta', 'Copiar código'],
@@ -46,6 +49,9 @@ const t = {
     copyMail: 'Copy email',
     copiedMail: 'Email copied',
     mailSubject: 'PetHealthTracker support',
+    mailFallback: 'Nothing opened? Write from',
+    mailFallbackOr: 'or',
+    mailFallbackEnd: 'or copy the address.',
     codeTitle: 'Include your support code',
     codeBody: 'It helps us find your account without you sending any personal details. To copy it in the app:',
     codeSteps: ['Settings', 'Help & feedback', 'Your account', 'Copy code'],
@@ -66,6 +72,9 @@ const t = {
   },
 }[lang];
 const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubject)}`;
+// Para quem não tem um app de e-mail configurado: o mailto não abre nada, então oferecemos o webmail.
+const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${SUPPORT_EMAIL}&su=${encodeURIComponent(t.mailSubject)}`;
+const outlook = `https://outlook.live.com/mail/0/deeplink/compose?to=${SUPPORT_EMAIL}&subject=${encodeURIComponent(t.mailSubject)}`;
 ---
 
 <section class="page pt-10 pb-10">
@@ -78,10 +87,13 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
     <h2 class="mt-1 text-2xl font-semibold">{t.mailTitle}</h2>
     <p class="text-base leading-normal text-muted">{t.mailBody}</p>
     <div class="mt-1.5 flex flex-wrap gap-2.5">
-      <Button href={mailto} size="md" className="max-sm:flex-auto">{t.mailCta}</Button>
+      <Button href={mailto} size="md" className="toski-mailto max-sm:flex-auto">{t.mailCta}</Button>
       <!-- Para quem não tem um app de e-mail configurado (aí o mailto não abre nada). -->
       <button type="button" class={buttonClasses('secondary', 'md', 'toski-copy max-sm:flex-auto')} data-copy={SUPPORT_EMAIL} data-copied={t.copiedMail}><svg class="toski-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg><span data-text>{t.copyMail}</span></button>
     </div>
+    <p data-mail-fallback hidden class="toski-menu text-[15px] leading-normal text-muted [--menu-from:-4px] [--menu-origin:top_left]" role="status">
+      {t.mailFallback} <a href={gmail} target="_blank" rel="noopener" class="font-medium">Gmail</a> {t.mailFallbackOr} <a href={outlook} target="_blank" rel="noopener" class="font-medium">Outlook</a>, {t.mailFallbackEnd}
+    </p>
     <p class="sr-only" aria-live="polite" data-copy-status></p>
   </Card>
   <Card variant="hero" radius="panel" className="flex min-w-0 flex-[1_1_340px] flex-col gap-3.5 p-8">
@@ -114,3 +126,21 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
   <a href={href(lang, 'privacy')} class="inline-flex min-h-11 items-center text-base font-semibold no-underline hover:underline">{t.privCta}</a>
 </section>
 
+<script>
+  // Se nenhum app de e-mail abrir (a página não perde o foco em ~1 s), mostra os atalhos para o webmail.
+  const fallback = document.querySelector<HTMLElement>('[data-mail-fallback]');
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('.toski-mailto')) {
+    link.addEventListener('click', () => {
+      if (!fallback) return;
+      let left = false;
+      const away = () => (left = true);
+      window.addEventListener('blur', away, { once: true });
+      document.addEventListener('visibilitychange', away, { once: true });
+      window.setTimeout(() => {
+        window.removeEventListener('blur', away);
+        document.removeEventListener('visibilitychange', away);
+        if (!left) fallback.hidden = false;
+      }, 1200);
+    });
+  }
+</script>
