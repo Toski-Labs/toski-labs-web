@@ -111,6 +111,11 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={fullTitle} />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- O X lê as tags og:, mas o robô dele é mais confiável com as twitter: explícitas. -->
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={fullTitle} />
     <meta name="generator" content={Astro.generator} />
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
