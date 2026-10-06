@@ -89,7 +89,7 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 - Suporte: resposta em até 2 dias úteis ✅.
 - Preços em inglês: hoje "Local price" até ter os valores por país; link da App Store quando publicar.
 - Wallpapers: 6 coleções (Minimal, Noturna, Padrão noturno, Linha, Halloween, Lick or Treat) em mobile 1320×2868 e desktop 5K, 4K, MacBook e ultrawide ✅. Downloads de desktop vêm da release mais recente de `Toski-Labs/toski-labs-wallpapers` (v2.1); nova coleção = nova release com todos os PNGs e os mesmos nomes de arquivo.
-- Estúdio: temas no ar (VS Code no Marketplace; Open VSX em revisão + pedido do namespace `toskilabs`). Toski DS: `ds.ready` quando o repositório tiver conteúdo.
+- Estúdio: temas no ar (VS Code no Marketplace e no Open VSX, namespace `toskilabs`). Toski DS: `ds.ready` quando o repositório tiver conteúdo.
 
 ## Situação em 6 out 2026
 
@@ -117,7 +117,7 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 
 **Estúdio**
 7. ~~Toski DS no Estúdio~~ ✅ (6 out): o site usa `@toski-labs/ds` como fonte única; a faixa está publicada (`ds.ready: true`) com Storybook, GitHub, npm e o comando de instalação.
-8. Open VSX: revisão do tema e pedido do namespace `toskilabs`.
+8. ~~Open VSX~~ ✅ (6 out): Toski Theme 1.0.0 publicado em open-vsx.org/extension/toskilabs/toski-theme; namespace `toskilabs` concedido (EclipseFdn/open-vsx.org#13813).
 
 **SEO e compartilhamento**
 9. ~~Card de compartilhamento~~ ✅ (6 out): imagens OG próprias por seção (Home, PetHealthTracker, Estúdio, Wallpapers, Temas) em PT e EN, conferidas no site publicado.
