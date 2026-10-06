@@ -74,6 +74,10 @@ The Toski Labs website (toski-labs.web.app) has no sign-in and uses no cookies, 
 - **Downloads**
   Wallpapers and themes downloaded through the buttons come from GitHub, the Visual Studio Marketplace or Open VSX, which have their own privacy policies.
 
+## Children
+
+PetHealthTracker is made for adults who look after pets. It isn’t directed at children, and we don’t knowingly collect data from anyone under 13. If you think a child has created an account, email [toskilabs@gmail.com](mailto:toskilabs@gmail.com) and we’ll delete the data.
+
 ## Changes to this policy
 
 If this policy changes, we update the date at the top and let you know in the app when the change matters.

@@ -107,8 +107,8 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 ### Falta
 **Conteúdo e revisão**
 1. Revisar todos os textos em português e em inglês (páginas, FAQ, política, Estúdio, wallpapers, campanhas, mensagens do menu e do aviso de idioma): ortografia, tom, consistência de termos (Toski, Plus, pet) e se o inglês soa natural.
-2. Preços: a página do PetHealthTracker mostra "Em breve" / "Soon" até a precificação ser decidida (o teste de 7 dias continua). A oferta de Black Friday em `src/data/campaigns.ts` ainda tem preços antigos em PT e `[PRICE]` em EN — **revisar antes de 27/11**.
-3. Política: confirmar os 30 dias, nomear a rede de anúncios, faixa etária, revisão jurídica.
+2. Preços: a página do PetHealthTracker mostra "Em breve" / "Soon" até a precificação ser decidida (o teste de 7 dias continua). Na Black Friday (`src/data/campaigns.ts`) os preços estão em branco em PT e EN e o card mostra só o desconto (−50% / −30%); preencher `price` e `old` quando a monetização for definida, **antes de 27/11**.
+3. Política: exclusão em até 30 dias confirmada; seção "Crianças" (não é direcionado a menores de 13 anos) adicionada. Falta nomear a rede de anúncios quando for escolhida (o texto já diz que o nome entra antes de os anúncios começarem) e a revisão jurídica.
 
 **App e anúncios**
 4. Link da App Store: página do PetHealthTracker ("Em breve na App Store") e `appStoreUrl: '#'` em `campaigns.ts`.
