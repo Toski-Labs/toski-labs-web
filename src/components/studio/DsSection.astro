@@ -1,6 +1,6 @@
 ---
 /** Faixa do Toski DS no Estúdio: prévia das cores (clique copia), da fonte e dos tokens, com link para o GitHub. */
-import { Kicker } from '@toski-labs/ds';
+import { Kicker, buttonClasses } from '@toski-labs/ds';
 import { getLang } from '../../i18n/ui';
 import { studio, swatches } from '../../data/studio';
 
@@ -42,7 +42,7 @@ const t = {
       <h2 id="toski-ds" class="text-[clamp(32px,3.6vw,44px)] leading-[1.08] font-semibold tracking-[-0.02em]">Toski DS</h2>
       <p class="max-w-120 text-[17px] leading-[1.55] text-muted">{t.lead}</p>
       <div class="mt-1.5 flex flex-wrap gap-2.5">
-        <a href={studio.ds.githubUrl} class="inline-flex h-12 items-center justify-center gap-2.5 rounded-button bg-accent px-5 text-base font-semibold text-on-accent no-underline hover:bg-accent-hover hover:text-on-accent max-sm:flex-auto">
+        <a href={studio.ds.githubUrl} class={buttonClasses('primary', 'md', 'max-sm:flex-auto')}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"></path></svg>
           {t.github}
         </a>

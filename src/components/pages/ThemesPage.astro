@@ -1,6 +1,6 @@
 ---
 /** Temas (PT e EN): VS Code e iTerm2, com prévia clara/escura trocada só com CSS (sem JavaScript). */
-import { Icon, Kicker, SectionHeading } from '@toski-labs/ds';
+import { Icon, Kicker, SectionHeading, buttonClasses } from '@toski-labs/ds';
 import { getLang } from '../../i18n/ui';
 import { studio } from '../../data/studio';
 import Breadcrumb from '../studio/Breadcrumb.astro';
@@ -78,8 +78,10 @@ const modes = [
 ] as const;
 const card = 'grid overflow-hidden rounded-panel border border-line bg-surface min-[900px]:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)]';
 const art = 'flex min-w-0 items-center bg-hero px-8 py-9 max-[899px]:px-5 max-[899px]:py-6';
-const secondary = 'inline-flex h-12 items-center justify-center gap-2.5 rounded-button border-[1.5px] border-line bg-surface px-4.5 text-base font-medium text-ink no-underline hover:border-accent hover:text-ink max-sm:flex-auto';
-const primary = 'inline-flex h-12 items-center justify-center gap-2.5 rounded-button bg-accent px-5 text-base font-semibold text-on-accent no-underline hover:bg-accent-hover hover:text-on-accent max-sm:flex-auto';
+// Links com cara de botão (Toski DS, tamanho md). No celular o secundário fica com 18px de respiro
+// em vez de 20px, para os três botões do fim da página caberem em duas linhas.
+const secondary = buttonClasses('secondary', 'md', 'max-sm:flex-auto max-sm:px-4.5');
+const primary = buttonClasses('primary', 'md', 'max-sm:flex-auto');
 ---
 
 <div class="themes-page">
