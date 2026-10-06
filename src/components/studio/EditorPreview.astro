@@ -1,0 +1,57 @@
+---
+/** Prévia de um VS Code com o tema Toski (HTML, sem imagem). Decorativa: aria-hidden. */
+import { sampleCode, themePalettes, type ThemeId } from '../../data/studio';
+
+interface Props {
+  theme: ThemeId;
+  /** Mostra a lista de arquivos (escondida em telas estreitas). */
+  side?: boolean;
+  title?: string;
+  lines?: number;
+  class?: string;
+  [key: `data-${string}`]: string;
+}
+const { theme, side = true, title = 'pacoca.ts — pethealthtracker', lines = sampleCode.length, class: className, ...rest } = Astro.props;
+const t = themePalettes[theme];
+const files: [string, number, boolean][] = [['▾ src', 14, false], ['lembretes.ts', 30, false], ['pacoca.ts', 30, true], ['pets.ts', 30, false], ['README.md', 14, false]];
+const dot = 'size-2.75 rounded-full';
+---
+
+<div {...rest} aria-hidden="true" class:list={['overflow-hidden rounded-button border text-left shadow-[0_18px_40px_rgba(35,27,23,0.18)]', className]} style={`background:${t.bg};border-color:${t.line}`}>
+  <div class="relative flex h-8.5 items-center gap-1.75 px-3" style={`background:${t.panel}`}>
+    <span class={`${dot} bg-[#E0705E]`}></span><span class={`${dot} bg-[#E8C26B]`}></span><span class={`${dot} bg-[#9CC48F]`}></span>
+    <span class="pointer-events-none absolute inset-x-0 text-center text-xs" style={`color:${t.muted}`}>{title}</span>
+  </div>
+  <div class="flex">
+    <div class="flex w-10 shrink-0 flex-col items-center gap-3.5 pt-3.5" style={`background:${t.panel}`}>
+      <span class="size-4.5 rounded-sm border-2" style={`border-color:${t.accent}`}></span>
+      <span class="size-4.5 rounded-full border-2" style={`border-color:${t.muted}`}></span>
+      <span class="size-4.5 rotate-45 scale-80 rounded-sm border-2" style={`border-color:${t.muted}`}></span>
+    </div>
+    {side && (
+      <div class="w-39 shrink-0 py-3 text-[12.5px] max-[559px]:hidden" style={`background:${t.side};color:${t.text}`}>
+        <p class="mb-2 px-3.5 text-[10.5px] font-semibold tracking-[0.08em]" style={`color:${t.text}`}>PETHEALTHTRACKER</p>
+        {files.map(([name, pad, on]) => (
+          <div class="flex h-6 items-center" style={`padding-left:${pad}px;background:${on ? t.active : 'transparent'};color:${on ? t.text : t.muted}`}>{name}</div>
+        ))}
+      </div>
+    )}
+    <div class="min-w-0 flex-auto">
+      <div class="flex h-8.5 text-[12.5px]" style={`background:${t.panel}`}>
+        <span class="flex items-center px-4" style={`background:${t.bg};color:${t.text};box-shadow:inset 0 2px 0 ${t.accent}`}>pacoca.ts</span>
+        <span class="flex items-center px-4" style={`color:${t.muted}`}>lembretes.ts</span>
+      </div>
+      <div class="overflow-hidden pt-3.5 pb-4.5 font-mono text-[13px] leading-[1.7] max-[559px]:text-[11.5px]">
+        {sampleCode.slice(0, lines).map((tokens, i) => (
+          <div class="flex whitespace-pre" style={`background:${i === 5 ? t.current : 'transparent'}`}>
+            <span class="w-10 shrink-0 pr-3.5 text-right" style={`color:${t.lineNo}`}>{i + 1}</span>
+            <span>{tokens.map(([text, role]) => <span style={`color:${role === 'v' ? t.x : t[role]}${role === 'c' || role === 'v' ? ';font-style:italic' : ''}`}>{text}</span>)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  <div class="flex h-6 items-center gap-3.5 border-t px-3 text-xs font-medium" style={`background:${t.status};color:${t.statusText};border-color:${t.line}`}>
+    <span>⎇ main</span><span>TypeScript</span><span class="ml-auto">{t.name}</span>
+  </div>
+</div>

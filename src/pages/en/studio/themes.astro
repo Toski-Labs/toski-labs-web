@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ThemesPage from '../../../components/pages/ThemesPage.astro';
+import { studio } from '../../../data/studio';
+---
+
+<!-- Kept out of search engines until the themes are published (studio.themes.ready). -->
+<BaseLayout page="themes" title="Themes" description="Toski Light and Toski Dark for VS Code and iTerm2, in the Toski Labs colors. Open source." noindex={!studio.themes.ready}>
+  <ThemesPage />
+</BaseLayout>

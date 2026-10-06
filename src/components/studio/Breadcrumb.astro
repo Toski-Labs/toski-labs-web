@@ -1,0 +1,17 @@
+---
+/** "Estúdio / Página atual", no topo das páginas do Estúdio. */
+import { getLang, href } from '../../i18n/ui';
+
+interface Props {
+  current: string;
+}
+const { current } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = { pt: { label: 'Você está em', studio: 'Estúdio' }, en: { label: 'You are here', studio: 'Studio' } }[lang];
+---
+
+<nav aria-label={t.label} class="page pt-2 text-sm text-muted">
+  <a href={href(lang, 'studio')} class="text-muted no-underline hover:underline">{t.studio}</a>
+  <span aria-hidden="true"> / </span>
+  <span aria-current="page">{current}</span>
+</nav>

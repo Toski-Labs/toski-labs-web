@@ -1,0 +1,34 @@
+---
+/** Prévia de um iTerm2 com o tema Toski (HTML, sem imagem). Decorativa: aria-hidden. */
+import { sampleTerminal, themePalettes, type ThemeId } from '../../data/studio';
+
+interface Props {
+  theme: ThemeId;
+  class?: string;
+  [key: `data-${string}`]: string;
+}
+const { theme, class: className, ...rest } = Astro.props;
+const t = themePalettes[theme];
+const color = (c: string) => (c === 'x' ? t.text : c === 'muted' ? t.muted : t[c as keyof typeof t]);
+const dot = 'size-2.75 rounded-full';
+---
+
+<div {...rest} aria-hidden="true" class:list={['overflow-hidden rounded-button border text-left shadow-[0_18px_40px_rgba(35,27,23,0.18)]', className]} style={`background:${t.bg};border-color:${t.line}`}>
+  <div class="relative flex h-8.5 items-center gap-1.75 px-3" style={`background:${t.panel}`}>
+    <span class={`${dot} bg-[#E0705E]`}></span><span class={`${dot} bg-[#E8C26B]`}></span><span class={`${dot} bg-[#9CC48F]`}></span>
+    <span class="pointer-events-none absolute inset-x-0 text-center text-xs" style={`color:${t.muted}`}>paçoca — zsh — 80×24</span>
+  </div>
+  <div class="overflow-hidden px-4.5 pt-3.5 pb-4.5 font-mono text-[13px] leading-[1.7] max-[559px]:text-[11.5px]">
+    {sampleTerminal.map((tokens) => (
+      <div class="min-h-[1.7em] whitespace-pre">
+        {tokens.map(([text, c, bold]) =>
+          c === 'cursor' ? (
+            <span style={`background:${t.accent};color:${t.bg}`}>{text}</span>
+          ) : (
+            <span style={`color:${color(c)}${bold ? ';font-weight:600' : ''}`}>{text}</span>
+          ),
+        )}
+      </div>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,200 @@
+---
+/** Temas (PT e EN): VS Code e iTerm2, com prévia clara/escura trocada só com CSS (sem JavaScript). */
+import { getLang } from '../../i18n/ui';
+import { studio } from '../../data/studio';
+import Icon from '../ui/Icon.astro';
+import Kicker from '../ui/Kicker.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Breadcrumb from '../studio/Breadcrumb.astro';
+import EditorPreview from '../studio/EditorPreview.astro';
+import TerminalPreview from '../studio/TerminalPreview.astro';
+
+const lang = getLang(Astro.currentLocale);
+const { vscode, iterm } = studio.themes;
+const command = `code --install-extension ${vscode.extensionId}`;
+const t = {
+  pt: {
+    crumb: 'Temas',
+    kicker: 'Temas',
+    title: 'Programe com as cores da Toski',
+    lead: 'Toski Light e Toski Dark para o VS Code e o iTerm2, com contraste pensado para ler código o dia inteiro.',
+    preview: 'Ver prévia em',
+    dark: 'Escuro',
+    light: 'Claro',
+    editor: 'Editor',
+    vsTitle: 'Toski para VS Code',
+    vsBody: 'Também funciona no Cursor e em outros editores baseados no VS Code.',
+    install: 'Instalar no VS Code',
+    orTerminal: 'Ou pelo terminal',
+    copy: 'Copiar',
+    copied: 'Copiado',
+    copyLabel: 'Copiar o comando de instalação',
+    meta: `Versão ${vscode.version} · Claro e escuro · Licença MIT`,
+    terminal: 'Terminal',
+    itTitle: 'Toski para iTerm2',
+    itBody: 'As 16 cores do terminal, o cursor e a seleção com a paleta da Toski.',
+    download: (name: string) => `Baixar ${name} para iTerm2`,
+    steps: ['Baixe o arquivo e dê dois cliques nele.', 'No iTerm2, abra Settings › Profiles › Colors.', 'Em Color Presets, escolha ☯ Toski (troca sozinho com o tema do Mac), Toski Dark ou Toski Light.'],
+    openTitle: 'Código aberto',
+    openBody: 'Os temas ficam no GitHub. Achou alguma cor difícil de ler? Abra uma issue ou mande uma sugestão.',
+    githubVs: 'VS Code no GitHub',
+    githubIt: 'iTerm2 no GitHub',
+    code: 'Código no GitHub',
+    talk: 'Falar com a gente',
+  },
+  en: {
+    crumb: 'Themes',
+    kicker: 'Themes',
+    title: 'Code with the Toski colors',
+    lead: 'Toski Light and Toski Dark for VS Code and iTerm2, with contrast tuned for reading code all day.',
+    preview: 'Preview in',
+    dark: 'Dark',
+    light: 'Light',
+    editor: 'Editor',
+    vsTitle: 'Toski for VS Code',
+    vsBody: 'Also works in Cursor and other editors based on VS Code.',
+    install: 'Install in VS Code',
+    orTerminal: 'Or from the terminal',
+    copy: 'Copy',
+    copied: 'Copied',
+    copyLabel: 'Copy the install command',
+    meta: `Version ${vscode.version} · Light and dark · MIT license`,
+    terminal: 'Terminal',
+    itTitle: 'Toski for iTerm2',
+    itBody: 'The 16 terminal colors, the cursor and the selection in the Toski palette.',
+    download: (name: string) => `Download ${name} for iTerm2`,
+    steps: ['Download the file and double-click it.', 'In iTerm2, open Settings › Profiles › Colors.', 'Under Color Presets, pick ☯ Toski (follows your Mac’s appearance), Toski Dark or Toski Light.'],
+    openTitle: 'Open source',
+    openBody: 'The themes live on GitHub. Found a color that’s hard to read? Open an issue or send a suggestion.',
+    githubVs: 'VS Code on GitHub',
+    githubIt: 'iTerm2 on GitHub',
+    code: 'Code on GitHub',
+    talk: 'Get in touch',
+  },
+}[lang];
+
+const itermFiles = iterm.files.map((f) => ({ name: f.name, detail: f.detail[lang], file: f.asset, url: iterm.downloadBase + f.asset }));
+const modes = [
+  { id: 'escuro', label: t.dark },
+  { id: 'claro', label: t.light },
+] as const;
+const card = 'grid overflow-hidden rounded-panel border border-line bg-surface min-[900px]:grid-cols-[minmax(0,1.4fr)_minmax(320px,1fr)]';
+const art = 'flex min-w-0 items-center bg-hero px-8 py-9 max-[899px]:px-5 max-[899px]:py-6';
+const secondary = 'inline-flex h-12 items-center justify-center gap-2.5 rounded-button border-[1.5px] border-line bg-surface px-4.5 text-base font-medium text-ink no-underline hover:border-accent hover:text-ink max-sm:flex-auto';
+const primary = 'inline-flex h-12 items-center justify-center gap-2.5 rounded-button bg-accent px-5 text-base font-semibold text-on-accent no-underline hover:bg-accent-hover hover:text-on-accent max-sm:flex-auto';
+---
+
+<div class="themes-page">
+  <Breadcrumb current={t.crumb} />
+
+  <section class="page flex flex-wrap items-end justify-between gap-x-12 gap-y-6 pt-7 pb-9 max-sm:pt-4">
+    <SectionHeading as="h1" kicker={t.kicker} title={t.title} lead={t.lead} class="min-w-0 flex-[1_1_520px]" />
+    <fieldset class="flex flex-col gap-2">
+      <legend class="mb-2 text-[13px] font-medium text-muted">{t.preview}</legend>
+      <div class="flex gap-1.5 rounded-button bg-tint p-1">
+        {modes.map((m, i) => (
+          <label class="cursor-pointer rounded-[10px] text-[15px] font-semibold text-muted transition-colors has-checked:bg-segment has-checked:text-ink has-checked:shadow-[0_1px_3px_rgba(35,27,23,0.14)] has-focus-visible:outline-2 has-focus-visible:outline-accent">
+            <input type="radio" name="previa-tema" id={`tema-${m.id}`} value={m.id} checked={i === 0} class="sr-only" />
+            <span class="flex h-10 items-center px-4.5">{m.label}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  </section>
+
+  <section aria-label={t.kicker} class="page flex flex-col gap-6 pb-24">
+    <article aria-labelledby="tema-vscode" class={card}>
+      <div class={art}>
+        <EditorPreview theme="escuro" class="w-full" data-preview="escuro" />
+        <EditorPreview theme="claro" class="w-full" data-preview="claro" />
+      </div>
+      <div class="flex min-w-0 flex-col gap-4.5 p-8 max-sm:p-6">
+        <Kicker>{t.editor}</Kicker>
+        <div class="flex flex-col gap-2">
+          <h2 id="tema-vscode" class="text-[28px] leading-[1.15] font-semibold tracking-[-0.015em]">{t.vsTitle}</h2>
+          <p class="text-base leading-normal text-muted">{t.vsBody}</p>
+        </div>
+        <div class="flex flex-wrap gap-2.5">
+          <a href={vscode.marketplaceUrl} class={primary}>{t.install}<Icon name="arrow-right" size={18} stroke={2.2} /></a>
+          <a href={vscode.openVsxUrl} class={secondary}>Open VSX</a>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-[13px] font-medium text-muted">{t.orTerminal}</span>
+          <div class="flex items-center gap-2 rounded-xl border border-line bg-background py-1.5 pr-1.5 pl-3.5">
+            <code tabindex="0" class="min-w-0 flex-auto overflow-x-auto font-mono text-[13px] whitespace-nowrap">{command}</code>
+            <button type="button" class="toski-copy-cmd h-9 shrink-0 rounded-[9px] bg-tint px-3 text-[13px] font-semibold text-ink" data-copy={command} data-copied={t.copied} aria-label={t.copyLabel}>{t.copy}</button>
+          </div>
+        </div>
+        <p class="text-[13px] text-muted">{t.meta} · <a href={vscode.githubUrl} class="font-medium">{t.code}</a></p>
+      </div>
+    </article>
+
+    <article aria-labelledby="tema-iterm" class={card}>
+      <div class={art}>
+        <TerminalPreview theme="escuro" class="w-full" data-preview="escuro" />
+        <TerminalPreview theme="claro" class="w-full" data-preview="claro" />
+      </div>
+      <div class="flex min-w-0 flex-col gap-4.5 p-8 max-sm:p-6">
+        <Kicker>{t.terminal}</Kicker>
+        <div class="flex flex-col gap-2">
+          <h2 id="tema-iterm" class="text-[28px] leading-[1.15] font-semibold tracking-[-0.015em]">{t.itTitle}</h2>
+          <p class="text-base leading-normal text-muted">{t.itBody}</p>
+        </div>
+        <div class="flex flex-wrap gap-2.5">
+          {itermFiles.map((f) => (
+            <a href={f.url} download={f.file} aria-label={t.download(f.name)} class="inline-flex min-h-12 items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-background py-1.5 pr-4 pl-3 text-ink no-underline hover:border-accent hover:text-ink max-sm:flex-auto">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
+              <span class="flex flex-col leading-tight"><span class="text-[15px] font-semibold">{f.name}</span><span class="text-xs text-muted">{f.detail}</span></span>
+            </a>
+          ))}
+        </div>
+        <ol class="flex flex-col gap-2.5">
+          {t.steps.map((step, i) => (
+            <li class="flex gap-3 text-[15px] leading-[1.45]">
+              <span class="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-tint text-[13px] font-semibold text-accent-text" aria-hidden="true">{i + 1}</span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="text-[13px] text-muted">{lang === 'pt' ? 'Claro e escuro · Licença MIT' : 'Light and dark · MIT license'} · <a href={iterm.githubUrl} class="font-medium">{t.code}</a></p>
+      </div>
+    </article>
+  </section>
+
+  <section aria-labelledby="codigo-aberto" class="band bg-tint">
+    <div class="page flex flex-wrap items-center justify-between gap-x-12 gap-y-6 py-14">
+      <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-2">
+        <h2 id="codigo-aberto" class="text-[clamp(24px,2.6vw,30px)] leading-[1.15] font-semibold tracking-[-0.015em]">{t.openTitle}</h2>
+        <p class="max-w-140 text-[17px] leading-normal text-muted">{t.openBody}</p>
+      </div>
+      <div class="flex flex-wrap gap-2.5 max-sm:w-full">
+        <a href={vscode.githubUrl} class={secondary}>{t.githubVs}</a>
+        <a href={iterm.githubUrl} class={secondary}>{t.githubIt}</a>
+        <a href={lang === 'pt' ? '/suporte' : '/en/support'} class={secondary}>{t.talk}</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Troca de prévia só com CSS: funciona sem JavaScript. */
+  .themes-page:not(:has(#tema-claro:checked)) [data-preview='claro'],
+  .themes-page:has(#tema-claro:checked) [data-preview='escuro'] {
+    display: none;
+  }
+</style>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('.toski-copy-cmd')) {
+    const original = button.textContent;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy!);
+      } catch {
+        return;
+      }
+      button.textContent = button.dataset.copied!;
+      setTimeout(() => (button.textContent = original), 1500);
+    });
+  }
+</script>

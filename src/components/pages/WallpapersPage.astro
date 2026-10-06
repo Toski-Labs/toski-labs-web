@@ -1,0 +1,218 @@
+---
+/** Wallpapers (PT e EN): prévia em iPhone e Mac, filtro por aparelho (só CSS) e download do PNG original. */
+import { Image } from 'astro:assets';
+import { getLang } from '../../i18n/ui';
+import { desktopSizes, wallpaperRelease, wallpapers } from '../../data/wallpapers';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Breadcrumb from '../studio/Breadcrumb.astro';
+
+const lang = getLang(Astro.currentLocale);
+const t = {
+  pt: {
+    kicker: 'Wallpapers',
+    title: 'Leve a Toski para a sua tela',
+    lead: 'Fundos de tela da Toski Labs para iPhone e Mac, em alta resolução. Grátis para uso pessoal.',
+    filter: 'Filtrar por aparelho',
+    listLabel: 'Lista de wallpapers (role para ver mais)',
+    all: 'Todos',
+    download: (name: string, device: string) => `Baixar ${name} para ${device}`,
+    desktopPick: (name: string) => `Baixar ${name} para desktop: escolha o tamanho`,
+    sizes: (n: number) => `PNG · ${n} tamanhos`,
+    howTitle: 'Como colocar como fundo de tela',
+    how: [
+      { title: 'iPhone', steps: ['Toque em “Mobile” e depois em Compartilhar › Salvar imagem.', 'Abra Ajustes › Fundo de tela › Adicionar novo fundo.', 'Escolha Fotos, selecione o wallpaper e toque em Adicionar.'] },
+      { title: 'Mac', steps: ['Clique em “Desktop” e escolha o tamanho da sua tela.', 'Abra Ajustes do Sistema › Papel de parede.', 'Clique em Adicionar foto e escolha o arquivo baixado.'] },
+    ],
+    license: 'Uso pessoal liberado: celular, computador, tela de bloqueio. Não vale revender, nem usar os desenhos ou a marca Toski Labs em outros produtos.',
+  },
+  en: {
+    kicker: 'Wallpapers',
+    title: 'Put Toski on your screen',
+    lead: 'Toski Labs wallpapers for iPhone and Mac, in high resolution. Free for personal use.',
+    filter: 'Filter by device',
+    listLabel: 'Wallpaper list (scroll to see more)',
+    all: 'All',
+    download: (name: string, device: string) => `Download ${name} for ${device}`,
+    desktopPick: (name: string) => `Download ${name} for desktop: choose a size`,
+    sizes: (n: number) => `PNG · ${n} sizes`,
+    howTitle: 'How to set it as your wallpaper',
+    how: [
+      { title: 'iPhone', steps: ['Tap “Mobile”, then Share › Save Image.', 'Open Settings › Wallpaper › Add New Wallpaper.', 'Choose Photos, pick the wallpaper and tap Add.'] },
+      { title: 'Mac', steps: ['Click “Desktop” and pick your screen size.', 'Open System Settings › Wallpaper.', 'Click Add Photo and choose the downloaded file.'] },
+    ],
+    license: 'Free for personal use: phone, computer, lock screen. Please don’t resell them or use the artwork or the Toski Labs brand in other products.',
+  },
+}[lang];
+
+const filters = [
+  { id: 'todos', label: t.all },
+  { id: 'iphone', label: 'Mobile' },
+  { id: 'mac', label: 'Desktop' },
+];
+const scrolls = wallpapers.length > 4;
+const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5px] border-line bg-background py-1.5 pr-4 pl-3 text-ink no-underline hover:border-accent hover:text-ink';
+---
+
+<div class="wallpapers">
+  <Breadcrumb current="Wallpapers" />
+  <section class="page flex flex-wrap items-end justify-between gap-x-12 gap-y-6 pt-7 pb-8 max-sm:pt-4">
+    <SectionHeading as="h1" kicker={t.kicker} title={t.title} lead={t.lead} class="min-w-0 flex-[1_1_520px]" />
+    <fieldset class="flex gap-1.5 rounded-button bg-tint p-1">
+      <legend class="sr-only">{t.filter}</legend>
+      {filters.map((f, i) => (
+        <label class="cursor-pointer rounded-[10px] text-[15px] font-semibold text-muted transition-colors has-checked:bg-segment has-checked:text-ink has-checked:shadow-[0_1px_3px_rgba(35,27,23,0.14)] has-focus-visible:outline-2 has-focus-visible:outline-accent">
+          <input type="radio" name="filtro-wallpaper" id={`f-${f.id}`} value={f.id} checked={i === 0} class="sr-only" />
+          <span class="flex h-10 items-center px-4.5">{f.label}</span>
+        </label>
+      ))}
+    </fieldset>
+  </section>
+
+  <!-- Desktop: lista de tamanhos abre para cima no computador e embaixo do botão, dentro do card, no celular. -->
+  <!-- Com mais de 4 wallpapers, do tablet em diante a lista ganha rolagem própria na altura dos 4 primeiros (script abaixo). -->
+  <section aria-label={t.kicker} class="page pb-24">
+    <div
+      class:list={['wallpaper-list', scrolls && 'toski-wall-scroll -mr-3 overflow-y-auto overscroll-y-contain pr-3']}
+      tabindex={scrolls ? 0 : undefined}
+      aria-label={scrolls ? t.listLabel : undefined}
+    >
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] gap-6">
+    {wallpapers.map((w) => (
+      <article
+        class="flex flex-col overflow-hidden rounded-panel border border-line bg-surface"
+        data-only={w.iphone && w.mac ? undefined : w.iphone ? 'iphone' : 'mac'}
+      >
+        <div class="flex h-75 items-end justify-center gap-6 overflow-hidden bg-hero px-6 pt-7" aria-hidden="true">
+          {w.mac && (
+            <div data-device="mac" class="mb-7 flex flex-col items-center">
+              <div class="w-82.5 max-w-full rounded-t-xl rounded-b-sm bg-[#1B1511] p-1.75">
+                <Image src={w.mac} alt="" widths={[330, 660]} sizes="330px" class="block aspect-video w-full rounded-sm object-cover" />
+              </div>
+              <div class="h-2.5 w-95 max-w-[115%] rounded-b-[10px] bg-[#43352B]"></div>
+            </div>
+          )}
+          {w.iphone && (
+            <div data-device="iphone" class="w-32 shrink-0 translate-y-3.5 rounded-t-3xl bg-[#1B1511] p-1.25">
+              <Image src={w.iphone} alt="" widths={[128, 256]} sizes="128px" class="block aspect-1320/2868 w-full rounded-t-[19px] object-cover" />
+            </div>
+          )}
+        </div>
+        <div class="flex flex-col gap-3.5 px-7 pt-6 pb-7">
+          <div class="flex flex-col gap-1">
+            <h2 class="text-[22px] font-semibold">{w.name[lang]}</h2>
+            <p class="text-[15px] leading-normal text-muted">{w.description[lang]}</p>
+          </div>
+          <div class="flex flex-wrap items-start gap-2.5">
+            {w.iphone && (
+              <a
+                href={w.iphone.src}
+                download={`toski-${w.file}-mobile.png`}
+                data-device="iphone"
+                aria-label={t.download(w.name[lang], 'mobile')}
+                class={btn}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-accent"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
+                <span class="flex flex-col leading-[1.2]"><span class="text-[15px] font-semibold">Mobile</span><span class="text-xs text-muted">PNG · {w.iphone.width} × {w.iphone.height}</span></span>
+              </a>
+            )}
+            {w.mac && (
+              <details data-device="mac" class="toski-sizes group relative max-sm:open:w-full">
+                <summary class={`${btn} cursor-pointer list-none [&::-webkit-details-marker]:hidden`} aria-label={t.desktopPick(w.name[lang])}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-accent"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
+                  <span class="flex flex-col leading-[1.2]"><span class="text-[15px] font-semibold">Desktop</span><span class="text-xs text-muted">{t.sizes(desktopSizes.length)}</span></span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ml-1 text-muted transition-transform group-open:rotate-180"><path d="m6 9 6 6 6-6"></path></svg>
+                </summary>
+                <ul class="absolute bottom-full left-0 z-10 mb-2 flex w-max min-w-full flex-col gap-0.5 rounded-card border border-line bg-surface p-1.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)] max-sm:static max-sm:mt-2 max-sm:mb-0 max-sm:w-full max-sm:shadow-none">
+                  {desktopSizes.map((size) => (
+                    <li>
+                      <a
+                        href={wallpaperRelease.ready ? `${wallpaperRelease.downloadBase}${w.file}-desktop-${size.id}.png` : w.mac!.src}
+                        download={`toski-${w.file}-desktop-${size.id}.png`}
+                        aria-label={t.download(w.name[lang], `desktop ${size.label}`)}
+                        class="flex min-h-11 items-center justify-between gap-6 rounded-[10px] px-3 py-1.5 text-ink no-underline hover:bg-tint hover:text-ink"
+                      >
+                        <span class="flex flex-col leading-[1.25]"><span class="text-[15px] font-semibold">{size.label}</span><span class="text-xs text-muted">{size.hint[lang]}</span></span>
+                        <span class="text-xs whitespace-nowrap text-muted">{size.width} × {size.height}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
+          </div>
+        </div>
+      </article>
+    ))}
+    </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="como-usar" class="band bg-tint">
+    <div class="page flex flex-col gap-7 pt-18 pb-20">
+      <h2 id="como-usar" class="text-[clamp(28px,3.2vw,36px)] leading-[1.1] font-semibold tracking-[-0.02em]">{t.howTitle}</h2>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,320px),1fr))] gap-5">
+        {t.how.map((h) => (
+          <div class="flex flex-col gap-3.5 rounded-card bg-surface p-7">
+            <h3 class="text-xl font-semibold">{h.title}</h3>
+            <ol class="flex flex-col gap-2.5">
+              {h.steps.map((step, i) => (
+                <li class="flex gap-3 text-base leading-[1.45]">
+                  <span class="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-tint text-[13px] font-semibold text-accent-text" aria-hidden="true">{i + 1}</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))}
+      </div>
+      <p class="text-sm leading-normal text-muted">{t.license}</p>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Filtro por aparelho só com CSS: funciona sem JavaScript. */
+  .wallpapers:has(#f-iphone:checked) [data-only='mac'],
+  .wallpapers:has(#f-mac:checked) [data-only='iphone'],
+  .wallpapers:has(#f-iphone:checked) [data-device='mac'],
+  .wallpapers:has(#f-mac:checked) [data-device='iphone'] {
+    display: none;
+  }
+  .toski-wall-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line) transparent;
+  }
+  /* Esmaece a borda de baixo enquanto ainda há itens para rolar. */
+  .toski-wall-scroll[data-more] {
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 56px), transparent);
+  }
+</style>
+
+<script>
+  // Altura da lista = até o fim do 4º wallpaper visível (respeita o filtro e a largura da tela).
+  const box = document.querySelector<HTMLElement>('.toski-wall-scroll');
+  if (box) {
+    const fit = () => {
+      const cards = [...box.querySelectorAll<HTMLElement>('article')].filter((el) => el.offsetParent !== null);
+      // No celular a lista fica com a rolagem normal da página (rolagem dentro de rolagem atrapalha no toque).
+      if (cards.length <= 4 || window.innerWidth < 768) {
+        box.style.maxHeight = '';
+      } else {
+        const top = box.getBoundingClientRect().top - box.scrollTop;
+        box.style.maxHeight = `${Math.ceil(cards[3].getBoundingClientRect().bottom - top - box.scrollTop + 4)}px`;
+      }
+      more();
+    };
+    const more = () => box.toggleAttribute('data-more', box.scrollTop + box.clientHeight < box.scrollHeight - 4);
+    box.addEventListener('scroll', more, { passive: true });
+    new ResizeObserver(fit).observe(box);
+    document.querySelectorAll('input[name="filtro-wallpaper"]').forEach((input) => input.addEventListener('change', () => { box.scrollTop = 0; fit(); }));
+    fit();
+  }
+
+  // Seletor de tamanhos: abre um por vez e fecha ao clicar fora ou apertar Esc.
+  const pickers = [...document.querySelectorAll<HTMLDetailsElement>('.toski-sizes')];
+  pickers.forEach((d) => d.addEventListener('toggle', () => { if (d.open) pickers.forEach((o) => o !== d && (o.open = false)); }));
+  document.addEventListener('click', (e) => pickers.forEach((d) => { if (d.open && !d.contains(e.target as Node)) d.open = false; }));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') pickers.forEach((d) => { if (d.open) { d.open = false; d.querySelector('summary')?.focus(); } }); });
+</script>

@@ -1,0 +1,109 @@
+---
+/** Faixa do Toski DS no Estúdio: prévia das cores (clique copia), da fonte e dos tokens, com link para o GitHub. */
+import { getLang } from '../../i18n/ui';
+import { studio, swatches } from '../../data/studio';
+import Kicker from '../ui/Kicker.astro';
+
+const lang = getLang(Astro.currentLocale);
+const t = {
+  pt: {
+    kicker: 'Design system',
+    lead: 'Cores, tipografia e componentes da Toski num lugar só. São os mesmos tokens que pintam o site, o app e os temas.',
+    github: 'Ver no GitHub',
+    meta: 'Código aberto · Licença MIT',
+    colors: 'Cores',
+    hint: 'Clique para copiar',
+    copy: (name: string, hex: string) => `Copiar ${name}, ${hex}`,
+    copyShort: 'Copiar',
+    copied: 'Copiado',
+    font: 'Regular · Medium · Semibold',
+    tokens: 'Exemplo de tokens',
+  },
+  en: {
+    kicker: 'Design system',
+    lead: 'Toski’s colors, type and components in one place. The same tokens paint the site, the app and the themes.',
+    github: 'View on GitHub',
+    meta: 'Open source · MIT license',
+    colors: 'Colors',
+    hint: 'Click to copy',
+    copy: (name: string, hex: string) => `Copy ${name}, ${hex}`,
+    copyShort: 'Copy',
+    copied: 'Copied',
+    font: 'Regular · Medium · Semibold',
+    tokens: 'Token example',
+  },
+}[lang];
+---
+
+<section aria-labelledby="toski-ds" class="band bg-tint">
+  <div class="page flex flex-wrap items-center gap-x-14 gap-y-10 pt-18 pb-20">
+    <div class="flex min-w-0 flex-[1_1_360px] flex-col gap-3.5">
+      <Kicker>{t.kicker}</Kicker>
+      <h2 id="toski-ds" class="text-[clamp(32px,3.6vw,44px)] leading-[1.08] font-semibold tracking-[-0.02em]">Toski DS</h2>
+      <p class="max-w-120 text-[17px] leading-[1.55] text-muted">{t.lead}</p>
+      <div class="mt-1.5 flex flex-wrap gap-2.5">
+        <a href={studio.ds.githubUrl} class="inline-flex h-12 items-center justify-center gap-2.5 rounded-button bg-accent px-5 text-base font-semibold text-on-accent no-underline hover:bg-accent-hover hover:text-on-accent max-sm:flex-auto">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"></path></svg>
+          {t.github}
+        </a>
+      </div>
+      <p class="text-[13px] text-muted">{t.meta}</p>
+    </div>
+
+    <div class="flex min-w-0 flex-[1_1_520px] flex-col gap-4.5 rounded-3xl bg-surface p-5">
+      <div class="flex items-baseline justify-between gap-3 px-1">
+        <h3 class="text-[15px] font-semibold">{t.colors}</h3>
+        <span class="text-[13px] text-muted">{t.hint}</span>
+      </div>
+      <ul class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,84px),1fr))] gap-2.5">
+        {swatches.map((s) => (
+          <li>
+            <button type="button" class="toski-swatch group flex w-full flex-col gap-2 text-left" data-copy={s.hex} data-copied={t.copied} aria-label={t.copy(s.name[lang], s.hex)}>
+              <span class="flex h-18 items-end justify-end rounded-xl p-1.5 shadow-[inset_0_0_0_1px_rgba(35,27,23,0.1)]" style={`background:${s.hex}`}>
+                <span data-label class="inline-flex h-5.5 items-center rounded-full bg-white/90 px-2 text-[11px] font-semibold text-carvao opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">{t.copyShort}</span>
+              </span>
+              <span class="flex flex-col gap-px">
+                <span class="text-sm font-semibold">{s.name[lang]}</span>
+                <span class="font-mono text-xs text-muted">{s.hex}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div class="flex flex-wrap gap-3">
+        <div class="flex flex-[1_1_180px] items-center gap-3.5 rounded-button bg-background px-4 py-3.5">
+          <span class="text-[40px] leading-none font-semibold tracking-[-0.02em]" aria-hidden="true">Aa</span>
+          <span class="flex flex-col gap-0.5"><span class="text-sm font-semibold">Outfit</span><span class="text-xs text-muted">{t.font}</span></span>
+        </div>
+        <pre aria-label={t.tokens} class="m-0 flex-[2_1_260px] overflow-x-auto rounded-button bg-carvao px-4 py-3.5 font-mono text-[12.5px] leading-[1.6] text-[#F1E6D8]"><span class="text-[#8FB8C9]">--toski-accent</span>: <span class="text-caramelo">#A9541F</span>;
+<span class="text-[#8FB8C9]">--toski-radius-card</span>: <span class="text-[#E39A8E]">18px</span>;
+<span class="text-[#8FB8C9]">--toski-font</span>: <span class="text-[#A9C98F]">'Outfit'</span>;</pre>
+      </div>
+      <p class="sr-only" aria-live="polite" data-swatch-status></p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const status = document.querySelector<HTMLElement>('[data-swatch-status]');
+  for (const button of document.querySelectorAll<HTMLButtonElement>('.toski-swatch')) {
+    const label = button.querySelector<HTMLElement>('[data-label]');
+    const original = label?.textContent ?? '';
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy!);
+      } catch {
+        return;
+      }
+      if (label) {
+        label.textContent = button.dataset.copied!;
+        label.style.opacity = '1';
+        setTimeout(() => {
+          label.textContent = original;
+          label.style.opacity = '';
+        }, 1500);
+      }
+      if (status) status.textContent = `${button.dataset.copied}: ${button.dataset.copy}`;
+    });
+  }
+</script>

@@ -1,0 +1,103 @@
+---
+/** Estúdio (PT e EN): Wallpapers e Temas em cards, e o Toski DS numa faixa própria. */
+import { Image } from 'astro:assets';
+import { getLang, href } from '../../i18n/ui';
+import { studio } from '../../data/studio';
+import { wallpapers } from '../../data/wallpapers';
+import Button from '../ui/Button.astro';
+import Pill from '../ui/Pill.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import EditorPreview from '../studio/EditorPreview.astro';
+import TerminalPreview from '../studio/TerminalPreview.astro';
+import DsSection from '../studio/DsSection.astro';
+
+const lang = getLang(Astro.currentLocale);
+const t = {
+  pt: {
+    kicker: 'Estúdio',
+    title: 'A identidade da Toski, fora dos apps.',
+    lead: 'Wallpapers, temas para o seu editor e terminal e o design system da Toski. Tudo de graça e com código aberto.',
+    categories: 'Categorias',
+    wallTitle: 'Wallpapers',
+    wallBody: 'Fundos de tela da Toski para iPhone e Mac, em alta resolução.',
+    wallPills: ['Mobile', 'Desktop', `${wallpapers.length} fundos`],
+    wallCta: 'Ver wallpapers',
+    themesTitle: 'Temas',
+    themesBody: 'Toski Light e Toski Dark para programar com as cores da Toski. Código aberto.',
+    themesPills: ['VS Code', 'iTerm2', 'Claro e escuro'],
+    themesCta: 'Ver temas',
+  },
+  en: {
+    kicker: 'Studio',
+    title: 'The Toski identity, beyond the apps.',
+    lead: 'Wallpapers, themes for your editor and terminal, and the Toski design system. All free and open source.',
+    categories: 'Categories',
+    wallTitle: 'Wallpapers',
+    wallBody: 'Toski wallpapers for iPhone and Mac, in high resolution.',
+    wallPills: ['Mobile', 'Desktop', `${wallpapers.length} wallpapers`],
+    wallCta: 'See wallpapers',
+    themesTitle: 'Themes',
+    themesBody: 'Toski Light and Toski Dark, to code with the Toski colors. Open source.',
+    themesPills: ['VS Code', 'iTerm2', 'Light and dark'],
+    themesCta: 'See themes',
+  },
+}[lang];
+
+// Itens ainda sem links de verdade aparecem só no npm run dev.
+const showThemes = studio.themes.ready || import.meta.env.DEV;
+const showDs = studio.ds.ready || import.meta.env.DEV;
+const noturna = wallpapers.find((w) => w.id === 'noturna');
+const minimal = wallpapers.find((w) => w.id === 'minimal');
+const card = 'flex flex-col overflow-hidden rounded-panel border border-line bg-surface';
+---
+
+<section class="page pt-10 pb-10 max-sm:pt-6">
+  <SectionHeading as="h1" kicker={t.kicker} title={t.title} lead={t.lead} />
+</section>
+
+<section aria-label={t.categories} class="page grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] gap-6 pb-24">
+  <article class={card}>
+    <div class="flex h-80 items-end justify-center gap-5.5 overflow-hidden bg-hero px-6 pt-8 max-sm:h-65" aria-hidden="true">
+      {noturna?.mac && (
+        <div class="mb-7.5 flex min-w-0 shrink flex-col items-center">
+          <div class="w-82.5 max-w-full rounded-t-xl rounded-b-sm bg-[#1B1511] p-1.75">
+            <Image src={noturna.mac} alt="" widths={[330, 660]} sizes="330px" class="block aspect-video w-full rounded-sm object-cover" />
+          </div>
+          <div class="h-2.5 w-[115%] rounded-b-[10px] bg-[#43352B]"></div>
+        </div>
+      )}
+      {minimal?.iphone && (
+        <div class="w-30 shrink-0 translate-y-3.5 rounded-t-3xl bg-[#1B1511] p-1.25 max-sm:w-23">
+          <Image src={minimal.iphone} alt="" widths={[120, 240]} sizes="120px" class="block aspect-1320/2868 w-full rounded-t-[19px] object-cover" />
+        </div>
+      )}
+    </div>
+    <div class="flex grow flex-col gap-4 px-7 pt-6.5 pb-7.5">
+      <ul class="flex flex-wrap gap-2">{t.wallPills.map((p) => <li><Pill variant="outline">{p}</Pill></li>)}</ul>
+      <div class="flex flex-col gap-1.5">
+        <h2 class="text-[28px] leading-[1.15] font-semibold tracking-[-0.015em]">{t.wallTitle}</h2>
+        <p class="max-w-115 text-base leading-normal text-muted">{t.wallBody}</p>
+      </div>
+      <Button href={href(lang, 'wallpapers')} size="md" icon="arrow-right" class="mt-auto self-start">{t.wallCta}</Button>
+    </div>
+  </article>
+
+  {showThemes && (
+    <article class={card}>
+      <div class="relative h-80 overflow-hidden bg-hero max-sm:h-65">
+        <EditorPreview theme="escuro" side={false} title="pacoca.ts" lines={7} class="absolute top-7 left-6 w-[min(400px,82%)]" />
+        <TerminalPreview theme="claro" class="absolute top-37.5 right-5.5 w-[min(330px,70%)]" />
+      </div>
+      <div class="flex grow flex-col gap-4 px-7 pt-6.5 pb-7.5">
+        <ul class="flex flex-wrap gap-2">{t.themesPills.map((p) => <li><Pill variant="outline">{p}</Pill></li>)}</ul>
+        <div class="flex flex-col gap-1.5">
+          <h2 class="text-[28px] leading-[1.15] font-semibold tracking-[-0.015em]">{t.themesTitle}</h2>
+          <p class="max-w-115 text-base leading-normal text-muted">{t.themesBody}</p>
+        </div>
+        <Button href={href(lang, 'themes')} size="md" icon="arrow-right" class="mt-auto self-start">{t.themesCta}</Button>
+      </div>
+    </article>
+  )}
+</section>
+
+{showDs && <DsSection />}
