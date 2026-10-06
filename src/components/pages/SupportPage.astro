@@ -1,6 +1,6 @@
 ---
 /** Suporte (PT e EN): contato, código de suporte e perguntas frequentes. */
-import { Button, Card, IconBox, Kicker, SectionHeading, buttonClasses } from '@toski-labs/ds';
+import { Card, Icon, IconBox, Kicker, SectionHeading, buttonClasses } from '@toski-labs/ds';
 import { getLang, href, SUPPORT_EMAIL } from '../../i18n/ui';
 import FaqItem from '../ui/FaqItem.astro';
 
@@ -17,9 +17,10 @@ const t = {
     copyMail: 'Copiar e-mail',
     copiedMail: 'E-mail copiado',
     mailSubject: 'Suporte PetHealthTracker',
-    mailFallback: 'Não abriu nada? Escreva pelo',
-    mailFallbackOr: 'ou pelo',
-    mailFallbackEnd: 'ou copie o e-mail.',
+    mailPick: 'Escolher como escrever o e-mail',
+    mailWeb: 'no navegador',
+    mailApp: 'App de e-mail',
+    mailAppHint: 'Mail ou o app do seu aparelho',
     codeTitle: 'Inclua o seu código de suporte',
     codeBody: 'Ele ajuda a encontrar a sua conta sem você precisar mandar dados pessoais. Para copiar no app:',
     codeSteps: ['Ajustes', 'Ajuda e feedback', 'Sua conta', 'Copiar código'],
@@ -49,9 +50,10 @@ const t = {
     copyMail: 'Copy email',
     copiedMail: 'Email copied',
     mailSubject: 'PetHealthTracker support',
-    mailFallback: 'Nothing opened? Write from',
-    mailFallbackOr: 'or',
-    mailFallbackEnd: 'or copy the address.',
+    mailPick: 'Choose how to write the email',
+    mailWeb: 'in your browser',
+    mailApp: 'Email app',
+    mailAppHint: 'Mail or your device’s app',
     codeTitle: 'Include your support code',
     codeBody: 'It helps us find your account without you sending any personal details. To copy it in the app:',
     codeSteps: ['Settings', 'Help & feedback', 'Your account', 'Copy code'],
@@ -72,7 +74,7 @@ const t = {
   },
 }[lang];
 const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubject)}`;
-// Para quem não tem um app de e-mail configurado: o mailto não abre nada, então oferecemos o webmail.
+// O botão abre um menu: Gmail e Outlook no navegador (para quem não tem app de e-mail configurado, o mailto não abre nada) ou o app do aparelho.
 const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${SUPPORT_EMAIL}&su=${encodeURIComponent(t.mailSubject)}`;
 const outlook = `https://outlook.live.com/mail/0/deeplink/compose?to=${SUPPORT_EMAIL}&subject=${encodeURIComponent(t.mailSubject)}`;
 ---
@@ -87,13 +89,33 @@ const outlook = `https://outlook.live.com/mail/0/deeplink/compose?to=${SUPPORT_E
     <h2 class="mt-1 text-2xl font-semibold">{t.mailTitle}</h2>
     <p class="text-base leading-normal text-muted">{t.mailBody}</p>
     <div class="mt-1.5 flex flex-wrap gap-2.5">
-      <Button href={mailto} size="md" className="toski-mailto max-sm:flex-auto">{t.mailCta}</Button>
+      <details class="toski-mail group relative max-sm:flex-auto">
+        <summary class={buttonClasses('primary', 'md', 'w-full cursor-pointer list-none [&::-webkit-details-marker]:hidden')} aria-label={t.mailPick}>
+          {t.mailCta}<Icon name="chevron-down" size={18} stroke={2.2} className="transition-transform group-open:rotate-180" />
+        </summary>
+        <ul class="toski-menu absolute top-full left-0 z-20 mt-2 flex w-max min-w-full flex-col gap-0.5 rounded-card border border-line bg-surface p-1.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)] [--menu-origin:top_left]">
+          {[
+            { label: 'Gmail', hint: t.mailWeb, href: gmail, external: true },
+            { label: 'Outlook', hint: t.mailWeb, href: outlook, external: true },
+            { label: t.mailApp, hint: t.mailAppHint, href: mailto, external: false },
+          ].map((o) => (
+            <li>
+              <a
+                href={o.href}
+                target={o.external ? '_blank' : undefined}
+                rel={o.external ? 'noopener' : undefined}
+                class="flex min-h-11 flex-col justify-center rounded-[10px] px-3 py-1.5 leading-tight text-ink no-underline hover:bg-tint hover:text-ink"
+              >
+                <span class="text-[15px] font-semibold">{o.label}</span>
+                <span class="text-xs text-muted">{o.hint}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
       <!-- Para quem não tem um app de e-mail configurado (aí o mailto não abre nada). -->
       <button type="button" class={buttonClasses('secondary', 'md', 'toski-copy max-sm:flex-auto')} data-copy={SUPPORT_EMAIL} data-copied={t.copiedMail}><svg class="toski-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg><span data-text>{t.copyMail}</span></button>
     </div>
-    <p data-mail-fallback hidden class="toski-menu text-[15px] leading-normal text-muted [--menu-from:-4px] [--menu-origin:top_left]" role="status">
-      {t.mailFallback} <a href={gmail} target="_blank" rel="noopener" class="font-medium">Gmail</a> {t.mailFallbackOr} <a href={outlook} target="_blank" rel="noopener" class="font-medium">Outlook</a>, {t.mailFallbackEnd}
-    </p>
     <p class="sr-only" aria-live="polite" data-copy-status></p>
   </Card>
   <Card variant="hero" radius="panel" className="flex min-w-0 flex-[1_1_340px] flex-col gap-3.5 p-8">
@@ -127,20 +149,34 @@ const outlook = `https://outlook.live.com/mail/0/deeplink/compose?to=${SUPPORT_E
 </section>
 
 <script>
-  // Se nenhum app de e-mail abrir (a página não perde o foco em ~1 s), mostra os atalhos para o webmail.
-  const fallback = document.querySelector<HTMLElement>('[data-mail-fallback]');
-  for (const link of document.querySelectorAll<HTMLAnchorElement>('.toski-mailto')) {
-    link.addEventListener('click', () => {
-      if (!fallback) return;
-      let left = false;
-      const away = () => (left = true);
-      window.addEventListener('blur', away, { once: true });
-      document.addEventListener('visibilitychange', away, { once: true });
+  // Menu do e-mail: fecha ao escolher, ao clicar fora ou com Esc, com uma saída curta (toski-menu do DS).
+  const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  for (const menu of document.querySelectorAll<HTMLDetailsElement>('.toski-mail')) {
+    const list = menu.querySelector<HTMLElement>('.toski-menu');
+    const close = () => {
+      if (!menu.open || !list || list.hasAttribute('data-closing')) return;
+      if (reduceMotion()) {
+        menu.open = false;
+        return;
+      }
+      list.dataset.closing = '';
       window.setTimeout(() => {
-        window.removeEventListener('blur', away);
-        document.removeEventListener('visibilitychange', away);
-        if (!left) fallback.hidden = false;
-      }, 1200);
+        menu.open = false;
+        delete list.dataset.closing;
+      }, 100);
+    };
+    menu.querySelector('summary')?.addEventListener('click', (e) => {
+      if (!menu.open) return;
+      e.preventDefault();
+      close();
+    });
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+    document.addEventListener('click', (e) => { if (!menu.contains(e.target as Node)) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.open) {
+        close();
+        menu.querySelector('summary')?.focus();
+      }
     });
   }
 </script>
