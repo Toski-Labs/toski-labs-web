@@ -98,6 +98,15 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 - Novidades: menu de configurações (tema e idioma), aviso de idioma do navegador, campanhas por Remote Config, Estúdio com Wallpapers (6 coleções, release v2.1) e Temas (VS Code, iTerm2 e Oh My Zsh publicados, `themes.ready: true`), botão de voltar ao topo.
 - No ar em `toski-labs.web.app` (as 14 páginas respondem; `/wallpapers` redireciona). `npm run deploy` publica.
 - axe-core (6 out): nenhuma violação em 15 páginas, 1280/390 px, claro e escuro.
+- PageSpeed no site publicado (6 out): 100 em desempenho, acessibilidade, práticas e SEO (Home, PetHealthTracker, Wallpapers, Temas; celular e computador).
+- Também no ar em 6 out:
+  - títulos no padrão "Toski Labs" (Home) e "Toski Labs: Página" (aba, Google e cards);
+  - imagens de compartilhamento por seção (a da Home sem a foto da Paçoca) e tags `og:`/`twitter:` completas;
+  - Suporte: "Escrever e-mail" abre um menu com Gmail, Outlook e o app de e-mail;
+  - Wallpapers no celular em carrossel, com os cards na mesma altura;
+  - Black Friday sem preços até a monetização (o card mostra só o desconto);
+  - Política com a seção "Crianças";
+  - Toski DS 0.4.1 e microinterações.
 
 ### Diferenças entre o plano e o código
 - i18n ficou num arquivo só (`ui.ts`), não em `pt.ts`/`en.ts`.
@@ -106,7 +115,7 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 
 ### Falta
 **Conteúdo e revisão**
-1. Revisar todos os textos em português e em inglês (páginas, FAQ, política, Estúdio, wallpapers, campanhas, mensagens do menu e do aviso de idioma): ortografia, tom, consistência de termos (Toski, Plus, pet) e se o inglês soa natural.
+1. Textos em PT e EN: primeira revisão feita (6 out); falta uma última leitura sua.
 2. Preços: a página do PetHealthTracker mostra "Em breve" / "Soon" até a precificação ser decidida (o teste de 7 dias continua). Na Black Friday (`src/data/campaigns.ts`) os preços estão em branco em PT e EN e o card mostra só o desconto (−50% / −30%); preencher `price` e `old` quando a monetização for definida, **antes de 27/11**.
 3. Política: exclusão em até 30 dias confirmada; seção "Crianças" (não é direcionado a menores de 13 anos) adicionada. Falta nomear a rede de anúncios quando for escolhida (o texto já diz que o nome entra antes de os anúncios começarem) e a revisão jurídica.
 
