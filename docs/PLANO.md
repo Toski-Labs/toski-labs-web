@@ -2,7 +2,7 @@
 
 Fonte da verdade visual: canvas "Toski Labs — Site" (Artifact de Design) + `../../design/` (tokens, SVGs da Paçoca, animações).
 Stack: Astro 7 + TypeScript (strict) + Tailwind 4 (via `@tailwindcss/vite`). Hospedagem: Firebase Hosting, projeto `toski-labs` (Plano Spark), em `toski-labs.web.app`.
-Regra: tudo gratuito. Site estático, sem cookies, sem SDK do Firebase, sem Google Analytics.
+Regra: tudo gratuito. Site estático, sem cookies, sem Google Analytics. O único uso do Firebase no navegador é o Remote Config das campanhas, baixado só durante uma campanha.
 
 ## Decisões
 - E-mail de suporte e contato: **toskilabs@gmail.com** (site, política, App Store e Google).
@@ -47,7 +47,9 @@ Feita. `@astrojs/sitemap` com PT/EN ligados (`/sitemap-index.xml`, sem a 404), `
 - SEO: `@astrojs/sitemap`, `robots.txt`, descrições por página, `hreflang`.
 - Performance: Lighthouse ≥ 95 em tudo; imagens via `<Image>`.
 
-## Fase 4 — Publicação no Firebase
+## Fase 4 — Publicação no Firebase ✅ (6 out 2026)
+No ar em `https://toski-labs.web.app`.
+
 1. `firebase init hosting` nesta pasta → projeto `toski-labs`, public `dist`, SPA **não**, GitHub **não**.
 2. `firebase.json`: `cleanUrls: true`, `trailingSlash: false`, cache longo para `/_astro/**`, `404.html`.
 3. `npm run build && firebase deploy --only hosting` → `https://toski-labs.web.app`.
@@ -86,5 +88,12 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 - Política: data (5 out 2026), exclusão em 30 dias e rede de anúncios genérica preenchidos; **confirmar os 30 dias**, nomear a rede quando decidir, faixa etária e revisão jurídica.
 - Suporte: resposta em até 2 dias úteis ✅.
 - Preços em inglês: hoje "Local price" até ter os valores por país; link da App Store quando publicar.
-- Wallpapers: 4 coleções com iPhone e Mac ✅. Downloads do Mac vêm da release mais recente de `Toski-Labs/toski-labs-wallpapers` (v1.1); nova coleção = nova release com os mesmos nomes de arquivo.
+- Wallpapers: 6 coleções (Minimal, Noturna, Padrão noturno, Linha, Halloween, Lick or Treat) em mobile 1320×2868 e desktop 5K, 4K, MacBook e ultrawide ✅. Downloads de desktop vêm da release mais recente de `Toski-Labs/toski-labs-wallpapers` (v2.1); nova coleção = nova release com todos os PNGs e os mesmos nomes de arquivo.
 - Estúdio: temas no ar (VS Code no Marketplace; Open VSX em revisão + pedido do namespace `toskilabs`). Toski DS: `ds.ready` quando o repositório tiver conteúdo.
+
+## Próximos passos (mapeados em 6 out 2026)
+- Antes do lançamento do app: link da App Store (página do PetHealthTracker e oferta de Black Friday), preços em inglês, política (30 dias, rede de anúncios, faixa etária, revisão jurídica) e `public/app-ads.txt`.
+- Black Friday (27–30/11): agendar ofertas no App Store Connect e ligar as duas chaves; testar antes com `?campanha=pethealthtracker.black_friday`.
+- Estúdio: `ds.ready` quando o toski-ds tiver conteúdo; Open VSX (revisão e namespace `toskilabs`).
+- Google Search Console com o `sitemap-index.xml`; Lighthouse de novo no site publicado.
+- Opcionais: domínio próprio e deploy automático pelo GitHub Actions.
