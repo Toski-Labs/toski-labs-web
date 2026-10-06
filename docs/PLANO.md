@@ -80,7 +80,7 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 ## Estúdio ✅ (5 out 2026)
 - Menu: Projetos · **Estúdio** · Suporte. Endereços: `/estudio` (`/en/studio`), `/estudio/wallpapers` (`/en/studio/wallpapers`, antes `/wallpapers`) e `/estudio/temas` (`/en/studio/themes`).
 - Página principal: cards de Wallpapers e Temas e a faixa do **Toski DS** (cores que copiam no clique, fonte, tokens, link para o GitHub).
-- Temas: VS Code e iTerm2, com prévia clara/escura feita em HTML (troca só com CSS). Paletas e código de exemplo em `src/data/studio.ts`.
+- Temas: VS Code, iTerm2 e Oh My Zsh, com prévia clara/escura feita em HTML (troca só com CSS). Paletas e código de exemplo em `src/data/studio.ts`.
 - **O que vai para o ar** é controlado por `studio.themes.ready` e `studio.ds.ready` em `src/data/studio.ts`. Enquanto estiverem `false`: no `npm run dev` aparece tudo; no site publicado o card de Temas e a faixa do DS somem, e `/estudio/temas` fica com noindex e fora do sitemap.
 - Para publicar: preencher os links (Marketplace, Open VSX, `.itermcolors`, GitHub dos temas e do DS) e trocar `ready` para `true`.
 
@@ -95,7 +95,7 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 
 ### Feito e conferido no código
 - Fases 0 a 4 completas: starter removido, tokens e Outfit locais (sem Google Fonts), i18n em `src/i18n/ui.ts`, BaseLayout com canonical, `hreflang` (pt-BR, en, x-default), Open Graph, Twitter card e `theme-color` claro/escuro; componentes de UI e marca; 7 páginas em PT e EN + 404 com `noindex`; sitemap sem a 404 e sem páginas não publicadas; `robots.txt`; imagens OG.
-- Novidades: menu de configurações (tema e idioma), aviso de idioma do navegador, campanhas por Remote Config, Estúdio com Wallpapers (6 coleções, release v2.1) e Temas (VS Code e iTerm2 publicados, `themes.ready: true`), botão de voltar ao topo.
+- Novidades: menu de configurações (tema e idioma), aviso de idioma do navegador, campanhas por Remote Config, Estúdio com Wallpapers (6 coleções, release v2.1) e Temas (VS Code, iTerm2 e Oh My Zsh publicados, `themes.ready: true`), botão de voltar ao topo.
 - No ar em `toski-labs.web.app` (as 14 páginas respondem; `/wallpapers` redireciona). `npm run deploy` publica.
 - axe-core (6 out): nenhuma violação em 15 páginas, 1280/390 px, claro e escuro.
 

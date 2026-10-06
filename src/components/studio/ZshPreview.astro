@@ -1,0 +1,73 @@
+---
+/**
+ * Prévia do prompt Toski para Oh My Zsh (HTML, sem imagem). Decorativa: aria-hidden.
+ * Cores iguais às do toski.zsh-theme (modo escuro e claro); os ícones Nerd Font viram SVG.
+ */
+import { Icon } from '@toski-labs/ds';
+import { themePalettes, type ThemeId } from '../../data/studio';
+
+interface Props {
+  theme: ThemeId;
+  class?: string;
+  [key: `data-${string}`]: string;
+}
+const { theme, class: className, ...rest } = Astro.props;
+const t = themePalettes[theme];
+
+// Mesmas cores de _toski_dark / _toski_light no toski.zsh-theme.
+const zsh = {
+  escuro: { dir: '#DB9A5B', parent: '#A9541F', muted: '#C2AE98', fill: '#43352B', branch: '#CDA6D0', staged: '#9CC48F', modified: '#F09A78', untracked: '#8CC7BA', sync: '#8FB8C9', took: '#E8C26B', time: '#A08B78', ok: '#DB9A5B', error: '#F09A78' },
+  claro: { dir: '#A9541F', parent: '#DB9A5B', muted: '#6B5648', fill: '#E6D8C4', branch: '#7A4E8C', staged: '#3F6E3B', modified: '#A3341A', untracked: '#2E7468', sync: '#2F6185', took: '#8A6A00', time: '#7D6858', ok: '#A9541F', error: '#A3341A' },
+}[theme];
+
+type Status = { sync?: boolean; took?: string; error?: string; time: string; cmd?: string };
+const prompts: Status[] = [
+  { time: '09:41:03', cmd: 'npm run build' },
+  { sync: true, took: '12s', time: '09:41:27', cmd: 'npm test' },
+  { sync: true, error: '1', time: '09:41:40' },
+];
+const svg = 'inline-block size-[1.05em] shrink-0 align-[-0.15em]';
+---
+
+<div {...rest} aria-hidden="true" class:list={['overflow-hidden rounded-button border text-left shadow-[0_18px_40px_rgba(35,27,23,0.18)]', className]} style={`background:${t.bg};border-color:${t.line}`}>
+  <div class="relative flex h-8.5 items-center gap-1.75 px-3" style={`background:${t.panel}`}>
+    <span class="size-2.75 rounded-full bg-[#E0705E]"></span><span class="size-2.75 rounded-full bg-[#E8C26B]"></span><span class="size-2.75 rounded-full bg-[#9CC48F]"></span>
+    <span class="pointer-events-none absolute inset-x-0 text-center text-xs" style={`color:${t.muted}`}>pethealthtracker — zsh</span>
+  </div>
+  <div class="flex flex-col gap-[1.7em] px-4.5 pt-3.5 pb-4.5 font-mono text-[13px] leading-[1.7] max-[559px]:text-[11px]" style={`color:${t.text}`}>
+    {prompts.map((p, i) => (
+      <div>
+        <div class="flex items-center gap-[0.6ch] whitespace-nowrap">
+          <svg class={svg} viewBox="0 0 24 24" fill="none" stroke={zsh.dir} stroke-width="2" stroke-linejoin="round"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.5h9A1.5 1.5 0 0 1 21 10v7.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5Z"></path></svg>
+          <span><span style={`color:${zsh.parent}`}>~/</span><span class="font-semibold" style={`color:${zsh.dir}`}>pethealthtracker</span></span>
+          <span style={`color:${zsh.muted}`}>on</span>
+          <svg class={svg} viewBox="0 0 24 24" fill="none" stroke={zsh.branch} stroke-width="2" stroke-linecap="round"><circle cx="7" cy="6" r="2"></circle><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="8" r="2"></circle><path d="M7 8v8M17 10c0 4-10 2-10 6"></path></svg>
+          <span style={`color:${zsh.branch}`}>main</span>
+          {p.sync && (
+            <span class="max-[559px]:hidden">
+              <span style={`color:${zsh.sync}`}>⇡1</span> <span style={`color:${zsh.staged}`}>+2</span> <span style={`color:${zsh.modified}`}>!1</span> <span style={`color:${zsh.untracked}`}>?3</span>
+            </span>
+          )}
+          <span class="mx-[0.4ch] min-w-[2ch] flex-1 self-center border-b-2 border-dotted" style={`border-color:${zsh.fill}`}></span>
+          {p.took && (
+            <span class="flex items-center gap-[0.6ch] max-[559px]:hidden">
+              <span style={`color:${zsh.muted}`}>took</span>
+              <svg class={svg} viewBox="0 0 24 24" fill="none" stroke={zsh.took} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 21h12M7 3c0 5 10 5 10 9s-10 4-10 9M17 3c0 5-10 5-10 9s10 4 10 9"></path></svg>
+              <span style={`color:${zsh.took}`}>{p.took}</span>
+            </span>
+          )}
+          {p.error && <span style={`color:${zsh.error}`}>✘ {p.error}</span>}
+          <span class="flex items-center gap-[0.6ch] max-[459px]:hidden">
+            <span style={`color:${zsh.muted}`}>at</span>
+            <span class="flex" style={`color:${zsh.time}`}><Icon name="clock" size={14} stroke={2} /></span>
+            <span style={`color:${zsh.time}`}>{p.time}</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-[1ch]">
+          <span class="flex" style={`color:${i === 2 ? zsh.error : zsh.ok}`}><Icon name="paw" size={15} stroke={2} /></span>
+          {p.cmd ? <span>{p.cmd}</span> : <span class="inline-block h-[1.25em] w-[0.6em]" style={`background:${t.accent}`}></span>}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

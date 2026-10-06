@@ -1,5 +1,5 @@
 /**
- * Estúdio: wallpapers, temas (VS Code e iTerm2) e o Toski DS.
+ * Estúdio: wallpapers, temas (VS Code, iTerm2 e Oh My Zsh) e o Toski DS.
  *
  * `ready` controla o que vai para o ar. Enquanto um item não estiver pronto
  * (links de verdade preenchidos), ele aparece só no `npm run dev`; no site publicado
@@ -31,6 +31,13 @@ export const studio = {
         { asset: 'Toski.Dark.itermcolors', name: 'Toski Dark', detail: { pt: 'Só escuro', en: 'Dark only' } },
         { asset: 'Toski.Light.itermcolors', name: 'Toski Light', detail: { pt: 'Só claro', en: 'Light only' } },
       ],
+    },
+    zsh: {
+      githubUrl: 'https://github.com/Toski-Labs/toski-labs-oh-my-zsh',
+      /** Baixa o tema direto para a pasta de temas do Oh My Zsh (comando do README do repositório). */
+      install:
+        'curl -fsSL https://raw.githubusercontent.com/Toski-Labs/toski-labs-oh-my-zsh/main/toski.zsh-theme -o "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/toski.zsh-theme"',
+      nerdFontsUrl: 'https://www.nerdfonts.com',
     },
   },
   ds: {

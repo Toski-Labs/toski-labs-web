@@ -89,6 +89,7 @@ O botão Mobile baixa do próprio site; os de desktop baixam da release mais rec
 - Wallpapers: [Toski-Labs/toski-labs-wallpapers](https://github.com/Toski-Labs/toski-labs-wallpapers)
 - Tema VS Code: [Toski-Labs/toski-labs-vscode-theme](https://github.com/Toski-Labs/toski-labs-vscode-theme)
 - Tema iTerm2: [Toski-Labs/toski-labs-iterm-theme](https://github.com/Toski-Labs/toski-labs-iterm-theme)
+- Tema Oh My Zsh: [Toski-Labs/toski-labs-oh-my-zsh](https://github.com/Toski-Labs/toski-labs-oh-my-zsh)
 - Design system: [Toski-Labs/toski-ds](https://github.com/Toski-Labs/toski-ds)
 
 Plano e decisões do projeto: [`docs/PLANO.md`](docs/PLANO.md).

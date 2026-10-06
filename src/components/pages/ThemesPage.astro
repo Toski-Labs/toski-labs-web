@@ -1,21 +1,22 @@
 ---
-/** Temas (PT e EN): VS Code e iTerm2, com prévia clara/escura trocada só com CSS (sem JavaScript). */
+/** Temas (PT e EN): VS Code, iTerm2 e Oh My Zsh, com prévia clara/escura trocada só com CSS (sem JavaScript). */
 import { Icon, Kicker, SectionHeading, buttonClasses } from '@toski-labs/ds';
 import { getLang } from '../../i18n/ui';
 import { studio } from '../../data/studio';
 import Breadcrumb from '../studio/Breadcrumb.astro';
 import EditorPreview from '../studio/EditorPreview.astro';
 import TerminalPreview from '../studio/TerminalPreview.astro';
+import ZshPreview from '../studio/ZshPreview.astro';
 
 const lang = getLang(Astro.currentLocale);
-const { vscode, iterm } = studio.themes;
+const { vscode, iterm, zsh } = studio.themes;
 const command = `code --install-extension ${vscode.extensionId}`;
 const t = {
   pt: {
     crumb: 'Temas',
     kicker: 'Temas',
     title: 'Programe com as cores da Toski',
-    lead: 'Toski Light e Toski Dark para o VS Code e o iTerm2, com contraste pensado para ler código o dia inteiro.',
+    lead: 'Toski Light e Toski Dark para o VS Code, o iTerm2 e o Oh My Zsh, com contraste pensado para ler código o dia inteiro.',
     preview: 'Ver prévia em',
     dark: 'Escuro',
     light: 'Claro',
@@ -33,6 +34,15 @@ const t = {
     itBody: 'As 16 cores do terminal, o cursor e a seleção com a paleta da Toski.',
     download: (name: string) => `Baixar ${name} para iTerm2`,
     steps: ['Baixe o arquivo e dê dois cliques nele.', 'No iTerm2, abra Settings › Profiles › Colors.', 'Em Color Presets, escolha ☯ Toski (troca sozinho com o tema do Mac), Toski Dark ou Toski Light.'],
+    prompt: 'Prompt',
+    zshTitle: 'Toski para Oh My Zsh',
+    zshBody: 'Um prompt em duas linhas: pasta, git, tempo do comando e hora em cima, e uma patinha no lugar da seta. Troca entre claro e escuro junto com o terminal.',
+    zshInstall: 'Baixe o tema',
+    zshCopyLabel: 'Copiar o comando que baixa o tema',
+    zshSteps: ['No ~/.zshrc, troque o tema para', 'Abra um terminal novo.'],
+    zshFont: 'Os ícones precisam de uma',
+    zshFontEnd: 'no terminal.',
+    githubZsh: 'Oh My Zsh no GitHub',
     openTitle: 'Código aberto',
     openBody: 'Os temas ficam no GitHub. Achou alguma cor difícil de ler? Abra uma issue ou mande uma sugestão.',
     githubVs: 'VS Code no GitHub',
@@ -44,7 +54,7 @@ const t = {
     crumb: 'Themes',
     kicker: 'Themes',
     title: 'Code with the Toski colors',
-    lead: 'Toski Light and Toski Dark for VS Code and iTerm2, with contrast tuned for reading code all day.',
+    lead: 'Toski Light and Toski Dark for VS Code, iTerm2 and Oh My Zsh, with contrast tuned for reading code all day.',
     preview: 'Preview in',
     dark: 'Dark',
     light: 'Light',
@@ -62,6 +72,15 @@ const t = {
     itBody: 'The 16 terminal colors, the cursor and the selection in the Toski palette.',
     download: (name: string) => `Download ${name} for iTerm2`,
     steps: ['Download the file and double-click it.', 'In iTerm2, open Settings › Profiles › Colors.', 'Under Color Presets, pick ☯ Toski (follows your Mac’s appearance), Toski Dark or Toski Light.'],
+    prompt: 'Prompt',
+    zshTitle: 'Toski for Oh My Zsh',
+    zshBody: 'A two-line prompt: folder, git, command time and clock on top, and a little paw instead of the arrow. Switches between light and dark with your terminal.',
+    zshInstall: 'Download the theme',
+    zshCopyLabel: 'Copy the command that downloads the theme',
+    zshSteps: ['In ~/.zshrc, set the theme to', 'Open a new terminal.'],
+    zshFont: 'The icons need a',
+    zshFontEnd: 'in your terminal.',
+    githubZsh: 'Oh My Zsh on GitHub',
     openTitle: 'Open source',
     openBody: 'The themes live on GitHub. Found a color that’s hard to read? Open an issue or send a suggestion.',
     githubVs: 'VS Code on GitHub',
@@ -160,6 +179,42 @@ const primary = buttonClasses('primary', 'md', 'max-sm:flex-auto');
         <p class="text-[13px] text-muted">{lang === 'pt' ? 'Claro e escuro · Licença MIT' : 'Light and dark · MIT license'} · <a href={iterm.githubUrl} class="font-medium">{t.code}</a></p>
       </div>
     </article>
+
+    <article aria-labelledby="tema-zsh" class={card}>
+      <div class={art}>
+        <ZshPreview theme="escuro" class="w-full" data-preview="escuro" />
+        <ZshPreview theme="claro" class="w-full" data-preview="claro" />
+      </div>
+      <div class="flex min-w-0 flex-col gap-4.5 p-8 max-sm:p-6">
+        <Kicker>{t.prompt}</Kicker>
+        <div class="flex flex-col gap-2">
+          <h2 id="tema-zsh" class="text-[28px] leading-[1.15] font-semibold tracking-[-0.015em]">{t.zshTitle}</h2>
+          <p class="text-base leading-normal text-muted">{t.zshBody}</p>
+        </div>
+        <ol class="flex flex-col gap-2.5">
+          <li class="flex min-w-0 gap-3 text-[15px] leading-[1.45]">
+            <span class="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-tint text-[13px] font-semibold text-accent-text" aria-hidden="true">1</span>
+            <div class="flex min-w-0 flex-auto flex-col gap-2">
+              <span>{t.zshInstall}:</span>
+              <div class="flex items-center gap-2 rounded-xl border border-line bg-background py-1.5 pr-1.5 pl-3.5">
+                <code tabindex="0" class="min-w-0 flex-auto overflow-x-auto font-mono text-[13px] whitespace-nowrap">{zsh.install}</code>
+                <button type="button" class="toski-copy inline-flex h-9 shrink-0 items-center rounded-[9px] bg-tint px-3 text-[13px] font-semibold text-ink" data-copy={zsh.install} data-copied={t.copied} aria-label={t.zshCopyLabel}><svg class="toski-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg><span data-text>{t.copy}</span></button>
+              </div>
+              <p class="sr-only" aria-live="polite" data-copy-status></p>
+            </div>
+          </li>
+          <li class="flex gap-3 text-[15px] leading-[1.45]">
+            <span class="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-tint text-[13px] font-semibold text-accent-text" aria-hidden="true">2</span>
+            <span>{t.zshSteps[0]} <code class="rounded-md bg-tint px-1.5 py-0.5 font-mono text-[13px]">ZSH_THEME="toski"</code></span>
+          </li>
+          <li class="flex gap-3 text-[15px] leading-[1.45]">
+            <span class="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-tint text-[13px] font-semibold text-accent-text" aria-hidden="true">3</span>
+            <span>{t.zshSteps[1]}</span>
+          </li>
+        </ol>
+        <p class="text-[13px] text-muted">{t.zshFont} <a href={zsh.nerdFontsUrl} class="font-medium">Nerd Font</a> {t.zshFontEnd} {lang === 'pt' ? 'Claro e escuro · Licença MIT' : 'Light and dark · MIT license'} · <a href={zsh.githubUrl} class="font-medium">{t.code}</a></p>
+      </div>
+    </article>
   </section>
 
   <section aria-labelledby="codigo-aberto" class="band bg-tint">
@@ -171,6 +226,7 @@ const primary = buttonClasses('primary', 'md', 'max-sm:flex-auto');
       <div class="flex flex-wrap gap-2.5 max-sm:w-full">
         <a href={vscode.githubUrl} class={secondary}>{t.githubVs}</a>
         <a href={iterm.githubUrl} class={secondary}>{t.githubIt}</a>
+        <a href={zsh.githubUrl} class={secondary}>{t.githubZsh}</a>
         <a href={lang === 'pt' ? '/suporte' : '/en/support'} class={secondary}>{t.talk}</a>
       </div>
     </div>
