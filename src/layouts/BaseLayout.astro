@@ -6,7 +6,7 @@ import LangBanner from '../components/LangBanner.astro';
 import BackToTop from '../components/BackToTop.astro';
 import CampaignFlags from '../components/campaign/CampaignFlags.astro';
 import CampaignBar from '../components/campaign/CampaignBar.astro';
-import { alternatePath, getLang, routes, STORAGE, useTranslations, type PageKey } from '../i18n/ui';
+import { alternatePath, getLang, routes, STORAGE, SUPPORT_EMAIL, useTranslations, type PageKey } from '../i18n/ui';
 
 interface Props {
   page: PageKey;
@@ -30,6 +30,42 @@ const enUrl = lang === 'en' ? canonical : alternate;
 const ogFiles: Partial<Record<PageKey, string>> = { pethealthtracker: 'pethealthtracker', studio: 'studio', wallpapers: 'wallpapers', themes: 'themes' };
 const ogImage = new URL(`/og/${ogFiles[page] ?? 'og'}-${lang}.png`, site);
 
+// Dados estruturados (schema.org) para o Google entender o site. Não aparecem na tela.
+const orgId = new URL('/#toski-labs', site).href;
+const organization = {
+  '@type': 'Organization',
+  '@id': orgId,
+  name: 'Toski Labs',
+  url: new URL('/', site).href,
+  logo: new URL('/apple-touch-icon.png', site).href,
+  email: SUPPORT_EMAIL,
+  sameAs: ['https://github.com/Toski-Labs'],
+  address: { '@type': 'PostalAddress', addressLocality: 'Recife', addressCountry: 'BR' },
+};
+const studioName = t('nav.studio');
+const breadcrumb = (name: string) => ({
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: studioName, item: new URL(routes[lang].studio, site).href },
+    { '@type': 'ListItem', position: 2, name, item: canonical.href },
+  ],
+});
+const graph: Record<string, unknown>[] = [organization];
+if (page === 'home') graph.push({ '@type': 'WebSite', name: 'Toski Labs', url: new URL('/', site).href, inLanguage: ['pt-BR', 'en'], publisher: { '@id': orgId } });
+if (page === 'pethealthtracker')
+  graph.push({
+    '@type': 'MobileApplication',
+    name: 'PetHealthTracker',
+    url: canonical.href,
+    description,
+    operatingSystem: 'iOS 18+',
+    applicationCategory: 'LifestyleApplication',
+    inLanguage: ['pt-BR', 'en'],
+    publisher: { '@id': orgId },
+  });
+if (page === 'wallpapers') graph.push(breadcrumb('Wallpapers'));
+if (page === 'themes') graph.push(breadcrumb(lang === 'pt' ? 'Temas' : 'Themes'));
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
 ---
 
 <!doctype html>
@@ -76,6 +112,7 @@ const ogImage = new URL(`/og/${ogFiles[page] ?? 'og'}-${lang}.png`, site);
     <meta property="og:image:alt" content={fullTitle} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="generator" content={Astro.generator} />
+    <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body class="flex min-h-dvh flex-col">
     <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-button focus:bg-surface focus:px-4 focus:py-3">
