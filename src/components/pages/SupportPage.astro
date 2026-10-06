@@ -17,7 +17,6 @@ const t = {
     copyMail: 'Copiar e-mail',
     copiedMail: 'E-mail copiado',
     mailSubject: 'Suporte PetHealthTracker',
-    mailPick: 'Escolher como escrever o e-mail',
     mailWeb: 'no navegador',
     mailApp: 'App de e-mail',
     mailAppHint: 'Mail ou o app do seu aparelho',
@@ -50,7 +49,6 @@ const t = {
     copyMail: 'Copy email',
     copiedMail: 'Email copied',
     mailSubject: 'PetHealthTracker support',
-    mailPick: 'Choose how to write the email',
     mailWeb: 'in your browser',
     mailApp: 'Email app',
     mailAppHint: 'Mail or your device’s app',
@@ -90,10 +88,10 @@ const outlook = `https://outlook.live.com/mail/0/deeplink/compose?to=${SUPPORT_E
     <p class="text-base leading-normal text-muted">{t.mailBody}</p>
     <div class="mt-1.5 flex flex-wrap gap-2.5">
       <details class="toski-mail group relative max-sm:flex-auto">
-        <summary class={buttonClasses('primary', 'md', 'w-full cursor-pointer list-none [&::-webkit-details-marker]:hidden')} aria-label={t.mailPick}>
+        <summary class={buttonClasses('primary', 'md', 'w-full cursor-pointer list-none [&::-webkit-details-marker]:hidden')}>
           {t.mailCta}<Icon name="chevron-down" size={18} stroke={2.2} className="transition-transform group-open:rotate-180" />
         </summary>
-        <ul class="toski-menu absolute top-full left-0 z-20 mt-2 flex w-max min-w-full flex-col gap-0.5 rounded-card border border-line bg-surface p-1.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)] [--menu-origin:top_left]">
+        <ul role="list" class="toski-menu absolute top-full left-0 z-20 mt-2 flex w-max min-w-full flex-col gap-0.5 rounded-card border border-line bg-surface p-1.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)] [--menu-origin:top_left]">
           {[
             { label: 'Gmail', hint: t.mailWeb, href: gmail, external: true },
             { label: 'Outlook', hint: t.mailWeb, href: outlook, external: true },
@@ -122,7 +120,7 @@ const outlook = `https://outlook.live.com/mail/0/deeplink/compose?to=${SUPPORT_E
     <IconBox name="copy" on="surface" />
     <h2 class="mt-1 text-2xl font-semibold">{t.codeTitle}</h2>
     <p class="text-base leading-normal text-muted">{t.codeBody}</p>
-    <ol aria-label={t.codeStepsLabel} class="mt-1.5 flex flex-wrap items-center gap-2">
+    <ol role="list" aria-label={t.codeStepsLabel} class="mt-1.5 flex flex-wrap items-center gap-2">
       {t.codeSteps.map((step) => (
         <li class="inline-flex h-8.5 items-center rounded-[10px] bg-surface px-3 text-sm font-medium">{step}</li>
       ))}

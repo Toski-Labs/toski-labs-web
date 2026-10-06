@@ -72,7 +72,7 @@ const card = 'toski-lift flex flex-col overflow-hidden rounded-panel border bord
       )}
     </div>
     <div class="flex grow flex-col gap-4 px-7 pt-6.5 pb-7.5">
-      <ul class="flex flex-wrap gap-2">{t.wallPills.map((p) => <li><Pill variant="outline">{p}</Pill></li>)}</ul>
+      <ul role="list" class="flex flex-wrap gap-2">{t.wallPills.map((p) => <li><Pill variant="outline">{p}</Pill></li>)}</ul>
       <div class="flex flex-col gap-1.5">
         <h2 class="text-[28px] leading-[1.15] font-semibold tracking-[-0.015em]">{t.wallTitle}</h2>
         <p class="max-w-115 text-base leading-normal text-muted">{t.wallBody}</p>
@@ -88,7 +88,7 @@ const card = 'toski-lift flex flex-col overflow-hidden rounded-panel border bord
         <TerminalPreview theme="claro" class="absolute top-37.5 right-5.5 w-[min(330px,70%)]" />
       </div>
       <div class="flex grow flex-col gap-4 px-7 pt-6.5 pb-7.5">
-        <ul class="flex flex-wrap gap-2">{t.themesPills.map((p) => <li><Pill variant="outline">{p}</Pill></li>)}</ul>
+        <ul role="list" class="flex flex-wrap gap-2">{t.themesPills.map((p) => <li><Pill variant="outline">{p}</Pill></li>)}</ul>
         <div class="flex flex-col gap-1.5">
           <h2 class="text-[28px] leading-[1.15] font-semibold tracking-[-0.015em]">{t.themesTitle}</h2>
           <p class="max-w-115 text-base leading-normal text-muted">{t.themesBody}</p>

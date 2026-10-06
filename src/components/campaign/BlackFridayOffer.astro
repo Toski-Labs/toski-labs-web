@@ -23,7 +23,7 @@ const c = campaign.copy[lang];
         <div class="flex min-w-0 flex-[1_1_520px] flex-col gap-5.5">
           <p class="text-[13px] font-semibold tracking-widest text-[#CDB9A3] uppercase">{c.kicker}</p>
           <h2 id="oferta-titulo" class="flex flex-col text-[clamp(72px,10vw,128px)] leading-[0.9] font-bold tracking-[-0.03em]">
-            <span class="text-caramelo">BLACK</span><span>FRIDAY</span>
+            <span class="text-caramelo">BLACK</span> <span>FRIDAY</span>
           </h2>
           <p class="max-w-130 text-[22px] leading-[1.35] font-medium">{c.title}</p>
           <p class="max-w-130 text-[17px] leading-[1.55] text-[#CDB9A3]">{c.lead}</p>
@@ -58,7 +58,7 @@ const c = campaign.copy[lang];
         </div>
       </div>
 
-      <ul class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4">
+      <ul role="list" class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4">
         {c.prices.map((p) => (
           <li class:list={['flex items-center justify-between gap-4 rounded-[20px] border-2 p-6', p.featured ? 'border-caramelo bg-[#2E241D]' : 'border-[#43352B] bg-[#1B1511]']}>
             <span class="flex flex-col gap-1">

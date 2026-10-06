@@ -32,7 +32,7 @@ const t = {
     terminal: 'Terminal',
     itTitle: 'Toski para iTerm2',
     itBody: 'As 16 cores do terminal, o cursor e a seleção com a paleta da Toski.',
-    download: (name: string) => `Baixar ${name} para iTerm2`,
+    srIterm: 'para iTerm2: baixar',
     steps: ['Baixe o arquivo e dê dois cliques nele.', 'No iTerm2, abra Settings › Profiles › Colors.', 'Em Color Presets, escolha ☯ Toski (troca sozinho com o tema do Mac), Toski Dark ou Toski Light.'],
     prompt: 'Prompt',
     zshTitle: 'Toski para Oh My Zsh',
@@ -70,7 +70,7 @@ const t = {
     terminal: 'Terminal',
     itTitle: 'Toski for iTerm2',
     itBody: 'The 16 terminal colors, the cursor and the selection in the Toski palette.',
-    download: (name: string) => `Download ${name} for iTerm2`,
+    srIterm: 'for iTerm2: download',
     steps: ['Download the file and double-click it.', 'In iTerm2, open Settings › Profiles › Colors.', 'Under Color Presets, pick ☯ Toski (follows your Mac’s appearance), Toski Dark or Toski Light.'],
     prompt: 'Prompt',
     zshTitle: 'Toski for Oh My Zsh',
@@ -162,13 +162,13 @@ const primary = buttonClasses('primary', 'md', 'max-sm:flex-auto');
         </div>
         <div class="flex flex-wrap gap-2.5">
           {itermFiles.map((f) => (
-            <a href={f.url} download={f.file} aria-label={t.download(f.name)} class="inline-flex min-h-12 items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-background py-1.5 pr-4 pl-3 text-ink no-underline hover:border-accent hover:text-ink max-sm:flex-auto">
+            <a href={f.url} download={f.file} class="relative inline-flex min-h-12 items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-background py-1.5 pr-4 pl-3 text-ink no-underline hover:border-accent hover:text-ink max-sm:flex-auto">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
-              <span class="flex flex-col leading-tight"><span class="text-[15px] font-semibold">{f.name}</span><span class="text-xs text-muted">{f.detail}</span></span>
+              <span class="flex flex-col leading-tight"><span class="text-[15px] font-semibold">{f.name}</span><span class="text-xs text-muted">{f.detail}</span></span><span class="sr-only"> {t.srIterm}</span>
             </a>
           ))}
         </div>
-        <ol class="flex flex-col gap-2.5">
+        <ol role="list" class="flex flex-col gap-2.5">
           {t.steps.map((step, i) => (
             <li class="flex gap-3 text-[15px] leading-[1.45]">
               <span class="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-tint text-[13px] font-semibold text-accent-text" aria-hidden="true">{i + 1}</span>
@@ -191,7 +191,7 @@ const primary = buttonClasses('primary', 'md', 'max-sm:flex-auto');
           <h2 id="tema-zsh" class="text-[28px] leading-[1.15] font-semibold tracking-[-0.015em]">{t.zshTitle}</h2>
           <p class="text-base leading-normal text-muted">{t.zshBody}</p>
         </div>
-        <ol class="flex flex-col gap-2.5">
+        <ol role="list" class="flex flex-col gap-2.5">
           <li class="flex min-w-0 gap-3 text-[15px] leading-[1.45]">
             <span class="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-tint text-[13px] font-semibold text-accent-text" aria-hidden="true">1</span>
             <div class="flex min-w-0 flex-auto flex-col gap-2">

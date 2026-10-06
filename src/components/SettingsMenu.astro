@@ -77,7 +77,7 @@ const sectionLabel = 'text-[13px] font-semibold uppercase tracking-[0.06em] text
 
     <div class="flex flex-col gap-1.5">
       <p id="rotulo-idioma" class:list={[sectionLabel, 'mb-1']}>{t('settings.language')}</p>
-      <ul aria-labelledby="rotulo-idioma" class="flex flex-col gap-1">
+      <ul role="list" aria-labelledby="rotulo-idioma" class="flex flex-col gap-1">
         {languages.map((l) => (
           <li>
             <a

@@ -16,8 +16,8 @@ const t = {
     listLabel: 'Lista de wallpapers (role para ver mais)',
     swipeLabel: 'Lista de wallpapers (deslize para o lado para ver mais)',
     all: 'Todos',
-    download: (name: string, device: string) => `Baixar ${name} para ${device}`,
-    desktopPick: (name: string) => `Baixar ${name} para desktop: escolha o tamanho`,
+    /** Prefixo só para leitores de tela: o nome acessível começa pelo texto visível (WCAG 2.5.3) e diz qual wallpaper é. */
+    srWall: (name: string) => `, ${name}`,
     sizes: (n: number) => `PNG · ${n} tamanhos`,
     howTitle: 'Como colocar como fundo de tela',
     how: [
@@ -34,8 +34,7 @@ const t = {
     listLabel: 'Wallpaper list (scroll to see more)',
     swipeLabel: 'Wallpaper list (swipe sideways to see more)',
     all: 'All',
-    download: (name: string, device: string) => `Download ${name} for ${device}`,
-    desktopPick: (name: string) => `Download ${name} for desktop: choose a size`,
+    srWall: (name: string) => `, ${name}`,
     sizes: (n: number) => `PNG · ${n} sizes`,
     howTitle: 'How to set it as your wallpaper',
     how: [
@@ -52,14 +51,15 @@ const filters = [
   { id: 'mac', label: 'Desktop' },
 ];
 const scrolls = wallpapers.length > 4;
-const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5px] border-line bg-background py-1.5 pr-4 pl-3 text-ink no-underline hover:border-accent hover:text-ink';
+// relative: o texto só para leitores de tela (sr-only, absoluto) fica preso ao botão e não estica a página.
+const btn = 'relative inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5px] border-line bg-background py-1.5 pr-4 pl-3 text-ink no-underline hover:border-accent hover:text-ink';
 ---
 
 <div class="wallpapers">
   <Breadcrumb current="Wallpapers" />
   <section class="page flex flex-wrap items-end justify-between gap-x-12 gap-y-6 pt-7 pb-8 max-sm:pt-4">
     <SectionHeading as="h1" kicker={t.kicker} title={t.title} lead={t.lead} className="min-w-0 flex-[1_1_520px]" />
-    <fieldset class="toski-seg flex gap-1.5 rounded-button bg-tint p-1">
+    <fieldset class="toski-seg flex max-w-full flex-wrap gap-1.5 rounded-button bg-tint p-1">
       <legend class="sr-only">{t.filter}</legend>
       {filters.map((f, i) => (
         <label class="cursor-pointer rounded-[10px] text-[15px] font-semibold text-muted transition-colors has-checked:bg-segment has-checked:text-ink has-checked:shadow-[0_1px_3px_rgba(35,27,23,0.14)] has-focus-visible:outline-2 has-focus-visible:outline-accent">
@@ -113,31 +113,30 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
                 href={w.iphone.src}
                 download={`toski-${w.file}-mobile.png`}
                 data-device="iphone"
-                aria-label={t.download(w.name[lang], 'mobile')}
                 class={btn}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-accent"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
-                <span class="flex flex-col leading-[1.2]"><span class="text-[15px] font-semibold">Mobile</span><span class="text-xs text-muted">PNG · {w.iphone.width} × {w.iphone.height}</span></span>
+                <span class="flex flex-col leading-[1.2]"><span class="text-[15px] font-semibold">Mobile</span><span class="text-xs text-muted">PNG · {w.iphone.width} × {w.iphone.height}</span></span><span class="sr-only">{t.srWall(w.name[lang])}</span>
               </a>
             )}
             {w.mac && (
               <details data-device="mac" class="toski-sizes group relative max-sm:open:w-full">
-                <summary class={`${btn} cursor-pointer list-none [&::-webkit-details-marker]:hidden`} aria-label={t.desktopPick(w.name[lang])}>
+                <summary class={`${btn} cursor-pointer list-none [&::-webkit-details-marker]:hidden`}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-accent"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
-                  <span class="flex flex-col leading-[1.2]"><span class="text-[15px] font-semibold">Desktop</span><span class="text-xs text-muted">{t.sizes(desktopSizes.length)}</span></span>
+                  <span class="flex flex-col leading-[1.2]"><span class="text-[15px] font-semibold">Desktop</span><span class="text-xs text-muted">{t.sizes(desktopSizes.length)}</span></span><span class="sr-only">{t.srWall(w.name[lang])}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ml-1 text-muted transition-transform group-open:rotate-180"><path d="m6 9 6 6 6-6"></path></svg>
                 </summary>
-                <ul class="toski-menu [--menu-from:6px] [--menu-origin:bottom_left] max-sm:[--menu-from:-6px] max-sm:[--menu-origin:top_left] absolute bottom-full left-0 z-10 mb-2 flex w-max min-w-full flex-col gap-0.5 rounded-card border border-line bg-surface p-1.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)] max-sm:static max-sm:mt-2 max-sm:mb-0 max-sm:w-full max-sm:shadow-none">
+                <ul role="list" class="toski-menu [--menu-from:6px] [--menu-origin:bottom_left] max-sm:[--menu-from:-6px] max-sm:[--menu-origin:top_left] absolute bottom-full left-0 z-10 mb-2 flex w-max min-w-full flex-col gap-0.5 rounded-card border border-line bg-surface p-1.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)] max-sm:static max-sm:mt-2 max-sm:mb-0 max-sm:w-full max-sm:shadow-none">
                   {desktopSizes.map((size) => (
                     <li>
                       <a
                         href={wallpaperRelease.ready ? `${wallpaperRelease.downloadBase}${w.file}-desktop-${size.id}.png` : w.mac!.src}
                         download={`toski-${w.file}-desktop-${size.id}.png`}
-                        aria-label={t.download(w.name[lang], `desktop ${size.label}`)}
-                        class="flex min-h-11 items-center justify-between gap-6 rounded-[10px] px-3 py-1.5 text-ink no-underline hover:bg-tint hover:text-ink"
+                        class="relative flex min-h-11 items-center justify-between gap-6 rounded-[10px] px-3 py-1.5 text-ink no-underline hover:bg-tint hover:text-ink"
                       >
                         <span class="flex flex-col leading-tight"><span class="text-[15px] font-semibold">{size.label}</span><span class="text-xs text-muted">{size.hint[lang]}</span></span>
                         <span class="text-xs whitespace-nowrap text-muted">{size.width} × {size.height}</span>
+                        <span class="sr-only">{t.srWall(w.name[lang])}</span>
                       </a>
                     </li>
                   ))}
@@ -159,7 +158,7 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
         {t.how.map((h) => (
           <div class="flex flex-col gap-3.5 rounded-card bg-surface p-7">
             <h3 class="text-xl font-semibold">{h.title}</h3>
-            <ol class="flex flex-col gap-2.5">
+            <ol role="list" class="flex flex-col gap-2.5">
               {h.steps.map((step, i) => (
                 <li class="flex gap-3 text-base leading-[1.45]">
                   <span class="flex size-6.5 shrink-0 items-center justify-center rounded-full bg-tint text-[13px] font-semibold text-accent-text" aria-hidden="true">{i + 1}</span>
@@ -198,11 +197,14 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
   // Quem rola ganha foco pelo teclado e o rótulo: a fileira no celular, a caixa da lista no computador.
   const focusable = (el: HTMLElement | null, on: boolean) => {
     if (!el) return;
+    // role="region" faz o leitor de tela anunciar o rótulo (aria-label numa div sem papel é ignorado).
     if (on) {
       el.tabIndex = 0;
+      el.setAttribute('role', 'region');
       el.setAttribute('aria-label', el.dataset.label ?? '');
     } else {
       el.removeAttribute('tabindex');
+      el.removeAttribute('role');
       el.removeAttribute('aria-label');
     }
   };

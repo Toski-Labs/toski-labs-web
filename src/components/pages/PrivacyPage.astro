@@ -60,3 +60,8 @@ const t = {
     </Card>
   </article>
 </div>
+
+<script>
+  // O Tailwind tira os marcadores das listas e, sem eles, o Safari/VoiceOver deixa de anunciar a lista.
+  for (const list of document.querySelectorAll('.legal ul, .legal ol')) list.setAttribute('role', 'list');
+</script>

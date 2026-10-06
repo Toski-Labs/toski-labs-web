@@ -81,7 +81,7 @@ const t = {
         <h3 class="text-[15px] font-semibold">{t.colors}</h3>
         <span class="text-[13px] text-muted">{t.hint}</span>
       </div>
-      <ul class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,84px),1fr))] gap-2.5">
+      <ul role="list" class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,84px),1fr))] gap-2.5">
         {swatches.map((s) => (
           <li>
             <button type="button" class="toski-swatch group flex w-full flex-col gap-2 text-left" data-copy={s.hex} data-copied={t.copied} aria-label={t.copy(s.name[lang], s.hex)}>
