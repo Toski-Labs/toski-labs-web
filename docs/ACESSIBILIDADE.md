@@ -42,7 +42,7 @@ Nenhuma mudança visual no modo normal: as 60 capturas (claro/escuro, 1280/390, 
 
 ## Pendências
 
-- **Toski DS (levar ao repositório):** `CheckList` sem `role="list"` (afeta listas da página do PetHealthTracker no VoiceOver) e botões cheios sem borda transparente (o site corrige no alto contraste, mas o lugar certo é o `buttonClasses()`).
+- ~~Toski DS~~ ✅ 0.4.2: `CheckList` com `role="list"` e botões cheios com borda transparente (aparece no alto contraste). O site usa a 0.4.2 e não tem mais a correção provisória dos botões.
 - **Teste com VoiceOver de verdade** (roteiro abaixo).
 - **Preços na página do PetHealthTracker:** "Mensal Em breve cobrança mensal" é lido sem pausa. Funciona, mas dá para melhorar com pontuação só para leitores de tela quando os preços forem definidos.
 

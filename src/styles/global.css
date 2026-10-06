@@ -249,14 +249,11 @@
 
 /*
  * Modo de alto contraste (Windows "Contraste" / forced-colors): o navegador troca as cores do site
- * pelas do sistema e some com fundos. Sem isto, a opção escolhida nos filtros e os botões cheios
- * (sem borda) ficariam invisíveis.
+ * pelas do sistema e some com fundos. Sem isto, a opção escolhida nos filtros ficaria invisível.
+ * (Os botões cheios já têm borda transparente no Toski DS 0.4.2, que o sistema desenha.)
  */
 @media (forced-colors: active) {
   .toski-seg-thumb {
     border: 2px solid Highlight;
-  }
-  .rounded-button.select-none {
-    border: 1.5px solid ButtonText;
   }
 }
