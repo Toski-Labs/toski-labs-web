@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
 import { unpublishedPaths } from './src/data/studio.ts';
 
 const SITE = 'https://toski-labs.web.app';
@@ -31,6 +32,8 @@ export default defineConfig({
     routing: { prefixDefaultLocale: false },
   },
   integrations: [
+    // Componentes do Toski DS (React), renderizados só no servidor: sem diretiva client:, sem JS no navegador.
+    react(),
     // Gera /sitemap-index.xml com as versões PT/EN ligadas (hreflang).
     // Ficam de fora a 404 e as páginas do Estúdio ainda não publicadas (src/data/studio.ts).
     sitemap({

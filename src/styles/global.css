@@ -2,174 +2,12 @@
 @import "@fontsource-variable/outfit";
 
 /*
-  Tokens da Toski Labs — fonte: Toski DS (../../design/toski-ds/tokens/tokens.json,
-  https://toski-labs.github.io/toski-ds/). Copiados aqui até o site importar @toski-labs/ds/tailwind.css.
-  As cores semânticas mudam sozinhas com o tema do sistema (claro/escuro).
+  Toski DS (@toski-labs/ds): variáveis --toski-* (claro/escuro e data-theme), @theme com as classes
+  (bg-surface, text-muted, rounded-card…), utilitário `page`, animação da bolinha (toski-ball),
+  estilos de base e as classes dos componentes React do pacote.
+  https://toski-labs.github.io/toski-ds/
 */
-:root {
-  color-scheme: light dark;
-
-  --toski-background: #F7F1E8;
-  --toski-surface: #FFFFFF;
-  --toski-tint: #F3E4CF;
-  --toski-hero: #EFDCC2;
-  --toski-ink: #231B17;
-  --toski-muted: #6B5648;
-  --toski-line: #E6D8C4;
-  --toski-accent: #A9541F;
-  --toski-accent-hover: #7E3C14;
-  /* Destaque para TEXTO pequeno: mais escuro que o accent para passar 4,5:1 também sobre tint e hero */
-  --toski-accent-text: #94481A;
-  --toski-on-accent: #FFF8EE;
-  --toski-link: #94481A;
-  --toski-critical: #A3341A;
-  --toski-critical-bg: #F8E0D4;
-  --toski-critical-line: #EBC0AA;
-  --toski-success: #3F6E3B;
-  --toski-success-bg: #E4EEDC;
-  --toski-tabbar: #FFFDF9;
-  --toski-tab-idle: #7D6858;
-  --toski-footer: #231B17;
-  --toski-footer-ink: #F7F1E8;
-  --toski-footer-muted: #C2AE98;
-  --toski-footer-line: #43352B;
-  /* Paçoca */
-  --toski-mascot-outline: none;
-  --toski-mascot-nose: #231B17;
-  --toski-ball-outline: #EFDCC2;
-  --toski-phone-ring: transparent;
-  /* Opção selecionada em controles segmentados (segmentSelected do app) */
-  --toski-segment: #FFFFFF;
-}
-
-/*
-  Tema escuro. Vale quando:
-  - o aparelho está no escuro e a pessoa não escolheu "Claro" (data-theme="light"), ou
-  - a pessoa escolheu "Escuro" no menu de configurações (data-theme="dark").
-  O atributo data-theme é posto no <html> pelo script do <head> (BaseLayout), antes da página aparecer.
-*/
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --toski-background: #231B17;
-    --toski-surface: #2E241D;
-    --toski-tint: #3A2D23;
-    --toski-hero: #33271F;
-    --toski-ink: #F7F1E8;
-    --toski-muted: #C2AE98;
-    --toski-line: #43352B;
-    --toski-accent: #DB9A5B;
-    --toski-accent-hover: #E8B27C;
-    --toski-accent-text: #DB9A5B;
-    --toski-on-accent: #231B17;
-    --toski-link: #E8B27C;
-    --toski-critical: #F09A78;
-    --toski-critical-bg: #45261A;
-    --toski-critical-line: #6A3A26;
-    --toski-success: #9CC48F;
-    --toski-success-bg: #2C3A27;
-    --toski-tabbar: #1B1511;
-    --toski-tab-idle: #A08B78;
-    --toski-footer: #1B1511;
-    --toski-footer-ink: #F7F1E8;
-    --toski-footer-muted: #C2AE98;
-    --toski-footer-line: #43352B;
-    --toski-mascot-outline: #F4E4CC;
-    --toski-mascot-nose: #100C0A;
-    --toski-ball-outline: #F4E4CC;
-    --toski-phone-ring: #43352B;
-    --toski-segment: #4A3A2E;
-  }
-}
-
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --toski-background: #231B17;
-  --toski-surface: #2E241D;
-  --toski-tint: #3A2D23;
-  --toski-hero: #33271F;
-  --toski-ink: #F7F1E8;
-  --toski-muted: #C2AE98;
-  --toski-line: #43352B;
-  --toski-accent: #DB9A5B;
-  --toski-accent-hover: #E8B27C;
-  --toski-accent-text: #DB9A5B;
-  --toski-on-accent: #231B17;
-  --toski-link: #E8B27C;
-  --toski-critical: #F09A78;
-  --toski-critical-bg: #45261A;
-  --toski-critical-line: #6A3A26;
-  --toski-success: #9CC48F;
-  --toski-success-bg: #2C3A27;
-  --toski-tabbar: #1B1511;
-  --toski-tab-idle: #A08B78;
-  --toski-footer: #1B1511;
-  --toski-footer-ink: #F7F1E8;
-  --toski-footer-muted: #C2AE98;
-  --toski-footer-line: #43352B;
-  --toski-mascot-outline: #F4E4CC;
-  --toski-mascot-nose: #100C0A;
-  --toski-ball-outline: #F4E4CC;
-  --toski-phone-ring: #43352B;
-  --toski-segment: #4A3A2E;
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-}
-
-/* Classes do Tailwind geradas a partir dos tokens: bg-surface, text-muted, border-line, bg-accent… */
-@theme inline {
-  --color-background: var(--toski-background);
-  --color-surface: var(--toski-surface);
-  --color-tint: var(--toski-tint);
-  --color-hero: var(--toski-hero);
-  --color-ink: var(--toski-ink);
-  --color-muted: var(--toski-muted);
-  --color-line: var(--toski-line);
-  --color-accent: var(--toski-accent);
-  --color-accent-hover: var(--toski-accent-hover);
-  --color-accent-text: var(--toski-accent-text);
-  --color-on-accent: var(--toski-on-accent);
-  --color-link: var(--toski-link);
-  --color-critical: var(--toski-critical);
-  --color-critical-bg: var(--toski-critical-bg);
-  --color-critical-line: var(--toski-critical-line);
-  --color-success: var(--toski-success);
-  --color-success-bg: var(--toski-success-bg);
-  --color-tabbar: var(--toski-tabbar);
-  --color-tab-idle: var(--toski-tab-idle);
-  --color-footer: var(--toski-footer);
-  --color-footer-ink: var(--toski-footer-ink);
-  --color-footer-muted: var(--toski-footer-muted);
-  --color-footer-line: var(--toski-footer-line);
-  --color-phone-ring: var(--toski-phone-ring);
-  --color-segment: var(--toski-segment);
-}
-
-@theme {
-  /* Cores fixas da marca (não mudam com o tema) */
-  --color-caramelo: #DB9A5B;
-  --color-ferrugem: #A9541F;
-  --color-creme: #F4E4CC;
-  --color-papel: #F7F1E8;
-  --color-carvao: #231B17;
-
-  --font-sans: "Outfit Variable", system-ui, sans-serif;
-
-  --radius-icon: 12px;
-  --radius-button: 14px;
-  --radius-card: 18px;
-  --radius-panel: 28px;
-}
-
-/* Container padrão das páginas: 1120px de conteúdo + 24px de margem */
-@utility page {
-  width: 100%;
-  max-width: 1168px;
-  margin-inline: auto;
-  padding-inline: 24px;
-}
+@import "@toski-labs/ds/tailwind.css";
 
 /*
  * Faixa de destaque (fundo tint ou escuro). No celular ocupa a largura toda;
@@ -193,12 +31,6 @@
 }
 
 @layer base {
-  html {
-    -webkit-text-size-adjust: 100%;
-  }
-  body {
-    @apply bg-background text-ink font-sans antialiased;
-  }
   a {
     color: var(--toski-link);
     text-decoration-line: underline;
@@ -208,27 +40,6 @@
   a:hover {
     color: var(--toski-accent-hover);
   }
-  :focus-visible {
-    outline: 2px solid var(--toski-accent);
-    outline-offset: 3px;
-    border-radius: 6px;
-  }
-  ::selection {
-    background: var(--toski-hero);
-    color: var(--toski-ink);
-  }
-}
-
-/* Animação da bolinha da Paçoca (design/animacoes.md) */
-@keyframes toski-bounce {
-  0%, 100% { transform: translateY(0); }
-  45%, 60% { transform: translateY(-14px); }
-}
-.toski-ball {
-  animation: toski-bounce 1.8s ease-in-out infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .toski-ball { animation: none; }
 }
 
 /* Textos legais em Markdown (Privacidade): seções numeradas e listas em cartões. */

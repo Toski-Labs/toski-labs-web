@@ -7,7 +7,8 @@ No ar em **https://toski-labs.web.app**
 ## Stack
 
 - [Astro 7](https://astro.build) + TypeScript (strict), site 100% estático
-- Tailwind CSS 4 (via `@tailwindcss/vite`), tokens em `src/styles/global.css`
+- Tailwind CSS 4 (via `@tailwindcss/vite`)
+- [Toski DS](https://toski-labs.github.io/toski-ds/) (`@toski-labs/ds`): tokens, ícones e componentes (Button, Card, Pill, Icon, Mascot…). Os componentes são React, renderizados só no build via `@astrojs/react`, sem JavaScript no navegador
 - Fonte Outfit servida pelo próprio site (`@fontsource-variable/outfit`)
 - Firebase Hosting (plano Spark) e Remote Config só para ligar campanhas
 - `@astrojs/sitemap` para o sitemap em PT e EN
@@ -56,11 +57,11 @@ Os endereços de Suporte e Privacidade estão cadastrados na App Store e no Goog
 src/
 ├── assets/          marca (SVGs da Toski), fotos e prévias dos wallpapers
 ├── components/
-│   ├── brand/       Mascot, PhoneMock, AppIcon, Wordmark…
+│   ├── brand/       MascotHero, PhoneMock, PdfCard, Wordmark
 │   ├── campaign/    faixa, selo e oferta de campanhas (Black Friday)
 │   ├── pages/       uma página por arquivo, com os textos PT/EN
 │   ├── studio/      prévias de editor e terminal, faixa do Toski DS
-│   └── ui/          Button, Card, Pill, Icon, FaqItem…
+│   └── ui/          FeatureCard e FaqItem (o resto vem do Toski DS)
 ├── content/legal/   política de privacidade em Markdown (pt e en)
 ├── data/            projetos, campanhas, wallpapers e Estúdio
 ├── i18n/ui.ts       rotas equivalentes PT↔EN e textos comuns
