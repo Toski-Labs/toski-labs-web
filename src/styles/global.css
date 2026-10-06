@@ -24,7 +24,9 @@
     & > .page {
       padding-inline: clamp(32px, 4.5vw, 56px);
     }
-    &:last-child {
+    /* Última faixa da página: respiro antes do rodapé. Ignora <script>/<style> que venham depois
+       (no `npm run dev` o script de um componente fica logo depois da faixa). */
+    &:not(:has(~ :not(script, style))) {
       margin-bottom: 96px;
     }
   }
