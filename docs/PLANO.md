@@ -151,5 +151,11 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
   - [ ] https://toski-labs.web.app/en/studio/themes
   - [ ] https://toski-labs.web.app/en/support
   - [ ] https://toski-labs.web.app/en/privacy
+- Conferir se as pedidas em 6 out entraram mesmo (a partir de 8–9 out). Em Inspeção de URL, cada uma deve mostrar "O URL está no Google" e "A página está indexada"; também dá para buscar `site:toski-labs.web.app` no Google:
+  - [ ] https://toski-labs.web.app/pethealthtracker
+  - [ ] https://toski-labs.web.app/estudio
+  - [ ] https://toski-labs.web.app/estudio/wallpapers
+  - [ ] https://toski-labs.web.app/suporte
+  - [ ] https://toski-labs.web.app/en
 - Os relatórios de Desempenho e Páginas levam alguns dias para ter dados. Conferir no fim da semana.
 - Se a Toski Labs tiver domínio próprio no futuro, cadastrar também uma propriedade do tipo **Domínio** (verificação por DNS).
