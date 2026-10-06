@@ -1,0 +1,64 @@
+---
+/** Política de Privacidade (texto em src/content/legal/<idioma>/). */
+import { getEntry, render } from 'astro:content';
+import { getLang, href } from '../../i18n/ui';
+import Button from '../ui/Button.astro';
+import Card from '../ui/Card.astro';
+import Kicker from '../ui/Kicker.astro';
+
+const lang = getLang(Astro.currentLocale);
+const entry = await getEntry('legal', lang === 'pt' ? 'pt/privacidade' : 'en/privacy');
+if (!entry) throw new Error('Texto da política não encontrado em src/content/legal');
+const { Content, headings } = await render(entry);
+const sections = headings.filter((h) => h.depth === 2);
+
+const t = {
+  pt: {
+    updated: 'Última atualização',
+    toc: 'Nesta página',
+    tocLabel: 'Seções da política',
+    contactTitle: 'Dúvidas sobre os seus dados?',
+    contactBody: 'Escreva para toskilabs@gmail.com ou veja a página de suporte.',
+    support: 'Suporte',
+  },
+  en: {
+    updated: 'Last updated',
+    toc: 'On this page',
+    tocLabel: 'Policy sections',
+    contactTitle: 'Questions about your data?',
+    contactBody: 'Email toskilabs@gmail.com or visit the support page.',
+    support: 'Support',
+  },
+}[lang];
+---
+
+<section class="page flex flex-col gap-3.5 pt-10 pb-12">
+  <Kicker>PetHealthTracker · Toski Labs</Kicker>
+  <h1 class="text-[clamp(36px,4.6vw,56px)] leading-[1.06] font-semibold tracking-tight">{entry.data.title}</h1>
+  <p class="max-w-170 text-[19px] leading-normal text-muted">{entry.data.lead}</p>
+  <p class="mt-1.5 text-sm text-muted">{t.updated}: {entry.data.updated}</p>
+</section>
+
+<div class="page flex flex-wrap items-start gap-12 pb-24">
+  <nav aria-label={t.tocLabel} class="flex max-w-75 min-w-0 flex-[1_1_240px] flex-col gap-0.5 rounded-card border border-line bg-surface p-5 lg:sticky lg:top-6">
+    <Kicker tone="muted" class="mb-2">{t.toc}</Kicker>
+    {sections.map((s, i) => (
+      <a href={`#${s.slug}`} class="flex min-h-10 items-center gap-2.5 text-[15px] font-medium text-ink no-underline hover:text-accent">
+        <span class="w-6 text-[13px] text-muted">{String(i + 1).padStart(2, '0')}</span>{s.text}
+      </a>
+    ))}
+  </nav>
+
+  <article class="flex min-w-0 flex-[999_1_560px] flex-col gap-11">
+    <div class="legal">
+      <Content />
+    </div>
+    <Card variant="hero" radius="panel" class="flex max-w-180 flex-wrap items-center justify-between gap-x-8 gap-y-4 px-8 py-7">
+      <div class="flex flex-col gap-1">
+        <p class="text-[22px] font-semibold">{t.contactTitle}</p>
+        <p class="text-base text-muted">{t.contactBody}</p>
+      </div>
+      <Button href={href(lang, 'support')} size="md">{t.support}</Button>
+    </Card>
+  </article>
+</div>
