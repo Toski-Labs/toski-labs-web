@@ -64,13 +64,14 @@ const c = campaign.copy[lang];
             <span class="flex flex-col gap-1">
               <span class="flex items-center gap-2 text-xl font-semibold">
                 {p.name}
-                {p.badge && <span class="rounded-[9px] bg-caramelo px-2 py-0.5 text-xs font-bold text-carvao">{p.badge}</span>}
+                {p.badge && p.price && <span class="rounded-[9px] bg-caramelo px-2 py-0.5 text-xs font-bold text-carvao">{p.badge}</span>}
               </span>
               <span class="text-sm text-[#CDB9A3]">{p.sub}</span>
             </span>
             <span class="flex flex-col items-end gap-0.5">
-              {p.old && <s class="text-sm text-[#A08B78]">{p.old}</s>}
-              <span class="text-[28px] font-bold tracking-[-0.01em]">{p.price}</span>
+              {p.price && p.old && <s class="text-sm text-[#A08B78]">{p.old}</s>}
+              <!-- Sem preço definido, o destaque é o próprio desconto. -->
+              <span class="text-[28px] font-bold tracking-[-0.01em]">{p.price || p.badge}</span>
             </span>
           </li>
         ))}

@@ -17,8 +17,9 @@ import type { Lang } from '../i18n/ui';
  */
 export interface CampaignPrice {
   name: string;
+  /** Preço com desconto. Vazio enquanto a precificação não estiver definida: aí o card mostra só o desconto (badge). */
   price: string;
-  /** Preço normal, riscado. Vazio quando não há desconto. */
+  /** Preço normal, riscado. Vazio quando não há desconto ou sem preço definido. */
   old: string;
   sub: string;
   /** Selo do desconto, ex. "−50%". */
@@ -79,13 +80,14 @@ export const blackFriday: Campaign = {
       sticker: 'no anual',
       seal: 'Plus anual pela metade no primeiro ano. Até 30/11.',
       cta: 'Aproveitar a Black Friday',
-      fine: 'Preços da App Store no Brasil. Vale de 27 a 30 de novembro para quem nunca assinou o anual e para ex-assinantes. O mensal não tem desconto.',
+      fine: 'Desconto aplicado na própria App Store. Vale de 27 a 30 de novembro para quem nunca assinou o anual e para ex-assinantes. O mensal não tem desconto.',
       endsIn: 'A oferta termina em',
       units: ['d', 'h', 'min'],
       close: 'Fechar',
       prices: [
-        { name: 'Anual', price: 'R$ 29,90', old: 'R$ 59,90', sub: 'primeiro ano · R$ 2,49 por mês', badge: '−50%', featured: true },
-        { name: 'Vitalício', price: 'R$ 104,90', old: 'R$ 149,90', sub: 'pague uma vez, é seu pra sempre', badge: '−30%', featured: false },
+        // Preços em branco até a monetização ser definida (o card mostra só o desconto).
+        { name: 'Anual', price: '', old: '', sub: 'no primeiro ano', badge: '−50%', featured: true },
+        { name: 'Vitalício', price: '', old: '', sub: 'pague uma vez, é seu pra sempre', badge: '−30%', featured: false },
       ],
     },
     en: {
@@ -99,13 +101,14 @@ export const blackFriday: Campaign = {
       sticker: 'yearly plan',
       seal: 'Yearly Plus at half price for the first year. Until Nov 30.',
       cta: 'Get the Black Friday deal',
-      fine: 'App Store prices. Valid from Nov 27 to 30 for people who never subscribed to the yearly plan and for former subscribers. Monthly has no discount.',
+      fine: 'Discount applied in the App Store. Valid from Nov 27 to 30 for people who never subscribed to the yearly plan and for former subscribers. Monthly has no discount.',
       endsIn: 'Offer ends in',
       units: ['d', 'h', 'min'],
       close: 'Close',
       prices: [
-        { name: 'Yearly', price: '[PRICE]', old: '[PRICE]', sub: 'first year · 50% off', badge: '−50%', featured: true },
-        { name: 'Lifetime', price: '[PRICE]', old: '[PRICE]', sub: 'pay once, yours forever', badge: '−30%', featured: false },
+        // Prices left blank until monetization is decided (the card shows only the discount).
+        { name: 'Yearly', price: '', old: '', sub: 'for the first year', badge: '−50%', featured: true },
+        { name: 'Lifetime', price: '', old: '', sub: 'pay once, yours forever', badge: '−30%', featured: false },
       ],
     },
   },
