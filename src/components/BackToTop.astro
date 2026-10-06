@@ -1,0 +1,62 @@
+---
+/**
+ * Botão "Voltar ao topo" (só celular e tablet em pé, abaixo de 768px).
+ * Aparece quando o rodapé entra na tela, no canto inferior direito, e some de novo ao subir.
+ * Fica escondido enquanto o aviso de idioma estiver aberto, para não disputar o mesmo canto.
+ * Ao tocar, sobe a página (suave, exceto com "reduzir movimento") e devolve o foco ao logo.
+ */
+import { getLang, useTranslations } from '../i18n/ui';
+import Icon from './ui/Icon.astro';
+
+const t = useTranslations(getLang(Astro.currentLocale));
+---
+
+<button
+  type="button"
+  class="toski-to-top fixed right-4 bottom-[max(16px,env(safe-area-inset-bottom))] z-40 flex size-12 items-center justify-center rounded-full bg-accent text-on-accent shadow-[0_10px_28px_rgba(0,0,0,0.28)] ring-2 ring-footer transition-colors hover:bg-accent-hover md:hidden"
+  hidden
+>
+  <span class="sr-only">{t('backToTop')}</span>
+  <Icon name="arrow-up" size={22} stroke={2.2} />
+</button>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .toski-to-top:not([hidden]) {
+      animation: toski-to-top-in 200ms ease-out;
+    }
+  }
+  @keyframes toski-to-top-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.9);
+    }
+  }
+</style>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.toski-to-top');
+  const footer = document.querySelector('footer');
+  const banner = document.querySelector<HTMLElement>('.toski-lang-banner');
+
+  if (button && footer) {
+    let footerVisible = false;
+    const update = () => {
+      button.hidden = !footerVisible || (banner !== null && !banner.hidden);
+    };
+
+    new IntersectionObserver(([entry]) => {
+      footerVisible = entry.isIntersecting;
+      update();
+    }).observe(footer);
+
+    if (banner) new MutationObserver(update).observe(banner, { attributes: true, attributeFilter: ['hidden'] });
+
+    button.addEventListener('click', () => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      // Leva o foco para o logo no topo (quem navega por teclado ou leitor de tela continua de lá).
+      document.querySelector<HTMLElement>('header a')?.focus({ preventScroll: true });
+    });
+  }
+</script>

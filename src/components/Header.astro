@@ -1,0 +1,39 @@
+---
+import AppIcon from './brand/AppIcon.astro';
+import Wordmark from './brand/Wordmark.astro';
+import SettingsMenu from './SettingsMenu.astro';
+import { getLang, href, useTranslations, type PageKey } from '../i18n/ui';
+
+interface Props {
+  page: PageKey;
+}
+const { page } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const nav = [
+  { label: t('nav.projects'), href: href(lang, 'home', 'projetos') },
+  { label: t('nav.studio'), href: href(lang, 'studio'), current: page === 'studio' || page === 'wallpapers' || page === 'themes' },
+  { label: t('nav.support'), href: href(lang, 'support'), current: page === 'support' },
+];
+---
+
+<!-- No celular: logo e configurações na 1ª linha, links na 2ª. -->
+<header class="page flex flex-wrap items-center gap-x-4 gap-y-2 py-5">
+  <a href={href(lang, 'home')} aria-label={t('site.name')} class="inline-flex min-h-11 items-center gap-2.5 text-ink no-underline hover:text-ink">
+    <AppIcon size={36} withBall={false} />
+    <Wordmark class="text-[22px]" />
+  </a>
+  <nav aria-label={t('nav.label')} class="ml-auto flex flex-wrap items-center gap-1 max-sm:order-3 max-sm:-ml-3 max-sm:w-full">
+    {nav.map((item) => (
+      <a
+        href={item.href}
+        aria-current={item.current ? 'page' : undefined}
+        class="inline-flex min-h-11 items-center px-3 text-[15px] font-medium text-ink no-underline hover:text-accent aria-[current=page]:font-semibold aria-[current=page]:text-accent-text"
+      >
+        {item.label}
+      </a>
+    ))}
+  </nav>
+  <SettingsMenu page={page} />
+</header>

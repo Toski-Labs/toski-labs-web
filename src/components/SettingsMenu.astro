@@ -1,0 +1,190 @@
+---
+/**
+ * Menu de configurações do cabeçalho: tema (Automático/Claro/Escuro) e idioma (PT/EN).
+ * Tema: salvo em localStorage e aplicado no <html data-theme> (o script do <head> do BaseLayout repete isso antes da pintura).
+ * Idioma: link para a mesma página no outro idioma; a escolha também fica salva.
+ */
+import { alternatePath, getLang, routes, STORAGE, useTranslations, type PageKey } from '../i18n/ui';
+import Icon from './ui/Icon.astro';
+
+interface Props {
+  page: PageKey;
+}
+const { page } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const icons = {
+  auto: 'M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1ZM8 21h8M12 17v4',
+  light: 'M12 3v2M12 19v2M5.6 5.6 7 7M17 17l1.4 1.4M3 12h2M19 12h2M5.6 18.4 7 17M17 7l1.4-1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z',
+  dark: 'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z',
+};
+const themes = [
+  { id: 'auto', label: t('settings.theme.auto'), hint: t('settings.hint.auto') },
+  { id: 'light', label: t('settings.theme.light'), hint: t('settings.hint.light') },
+  { id: 'dark', label: t('settings.theme.dark'), hint: t('settings.hint.dark') },
+] as const;
+const languages = [
+  { id: 'pt', short: 'PT', label: 'Português (Brasil)', htmlLang: 'pt-BR', href: lang === 'pt' ? routes.pt[page] : alternatePath(page, lang) },
+  { id: 'en', short: 'EN', label: 'English', htmlLang: 'en', href: lang === 'en' ? routes.en[page] : alternatePath(page, lang) },
+];
+const sectionLabel = 'text-[13px] font-semibold uppercase tracking-[0.06em] text-muted';
+---
+
+<div class="toski-settings relative max-sm:ml-auto" data-storage-theme={STORAGE.theme} data-storage-lang={STORAGE.lang}>
+  <button
+    type="button"
+    class="toski-settings-trigger inline-flex h-11 items-center gap-2 rounded-full border-[1.5px] border-line pr-3 pl-3.5 text-sm font-semibold text-ink transition-colors hover:border-accent aria-expanded:border-accent aria-expanded:bg-surface"
+    aria-expanded="false"
+    aria-controls="painel-config"
+  >
+    {Object.entries(icons).map(([id, d]) => (
+      <svg data-theme-icon={id} hidden={id !== 'auto'} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={d}></path></svg>
+    ))}
+    <span aria-hidden="true">{lang.toUpperCase()}</span>
+    <span class="sr-only">{t('settings.button')}</span>
+    <Icon name="chevron-down" size={16} stroke={2} class="text-muted transition-transform [[aria-expanded=true]>&]:rotate-180" />
+  </button>
+
+  <div
+    id="painel-config"
+    role="dialog"
+    aria-label={t('settings.title')}
+    hidden
+    class="absolute top-13 right-0 z-40 flex w-[min(320px,calc(100vw-32px))] flex-col gap-4.5 rounded-card border border-line bg-surface p-4.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)]"
+  >
+    <div class="flex flex-col gap-2.5">
+      <p id="rotulo-tema" class={sectionLabel}>{t('settings.theme')}</p>
+      <div role="radiogroup" aria-labelledby="rotulo-tema" class="grid grid-cols-3 gap-1 rounded-icon bg-tint p-1">
+        {themes.map((theme) => (
+          <button
+            type="button"
+            role="radio"
+            aria-checked={theme.id === 'auto' ? 'true' : 'false'}
+            data-theme-option={theme.id}
+            data-hint={theme.hint}
+            class="flex h-14.5 flex-col items-center justify-center gap-1 rounded-[9px] text-[13px] font-medium text-muted transition-colors aria-checked:bg-segment aria-checked:text-ink aria-checked:shadow-[0_1px_3px_rgba(35,27,23,0.14)]"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={icons[theme.id]}></path></svg>
+            {theme.label}
+          </button>
+        ))}
+      </div>
+      <p class="toski-theme-hint text-[13px] leading-[1.45] text-muted" aria-live="polite">{themes[0].hint}</p>
+    </div>
+
+    <div class="h-px bg-line"></div>
+
+    <div class="flex flex-col gap-1.5">
+      <p id="rotulo-idioma" class:list={[sectionLabel, 'mb-1']}>{t('settings.language')}</p>
+      <ul aria-labelledby="rotulo-idioma" class="flex flex-col gap-1">
+        {languages.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              hreflang={l.htmlLang}
+              lang={l.htmlLang}
+              data-lang-choice={l.id}
+              aria-current={l.id === lang ? 'true' : undefined}
+              class="flex min-h-11 items-center justify-between gap-3 rounded-[10px] px-3 text-[15px] font-medium text-ink no-underline hover:bg-tint hover:text-ink aria-current:bg-tint aria-current:font-semibold"
+            >
+              <span class="flex items-center gap-2.5"><span class="w-7.5 text-xs font-semibold tracking-[0.04em] text-muted">{l.short}</span>{l.label}</span>
+              {l.id === lang && <Icon name="check" size={18} stroke={2.4} class="text-accent" />}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <p class="pt-0.5 text-xs leading-[1.45] text-muted">{t('settings.saved')}</p>
+  </div>
+</div>
+
+<script>
+  type Theme = 'auto' | 'light' | 'dark';
+
+  function store(key: string, value: string | null) {
+    try {
+      if (value === null) localStorage.removeItem(key);
+      else localStorage.setItem(key, value);
+    } catch {
+      /* navegação privada: segue sem salvar */
+    }
+  }
+  function read(key: string): string | null {
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  }
+
+  for (const root of document.querySelectorAll<HTMLElement>('.toski-settings')) {
+    const trigger = root.querySelector<HTMLButtonElement>('.toski-settings-trigger')!;
+    const panel = root.querySelector<HTMLElement>('[role=dialog]')!;
+    const hint = root.querySelector<HTMLElement>('.toski-theme-hint')!;
+    const themeKey = root.dataset.storageTheme!;
+    const langKey = root.dataset.storageLang!;
+    const options = [...root.querySelectorAll<HTMLButtonElement>('[data-theme-option]')];
+
+    const applyTheme = (theme: Theme) => {
+      if (theme === 'auto') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', theme);
+      for (const option of options) {
+        const on = option.dataset.themeOption === theme;
+        option.setAttribute('aria-checked', String(on));
+        option.tabIndex = on ? 0 : -1;
+        if (on) hint.textContent = option.dataset.hint ?? '';
+      }
+      for (const icon of root.querySelectorAll<SVGElement>('[data-theme-icon]')) {
+        icon.toggleAttribute('hidden', icon.dataset.themeIcon !== theme);
+      }
+    };
+
+    const saved = read(themeKey);
+    applyTheme(saved === 'light' || saved === 'dark' ? saved : 'auto');
+
+    const open = () => {
+      panel.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+      root.querySelector<HTMLElement>('[data-theme-option][aria-checked=true]')?.focus();
+    };
+    const close = (focusTrigger = false) => {
+      panel.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      if (focusTrigger) trigger.focus();
+    };
+
+    trigger.addEventListener('click', () => (panel.hidden ? open() : close()));
+    root.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !panel.hidden) {
+        event.stopPropagation();
+        close(true);
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (!panel.hidden && !root.contains(event.target as Node)) close();
+    });
+
+    options.forEach((option, index) => {
+      option.addEventListener('click', () => {
+        const theme = option.dataset.themeOption as Theme;
+        store(themeKey, theme === 'auto' ? null : theme);
+        applyTheme(theme);
+      });
+      // Setas trocam a opção, como num grupo de rádio.
+      option.addEventListener('keydown', (event) => {
+        const step = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 0;
+        if (!step) return;
+        event.preventDefault();
+        const next = options[(index + step + options.length) % options.length];
+        next.click();
+        next.focus();
+      });
+    });
+
+    for (const link of root.querySelectorAll<HTMLAnchorElement>('[data-lang-choice]')) {
+      link.addEventListener('click', () => store(langKey, link.dataset.langChoice!));
+    }
+  }
+</script>
