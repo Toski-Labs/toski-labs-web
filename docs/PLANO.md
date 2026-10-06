@@ -123,8 +123,11 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 9. Conferir o card de compartilhamento nas redes (WhatsApp, Instagram/Facebook, X, LinkedIn, iMessage) para cada página em PT e EN: imagem, título e descrição. Avaliar imagens OG próprias para PetHealthTracker, Estúdio e Wallpapers.
 10. SEO: títulos e descrições de todas as páginas, Google Search Console com o `sitemap-index.xml`, dados estruturados (Organization e SoftwareApplication) e Lighthouse no site publicado.
 
+**Animações**
+11. Mapear animações e microinterações do site: o que já existe (bolinha da Toski, menu de configurações, faixa de campanha, voltar ao topo) e onde vale adicionar (hover e clique em botões e cards, troca de tema, filtro e seletor de tamanho dos wallpapers, copiar cor do DS, abertura do FAQ, entrada das seções ao rolar). Tudo leve, só CSS sempre que der, respeitando `prefers-reduced-motion`. Desenhar no canvas antes de implementar.
+
 **Manutenção**
-11. Canvas de design: página de Wallpapers ainda na v1 (sem tamanhos de desktop, Halloween e Lick or Treat).
+12. Canvas de design: página de Wallpapers ainda na v1 (sem tamanhos de desktop, Halloween e Lick or Treat).
 
 **Opcionais**
-12. Domínio próprio e deploy automático pelo GitHub Actions.
+13. Domínio próprio e deploy automático pelo GitHub Actions.
