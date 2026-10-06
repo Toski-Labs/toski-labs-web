@@ -2,7 +2,8 @@
 @import "@fontsource-variable/outfit";
 
 /*
-  Tokens da Toski Labs — mesma fonte do app (../../design/tokens/tokens.json).
+  Tokens da Toski Labs — fonte: Toski DS (../../design/toski-ds/tokens/tokens.json,
+  https://toski-labs.github.io/toski-ds/). Copiados aqui até o site importar @toski-labs/ds/tailwind.css.
   As cores semânticas mudam sozinhas com o tema do sistema (claro/escuro).
 */
 :root {
