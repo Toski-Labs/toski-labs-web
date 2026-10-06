@@ -24,13 +24,15 @@ Precisa de Node 22.12 ou mais novo.
 | `npm run dev`     | Servidor local em `localhost:4321`                 |
 | `npm run build`   | Gera o site em `dist/`                             |
 | `npm run preview` | Abre o `dist/` localmente, igual ao publicado      |
+| `npm run deploy`  | Gera o site e publica no Firebase Hosting          |
 
 ## Publicando
 
 ```sh
-npm run build
-firebase deploy --only hosting
+npm run deploy
 ```
+
+É o mesmo que `npm run build && firebase deploy --only hosting`.
 
 A primeira vez: `npm install -g firebase-tools` e `firebase login`. O projeto Firebase é o `toski-labs` (`.firebaserc`); cache, URLs limpas e redirecionamentos ficam em `firebase.json`.
 

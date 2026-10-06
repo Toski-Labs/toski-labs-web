@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "deploy": "astro build && firebase deploy --only hosting",
     "astro": "astro"
   },
   "dependencies": {
