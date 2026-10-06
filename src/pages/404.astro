@@ -1,8 +1,7 @@
 ---
 /** Página não encontrada (o Firebase serve /404.html). Bilíngue, porque não sabemos o idioma de quem chegou. */
+import { Button, Mascot } from '@toski-labs/ds';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Button from '../components/ui/Button.astro';
-import Mascot from '../components/brand/Mascot.astro';
 ---
 
 <BaseLayout page="home" title="Página não encontrada" description="Esta página não existe." noindex>
@@ -17,7 +16,7 @@ import Mascot from '../components/brand/Mascot.astro';
     </div>
     <div class="flex flex-wrap justify-center gap-3">
       <Button href="/" size="md">Voltar para o início</Button>
-      <Button href="/en" size="md" variant="secondary" hreflang="en">Go to the English site</Button>
+      <Button href="/en" size="md" variant="secondary" hrefLang="en">Go to the English site</Button>
     </div>
   </section>
 </BaseLayout>

@@ -1,10 +1,8 @@
 ---
 /** Temas (PT e EN): VS Code e iTerm2, com prévia clara/escura trocada só com CSS (sem JavaScript). */
+import { Icon, Kicker, SectionHeading } from '@toski-labs/ds';
 import { getLang } from '../../i18n/ui';
 import { studio } from '../../data/studio';
-import Icon from '../ui/Icon.astro';
-import Kicker from '../ui/Kicker.astro';
-import SectionHeading from '../ui/SectionHeading.astro';
 import Breadcrumb from '../studio/Breadcrumb.astro';
 import EditorPreview from '../studio/EditorPreview.astro';
 import TerminalPreview from '../studio/TerminalPreview.astro';
@@ -88,7 +86,7 @@ const primary = 'inline-flex h-12 items-center justify-center gap-2.5 rounded-bu
   <Breadcrumb current={t.crumb} />
 
   <section class="page flex flex-wrap items-end justify-between gap-x-12 gap-y-6 pt-7 pb-9 max-sm:pt-4">
-    <SectionHeading as="h1" kicker={t.kicker} title={t.title} lead={t.lead} class="min-w-0 flex-[1_1_520px]" />
+    <SectionHeading as="h1" kicker={t.kicker} title={t.title} lead={t.lead} className="min-w-0 flex-[1_1_520px]" />
     <fieldset class="flex flex-col gap-2">
       <legend class="mb-2 text-[13px] font-medium text-muted">{t.preview}</legend>
       <div class="flex gap-1.5 rounded-button bg-tint p-1">

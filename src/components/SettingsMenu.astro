@@ -4,8 +4,8 @@
  * Tema: salvo em localStorage e aplicado no <html data-theme> (o script do <head> do BaseLayout repete isso antes da pintura).
  * Idioma: link para a mesma página no outro idioma; a escolha também fica salva.
  */
+import { Icon } from '@toski-labs/ds';
 import { alternatePath, getLang, routes, STORAGE, useTranslations, type PageKey } from '../i18n/ui';
-import Icon from './ui/Icon.astro';
 
 interface Props {
   page: PageKey;
@@ -43,7 +43,7 @@ const sectionLabel = 'text-[13px] font-semibold uppercase tracking-[0.06em] text
     ))}
     <span aria-hidden="true">{lang.toUpperCase()}</span>
     <span class="sr-only">{t('settings.button')}</span>
-    <Icon name="chevron-down" size={16} stroke={2} class="text-muted transition-transform [[aria-expanded=true]>&]:rotate-180" />
+    <Icon name="chevron-down" size={16} stroke={2} className="text-muted transition-transform [[aria-expanded=true]>&]:rotate-180" />
   </button>
 
   <div
@@ -89,7 +89,7 @@ const sectionLabel = 'text-[13px] font-semibold uppercase tracking-[0.06em] text
               class="flex min-h-11 items-center justify-between gap-3 rounded-[10px] px-3 text-[15px] font-medium text-ink no-underline hover:bg-tint hover:text-ink aria-current:bg-tint aria-current:font-semibold"
             >
               <span class="flex items-center gap-2.5"><span class="w-7.5 text-xs font-semibold tracking-[0.04em] text-muted">{l.short}</span>{l.label}</span>
-              {l.id === lang && <Icon name="check" size={18} stroke={2.4} class="text-accent" />}
+              {l.id === lang && <Icon name="check" size={18} stroke={2.4} className="text-accent" />}
             </a>
           </li>
         ))}

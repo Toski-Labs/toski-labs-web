@@ -5,8 +5,8 @@
  * Fica escondido enquanto o aviso de idioma estiver aberto, para não disputar o mesmo canto.
  * Ao tocar, sobe a página (suave, exceto com "reduzir movimento") e devolve o foco ao logo.
  */
+import { Icon } from '@toski-labs/ds';
 import { getLang, useTranslations } from '../i18n/ui';
-import Icon from './ui/Icon.astro';
 
 const t = useTranslations(getLang(Astro.currentLocale));
 ---

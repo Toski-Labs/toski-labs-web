@@ -1,8 +1,8 @@
 ---
 /** Selo pequeno da campanha dentro do card do projeto, na Home. Leva para a oferta na página do projeto. Quem mostra é o CampaignFlags. */
+import { Icon } from '@toski-labs/ds';
 import { blackFriday as campaign } from '../../data/campaigns';
 import { getLang, href } from '../../i18n/ui';
-import Icon from '../ui/Icon.astro';
 
 const lang = getLang(Astro.currentLocale);
 const c = campaign.copy[lang];
@@ -22,5 +22,5 @@ const c = campaign.copy[lang];
       <span class="text-xs font-bold tracking-[0.08em] text-caramelo">BLACK FRIDAY</span>
       <span class="text-[15px] leading-[1.35]">{c.seal}</span>
     </span>
-    <Icon name="arrow-right" size={18} stroke={2.2} class="text-caramelo" />
+    <Icon name="arrow-right" size={18} stroke={2.2} className="text-caramelo" />
   </a>

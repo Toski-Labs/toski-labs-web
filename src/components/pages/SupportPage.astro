@@ -1,12 +1,8 @@
 ---
 /** Suporte (PT e EN): contato, código de suporte e perguntas frequentes. */
+import { Button, Card, IconBox, Kicker, SectionHeading } from '@toski-labs/ds';
 import { getLang, href, SUPPORT_EMAIL } from '../../i18n/ui';
-import Button from '../ui/Button.astro';
-import Card from '../ui/Card.astro';
 import FaqItem from '../ui/FaqItem.astro';
-import IconBox from '../ui/IconBox.astro';
-import Kicker from '../ui/Kicker.astro';
-import SectionHeading from '../ui/SectionHeading.astro';
 
 const lang = getLang(Astro.currentLocale);
 const t = {
@@ -73,13 +69,13 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
 </section>
 
 <section aria-label={t.contactLabel} class="page flex flex-wrap gap-6 pb-22">
-  <Card radius="panel" class="flex min-w-0 flex-[1_1_340px] flex-col gap-3.5 p-8">
+  <Card radius="panel" className="flex min-w-0 flex-[1_1_340px] flex-col gap-3.5 p-8">
     <IconBox name="mail" />
     <h2 class="mt-1 text-2xl font-semibold">{t.mailTitle}</h2>
     <p class="text-base leading-normal text-muted">{t.mailBody}</p>
-    <Button href={mailto} size="md" class="mt-1.5 self-start">{t.mailCta}</Button>
+    <Button href={mailto} size="md" className="mt-1.5 self-start">{t.mailCta}</Button>
   </Card>
-  <Card variant="hero" radius="panel" class="flex min-w-0 flex-[1_1_340px] flex-col gap-3.5 p-8">
+  <Card variant="hero" radius="panel" className="flex min-w-0 flex-[1_1_340px] flex-col gap-3.5 p-8">
     <IconBox name="copy" on="surface" />
     <h2 class="mt-1 text-2xl font-semibold">{t.codeTitle}</h2>
     <p class="text-base leading-normal text-muted">{t.codeBody}</p>

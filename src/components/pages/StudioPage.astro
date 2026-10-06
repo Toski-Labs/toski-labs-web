@@ -1,12 +1,10 @@
 ---
 /** Estúdio (PT e EN): Wallpapers e Temas em cards, e o Toski DS numa faixa própria. */
+import { Button, Pill, SectionHeading } from '@toski-labs/ds';
 import { Image } from 'astro:assets';
 import { getLang, href } from '../../i18n/ui';
 import { studio } from '../../data/studio';
 import { wallpapers } from '../../data/wallpapers';
-import Button from '../ui/Button.astro';
-import Pill from '../ui/Pill.astro';
-import SectionHeading from '../ui/SectionHeading.astro';
 import EditorPreview from '../studio/EditorPreview.astro';
 import TerminalPreview from '../studio/TerminalPreview.astro';
 import DsSection from '../studio/DsSection.astro';
@@ -78,7 +76,7 @@ const card = 'flex flex-col overflow-hidden rounded-panel border border-line bg-
         <h2 class="text-[28px] leading-[1.15] font-semibold tracking-[-0.015em]">{t.wallTitle}</h2>
         <p class="max-w-115 text-base leading-normal text-muted">{t.wallBody}</p>
       </div>
-      <Button href={href(lang, 'wallpapers')} size="md" icon="arrow-right" class="mt-auto self-start">{t.wallCta}</Button>
+      <Button href={href(lang, 'wallpapers')} size="md" icon="arrow-right" className="mt-auto self-start">{t.wallCta}</Button>
     </div>
   </article>
 
@@ -94,7 +92,7 @@ const card = 'flex flex-col overflow-hidden rounded-panel border border-line bg-
           <h2 class="text-[28px] leading-[1.15] font-semibold tracking-[-0.015em]">{t.themesTitle}</h2>
           <p class="max-w-115 text-base leading-normal text-muted">{t.themesBody}</p>
         </div>
-        <Button href={href(lang, 'themes')} size="md" icon="arrow-right" class="mt-auto self-start">{t.themesCta}</Button>
+        <Button href={href(lang, 'themes')} size="md" icon="arrow-right" className="mt-auto self-start">{t.themesCta}</Button>
       </div>
     </article>
   )}

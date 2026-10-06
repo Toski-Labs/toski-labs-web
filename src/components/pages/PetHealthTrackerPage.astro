@@ -1,15 +1,9 @@
 ---
 /** Página do PetHealthTracker (PT e EN). */
+import { AppIcon, Button, Card, CheckList, Icon, Kicker, Pill, SectionHeading } from '@toski-labs/ds';
+import type { IconName } from '@toski-labs/ds';
 import { getLang, href } from '../../i18n/ui';
-import Button from '../ui/Button.astro';
-import Card from '../ui/Card.astro';
-import CheckList from '../ui/CheckList.astro';
 import FeatureCard from '../ui/FeatureCard.astro';
-import Icon, { type IconName } from '../ui/Icon.astro';
-import Kicker from '../ui/Kicker.astro';
-import Pill from '../ui/Pill.astro';
-import SectionHeading from '../ui/SectionHeading.astro';
-import AppIcon from '../brand/AppIcon.astro';
 import PdfCard from '../brand/PdfCard.astro';
 import PhoneMock from '../brand/PhoneMock.astro';
 import BlackFridayOffer from '../campaign/BlackFridayOffer.astro';
@@ -117,7 +111,7 @@ const t = {
 <!-- No celular: ícone menor, botões do mesmo tamanho e iPhone reduzido. Do tablet (md) em diante, texto e iPhone lado a lado. -->
 <section class="page flex flex-wrap items-center gap-10 pt-6 pb-16 sm:pt-10 md:flex-nowrap md:gap-14 md:pb-24">
   <div class="flex min-w-0 flex-[1_1_360px] flex-col gap-5 sm:gap-5.5">
-    <AppIcon size={96} class="size-16 sm:size-24" />
+    <AppIcon size={96} className="size-16 sm:size-24" />
     <div class="flex flex-col gap-3">
       <h1 class="text-[clamp(40px,5.2vw,64px)] leading-[1.04] font-semibold tracking-tight">PetHealthTracker</h1>
       <p class="max-w-130 text-xl leading-[1.4] font-medium sm:text-[22px]">{t.tagline}</p>
@@ -127,7 +121,7 @@ const t = {
       <span class="inline-flex h-12 items-center justify-center gap-2.5 rounded-button bg-ink px-5.5 text-base font-medium text-background sm:h-13.5">
         <Icon name="clock" size={20} />{t.soon}
       </span>
-      <Button href="#planos" variant="secondary" class="justify-center max-sm:h-12 max-sm:text-base">{t.seePlans}</Button>
+      <Button href="#planos" variant="secondary" className="justify-center max-sm:h-12 max-sm:text-base">{t.seePlans}</Button>
     </div>
     <p class="text-sm text-muted">{t.requirement}</p>
   </div>
@@ -149,7 +143,7 @@ const t = {
 
 <!-- Destaque: PDF -->
 <section aria-labelledby="pdf-titulo" class="page pb-16 sm:pb-24">
-  <Card variant="hero" class="flex flex-wrap items-center gap-x-16 gap-y-10 rounded-4xl p-6 sm:p-12">
+  <Card variant="hero" className="flex flex-wrap items-center gap-x-16 gap-y-10 rounded-4xl p-6 sm:p-12">
     <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-4.5">
       <div class="flex flex-wrap items-center gap-2.5">
         <Kicker>{t.pdfKicker}</Kicker>
@@ -157,7 +151,7 @@ const t = {
       </div>
       <h2 id="pdf-titulo" class="text-[clamp(30px,3.6vw,44px)] leading-[1.08] font-semibold tracking-[-0.02em] text-balance">{t.pdfTitle}</h2>
       <p class="max-w-130 text-base leading-[1.55] text-muted sm:text-lg">{t.pdfBody}</p>
-      <CheckList items={t.pdfList} class="mt-1" />
+      <CheckList items={t.pdfList} className="mt-1" />
     </div>
     <div class="flex min-w-0 flex-[1_1_320px] justify-center">
       <PdfCard />
@@ -173,14 +167,14 @@ const t = {
   <div class="page flex flex-col gap-7 py-14 sm:gap-9 sm:py-22">
     <SectionHeading id="planos-titulo" kicker={t.plansKicker} title={t.plansTitle} lead={t.plansLead} />
     <div class="flex flex-wrap items-stretch gap-4 sm:gap-6">
-      <Card variant="plain" radius="panel" class="flex min-w-0 flex-[1_1_300px] flex-col gap-5 p-6 sm:p-8">
+      <Card variant="plain" radius="panel" className="flex min-w-0 flex-[1_1_300px] flex-col gap-5 p-6 sm:p-8">
         <div class="flex flex-col gap-1.5">
           <h3 class="text-2xl font-semibold">{t.freeName}</h3>
           <p class="text-[15px] text-muted">{t.freeSub}</p>
         </div>
         <CheckList items={t.freeList} tone="success" />
       </Card>
-      <Card variant="plain" radius="panel" class="flex min-w-0 flex-[2_1_480px] flex-col gap-5 border-2 border-accent p-6 sm:gap-5.5 sm:p-8">
+      <Card variant="plain" radius="panel" className="flex min-w-0 flex-[2_1_480px] flex-col gap-5 border-2 border-accent p-6 sm:gap-5.5 sm:p-8">
         <div class="flex flex-wrap items-center justify-between gap-2.5">
           <div class="flex flex-col gap-1.5">
             <h3 class="text-2xl font-semibold">Plus</h3>
@@ -215,14 +209,14 @@ const t = {
       </div>
     ))}
   </dl>
-  <Card variant="hero" radius="panel" class="mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 px-6 py-6 sm:px-8 sm:py-7">
+  <Card variant="hero" radius="panel" className="mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 px-6 py-6 sm:px-8 sm:py-7">
     <div class="flex flex-col gap-1">
       <p class="text-[22px] font-semibold">{t.helpTitle}</p>
       <p class="text-base text-muted">{t.helpBody}</p>
     </div>
     <div class="flex flex-wrap gap-3 max-sm:w-full">
-      <Button href={href(lang, 'support')} size="md" class="justify-center max-sm:flex-1">{t.support}</Button>
-      <Button href={href(lang, 'privacy')} size="md" variant="light" class="justify-center max-sm:flex-1">{t.privacy}</Button>
+      <Button href={href(lang, 'support')} size="md" className="justify-center max-sm:flex-1">{t.support}</Button>
+      <Button href={href(lang, 'privacy')} size="md" variant="light" className="justify-center max-sm:flex-1">{t.privacy}</Button>
     </div>
   </Card>
 </section>

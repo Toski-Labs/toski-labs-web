@@ -1,10 +1,8 @@
 ---
 /** Política de Privacidade (texto em src/content/legal/<idioma>/). */
+import { Button, Card, Kicker } from '@toski-labs/ds';
 import { getEntry, render } from 'astro:content';
 import { getLang, href } from '../../i18n/ui';
-import Button from '../ui/Button.astro';
-import Card from '../ui/Card.astro';
-import Kicker from '../ui/Kicker.astro';
 
 const lang = getLang(Astro.currentLocale);
 const entry = await getEntry('legal', lang === 'pt' ? 'pt/privacidade' : 'en/privacy');
@@ -41,7 +39,7 @@ const t = {
 
 <div class="page flex flex-wrap items-start gap-12 pb-24">
   <nav aria-label={t.tocLabel} class="flex max-w-75 min-w-0 flex-[1_1_240px] flex-col gap-0.5 rounded-card border border-line bg-surface p-5 lg:sticky lg:top-6">
-    <Kicker tone="muted" class="mb-2">{t.toc}</Kicker>
+    <Kicker tone="muted" className="mb-2">{t.toc}</Kicker>
     {sections.map((s, i) => (
       <a href={`#${s.slug}`} class="flex min-h-10 items-center gap-2.5 text-[15px] font-medium text-ink no-underline hover:text-accent">
         <span class="w-6 text-[13px] text-muted">{String(i + 1).padStart(2, '0')}</span>{s.text}
@@ -53,7 +51,7 @@ const t = {
     <div class="legal">
       <Content />
     </div>
-    <Card variant="hero" radius="panel" class="flex max-w-180 flex-wrap items-center justify-between gap-x-8 gap-y-4 px-8 py-7">
+    <Card variant="hero" radius="panel" className="flex max-w-180 flex-wrap items-center justify-between gap-x-8 gap-y-4 px-8 py-7">
       <div class="flex flex-col gap-1">
         <p class="text-[22px] font-semibold">{t.contactTitle}</p>
         <p class="text-base text-muted">{t.contactBody}</p>

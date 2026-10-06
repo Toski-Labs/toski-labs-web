@@ -1,8 +1,8 @@
 ---
 /** Seção BLACK FRIDAY na página do PetHealthTracker, no visual da tela de Black Friday do app (tokens blackFriday). */
+import { Icon } from '@toski-labs/ds';
 import { blackFriday as campaign } from '../../data/campaigns';
 import { getLang } from '../../i18n/ui';
-import Icon from '../ui/Icon.astro';
 
 const lang = getLang(Astro.currentLocale);
 const c = campaign.copy[lang];
@@ -29,7 +29,7 @@ const c = campaign.copy[lang];
           <p class="max-w-130 text-[17px] leading-[1.55] text-[#CDB9A3]">{c.lead}</p>
           <div class="flex flex-wrap items-center gap-3">
             <span class="inline-flex h-12 items-center gap-2.5 rounded-button bg-[#2E241D] px-4 text-[15px] font-medium">
-              <Icon name="clock" size={18} stroke={2.2} class="text-caramelo" />{c.until}
+              <Icon name="clock" size={18} stroke={2.2} className="text-caramelo" />{c.until}
             </span>
             <div class="flex gap-1.5" role="timer" aria-label={c.endsIn}>
               {c.units.map((unit, i) => (

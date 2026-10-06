@@ -1,7 +1,7 @@
 ---
 /** Carteirinha de vacinação em PDF (exemplo da Paçoca) + botão de compartilhar ilustrativo. Papel sempre claro. */
+import { Icon } from '@toski-labs/ds';
 import { getLang } from '../../i18n/ui';
-import Icon from '../ui/Icon.astro';
 
 const lang = getLang(Astro.currentLocale);
 const copy = {
@@ -43,6 +43,6 @@ const copy = {
     </div>
   </div>
   <span class="inline-flex h-11 items-center gap-2.5 rounded-full bg-surface px-4.5 text-[15px] font-medium shadow-[0_6px_18px_rgba(35,27,23,0.08)]" aria-hidden="true">
-    <Icon name="share" size={18} stroke={2} class="text-accent" />{copy.share}
+    <Icon name="share" size={18} stroke={2} className="text-accent" />{copy.share}
   </span>
 </div>
