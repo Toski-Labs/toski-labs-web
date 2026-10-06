@@ -1,0 +1,27 @@
+---
+/**
+ * surface  = branco/superfície com borda fina (cards de projeto e recurso)
+ * plain    = superfície sem borda (cards sobre faixa tint)
+ * hero     = fundo bege da Paçoca (destaques e CTAs)
+ * dashed   = tracejado ("Próximo projeto")
+ */
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+  variant?: 'surface' | 'plain' | 'hero' | 'dashed';
+  /** card = raio 18 · panel = raio 28 */
+  radius?: 'card' | 'panel';
+  as?: 'div' | 'article' | 'section' | 'li';
+}
+const { variant = 'surface', radius = 'card', as: Tag = 'div', class: className, ...rest } = Astro.props;
+const variants = {
+  surface: 'bg-surface border border-line',
+  plain: 'bg-surface',
+  hero: 'bg-hero',
+  dashed: 'border-2 border-dashed border-line',
+};
+---
+
+<Tag class:list={[variants[variant], radius === 'panel' ? 'rounded-panel' : 'rounded-card', className]} {...rest}>
+  <slot />
+</Tag>

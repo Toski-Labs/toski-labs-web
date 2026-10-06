@@ -1,0 +1,19 @@
+---
+/** Pergunta que abre e fecha (<details> nativo: funciona sem JavaScript). */
+import Icon from './Icon.astro';
+
+interface Props {
+  question: string;
+}
+const { question } = Astro.props;
+---
+
+<details class="group rounded-card bg-surface">
+  <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 px-5.5 py-4 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
+    {question}
+    <Icon name="chevron-down" size={20} stroke={2} class="text-muted transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none" />
+  </summary>
+  <div class="px-5.5 pb-5 text-base leading-relaxed text-muted">
+    <slot />
+  </div>
+</details>

@@ -1,0 +1,93 @@
+---
+/** Tela Início do PetHealthTracker num iPhone ilustrado (sem barra de status). Acompanha o tema do site. */
+import { getLang } from '../../i18n/ui';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+
+const copy = {
+  pt: {
+    aria: 'Tela inicial do app com lembretes atrasados, de hoje e dos próximos dias',
+    title: 'Início', all: 'Todos', late: 'Atrasados', today: 'Hoje', next: 'Próximos dias',
+    lateItem: { title: 'Vermífugo', sub: 'Mia · ontem' },
+    todayItems: [{ title: 'Vacina V10', sub: 'Paçoca · 9:00' }, { title: 'Banho', sub: 'Paçoca · 15:00' }],
+    nextItem: { title: 'Antipulgas', sub: 'Mia · sexta' },
+    tabs: ['Início', 'Calendário', 'Pets', 'Ajustes'],
+  },
+  en: {
+    aria: 'The app’s home screen with overdue, today and upcoming reminders',
+    title: 'Home', all: 'All', late: 'Overdue', today: 'Today', next: 'Next few days',
+    lateItem: { title: 'Dewormer', sub: 'Mia · yesterday' },
+    todayItems: [{ title: 'Rabies shot', sub: 'Paçoca · 9:00' }, { title: 'Bath', sub: 'Paçoca · 3:00 PM' }],
+    nextItem: { title: 'Flea treatment', sub: 'Mia · Friday' },
+    tabs: ['Home', 'Calendar', 'Pets', 'Settings'],
+  },
+}[lang];
+
+const pets = [
+  { name: 'Paçoca', initial: 'P', color: '#DB9A5B' },
+  { name: 'Mia', initial: 'M', color: '#8FA07C' },
+];
+const label = 'mt-1 text-[11px] font-semibold uppercase tracking-[0.06em]';
+/** Ícones da barra de abas do app (Início, Calendário, Pets, Ajustes), iguais ao canvas do PetHealthTracker. */
+const tabIcons = [
+  'M3 11l9-7 9 7 M5.5 9.5V20h13V9.5 M10 20v-5h4v5',
+  'M4 6h16v14H4z M4 10h16 M8 3v4 M16 3v4',
+  'M12 13c-3 0-5.5 3.5-5.5 5.5 0 1.4 1.2 2 2.3 2 1.2 0 2-.6 3.2-.6s2 .6 3.2.6c1.1 0 2.3-.6 2.3-2 0-2-2.5-5.5-5.5-5.5z M6 8.5a1.8 2.2 0 1 0 0.01 0z M10 4.5a1.8 2.2 0 1 0 0.01 0z M14 4.5a1.8 2.2 0 1 0 0.01 0z M18 8.5a1.8 2.2 0 1 0 0.01 0z',
+  'M4 7h9 M17 7h3 M4 17h3 M11 17h9 M15 5v4 M9 15v4',
+];
+---
+
+<div role="img" aria-label={copy.aria} class:list={['relative w-75 rounded-[48px] bg-[#1B1511] p-2.5 shadow-[0_24px_60px_rgba(35,27,23,0.22)] ring-1 ring-phone-ring', className]}>
+  <div class="flex h-150 flex-col overflow-hidden rounded-[38px] bg-background" aria-hidden="true">
+    <div class="flex grow flex-col gap-3 overflow-hidden px-4 pt-10">
+      <div class="flex items-center justify-between">
+        <span class="text-[26px] font-semibold tracking-[-0.01em]">{copy.title}</span>
+        <span class="flex size-8.5 items-center justify-center rounded-full bg-accent text-on-accent"><Icon name="plus" size={16} stroke={2.4} /></span>
+      </div>
+      <div class="flex gap-1.5">
+        <span class="flex h-7.5 items-center rounded-full bg-ink px-3 text-xs font-semibold text-background">{copy.all}</span>
+        {pets.map((pet) => (
+          <span class="flex h-7.5 items-center gap-1.5 rounded-full border border-line bg-surface pr-2.5 pl-1 text-xs font-medium">
+            <span class="flex size-5.5 items-center justify-center rounded-full text-[11px] font-semibold text-carvao" style={`background:${pet.color}`}>{pet.initial}</span>
+            {pet.name}
+          </span>
+        ))}
+      </div>
+
+      <span class:list={[label, 'text-critical']}>{copy.late}</span>
+      <div class="flex items-center gap-2.5 rounded-2xl border border-critical-line bg-surface p-3">
+        <span class="size-5.5 shrink-0 rounded-full border-2 border-critical"></span>
+        <span class="flex flex-col gap-px"><span class="text-sm font-semibold">{copy.lateItem.title}</span><span class="text-xs text-critical">{copy.lateItem.sub}</span></span>
+      </div>
+
+      <span class:list={[label, 'text-muted']}>{copy.today}</span>
+      {copy.todayItems.map((item) => (
+        <div class="flex items-center gap-2.5 rounded-2xl bg-surface p-3">
+          <span class="size-5.5 shrink-0 rounded-full border-2 border-line"></span>
+          <span class="flex flex-col gap-px"><span class="text-sm font-semibold">{item.title}</span><span class="text-xs text-muted">{item.sub}</span></span>
+        </div>
+      ))}
+
+      <span class:list={[label, 'text-muted']}>{copy.next}</span>
+      <div class="flex items-center gap-2.5 rounded-2xl bg-surface p-3">
+        <span class="size-5.5 shrink-0 rounded-full border-2 border-line"></span>
+        <span class="flex flex-col gap-px"><span class="text-sm font-semibold">{copy.nextItem.title}</span><span class="text-xs text-muted">{copy.nextItem.sub}</span></span>
+      </div>
+    </div>
+    <div class="grid h-16 shrink-0 grid-cols-4 border-t border-line bg-tabbar px-2 pt-2 pb-3.5">
+      {copy.tabs.map((tab, i) => (
+        <span class:list={['flex flex-col items-center justify-center gap-0.75 text-[10px]', i === 0 ? 'font-semibold text-accent' : 'font-medium text-tab-idle']}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d={tabIcons[i]}></path>
+          </svg>
+          {tab}
+        </span>
+      ))}
+    </div>
+  </div>
+</div>

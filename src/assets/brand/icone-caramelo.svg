@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
-  <rect width="180" height="180" rx="40" fill="#DB9A5B"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="1024" height="1024">
+  <title>Ícone do app — Caramelo (padrão)</title>
+  <rect width="180" height="180" fill="#DB9A5B"/>
   <svg x="22" y="25" width="136" height="130" viewBox="-6 -6 222 212">
     <path d="M26 90 C26 84 32 80 40 79 L74 72 C82 70 86 62 94 56 C104 48 124 46 140 52 C158 58 166 76 168 96 C172 120 182 150 196 200 L72 200 C66 190 74 184 68 176 C62 168 72 162 68 154 C64 146 74 140 74 132 C70 126 64 122 58 118 C48 114 38 110 32 104 C27 100 25 95 26 90 Z" fill="#A9541F" stroke="#F4E4CC" stroke-width="5" stroke-linejoin="round"/>
     <path d="M112 64 C128 56 148 62 150 78 C154 98 150 116 140 126 C136 132 128 132 124 126 C120 120 122 114 118 110 C112 96 104 78 112 64 Z" fill="#A9541F" stroke="#F4E4CC" stroke-width="4" stroke-linejoin="round"/>

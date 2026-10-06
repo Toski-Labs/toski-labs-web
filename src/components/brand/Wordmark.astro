@@ -1,0 +1,13 @@
+---
+/** "toski labs" — na cor do texto, com "labs" na cor de destaque. */
+interface Props {
+  class?: string;
+  /** Rodapé: fundo sempre escuro, então "labs" fica caramelo. */
+  onDark?: boolean;
+}
+const { class: className, onDark = false } = Astro.props;
+---
+
+<span class:list={['font-semibold tracking-[-0.01em]', className]}>
+  toski <span class:list={['font-normal', onDark ? 'text-caramelo' : 'text-accent']}>labs</span>
+</span>

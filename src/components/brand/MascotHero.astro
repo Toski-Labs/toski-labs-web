@@ -1,0 +1,15 @@
+---
+/** Paçoca dentro do círculo bege (topo da Home). O tamanho máximo vem de fora, via class (ex.: max-w-[440px]). */
+import Mascot from './Mascot.astro';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class:list={['relative aspect-square w-full', className]}>
+  <div class="absolute inset-0 flex items-center justify-center rounded-full bg-hero">
+    <Mascot width="66%" />
+  </div>
+</div>

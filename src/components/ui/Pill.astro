@@ -1,0 +1,24 @@
+---
+/**
+ * status  = fundo tint com bolinha de destaque ("Em desenvolvimento")
+ * outline = só borda ("iPhone · iOS 18+")
+ * tag     = etiqueta clara de recurso
+ * plus    = etiqueta PLUS
+ */
+interface Props {
+  variant?: 'status' | 'outline' | 'tag' | 'plus';
+  class?: string;
+}
+const { variant = 'tag', class: className } = Astro.props;
+const styles = {
+  status: 'h-8 gap-2 rounded-full bg-tint px-3.5 text-sm font-medium text-ink',
+  outline: 'h-8 rounded-full border border-line px-3.5 text-sm font-medium text-muted',
+  tag: 'h-8 rounded-[10px] bg-background px-3 text-sm text-ink',
+  plus: 'h-6.5 rounded-full bg-accent px-2.5 text-xs font-semibold tracking-[0.04em] text-on-accent',
+};
+---
+
+<span class:list={['inline-flex items-center whitespace-nowrap', styles[variant], className]}>
+  {variant === 'status' && <span class="size-2 rounded-full bg-accent" aria-hidden="true"></span>}
+  <slot />
+</span>

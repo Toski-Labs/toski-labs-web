@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="15.5 149.5 37 37" width="37" height="37">
+  <title>Bolinha (tema escuro) — camada animada</title>
+  <circle cx="34" cy="168" r="16" fill="#DB9A5B" stroke="#F4E4CC" stroke-width="5"/>
+  <path d="M24 156 Q36 168 24 180 M44 156 Q32 168 44 180" fill="none" stroke="#F4E4CC" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
