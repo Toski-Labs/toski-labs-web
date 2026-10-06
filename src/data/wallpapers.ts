@@ -54,7 +54,7 @@ export const wallpapers: Wallpaper[] = [
   {
     id: 'halloween',
     name: { pt: 'Halloween', en: 'Halloween' },
-    description: { pt: 'A Toski entre abóboras, teias e fantasminhas dizendo “booo!”.', en: 'Toski among pumpkins, spider webs and little ghosts saying “booo!”.' },
+    description: { pt: 'A Toski entre abóboras, teias e fantasminhas.', en: 'Toski among pumpkins, webs and little ghosts.' },
     iphone: halloweenIphone,
     mac: halloweenMac,
     file: '06-halloween',
@@ -62,7 +62,7 @@ export const wallpapers: Wallpaper[] = [
   {
     id: 'lick-or-treat',
     name: { pt: 'Lick or Treat', en: 'Lick or Treat' },
-    description: { pt: 'Estampa lilás com fantasminhas, esqueletinhos de doguinho, abóboras, pirulitos e “woof!”.', en: 'A lilac pattern with little ghosts, little dog skeletons, pumpkins, lollipops and “woof!”.' },
+    description: { pt: 'Estampa lilás com fantasminhas, doces e “woof!”.', en: 'A lilac pattern with ghosts, treats and “woof!”.' },
     iphone: lickIphone,
     mac: lickMac,
     file: '07-lick-or-treat',
@@ -70,7 +70,7 @@ export const wallpapers: Wallpaper[] = [
   {
     id: 'minimal',
     name: { pt: 'Minimal', en: 'Minimal' },
-    description: { pt: 'A Toski e o nome sobre o papel. Discreto, combina com qualquer ícone.', en: 'Toski and the name on paper. Subtle, goes with any icon set.' },
+    description: { pt: 'A Toski e o nome sobre o papel, bem discreto.', en: 'Toski and the name on paper, nice and subtle.' },
     iphone: minimalIphone,
     mac: minimalMac,
     file: '01-minimal',
