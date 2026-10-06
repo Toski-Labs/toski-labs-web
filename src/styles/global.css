@@ -100,7 +100,8 @@
 
 /*
  * Microinterações (proposta aprovada no canvas, página "Animações").
- * Só transform e opacity, 100 a 250 ms, curvas do DS. Com "reduzir movimento",
+ * Só transform e opacity, durações e curvas do DS (--toski-motion-*, --toski-ease-*).
+ * Abrir e fechar menus (toski-menu) e afundar botões (buttonClasses) vêm do próprio DS 0.4. Com "reduzir movimento",
  * o DS zera as durações de tudo. O comportamento fica em src/scripts/motion.ts.
  * Fora de @layer de propósito: precisa valer sobre as classes utilitárias.
  */
@@ -117,10 +118,10 @@
   transform: scale(0.6);
   color: var(--toski-success);
   transition:
-    width 150ms var(--toski-ease-out),
-    margin 150ms var(--toski-ease-out),
-    opacity 150ms var(--toski-ease-out),
-    transform 200ms var(--toski-ease-out);
+    width var(--toski-motion-base) var(--toski-ease-out),
+    margin var(--toski-motion-base) var(--toski-ease-out),
+    opacity var(--toski-motion-base) var(--toski-ease-out),
+    transform var(--toski-motion-base) var(--toski-ease-out);
 }
 .toski-copy[data-state='copied'] .toski-check {
   width: 1.1em;
@@ -140,34 +141,14 @@
   }
 }
 .toski-swatch[data-state='copied'] [data-label] {
-  animation: toski-pop 220ms var(--toski-ease-out);
+  animation: toski-pop var(--toski-motion-enter) var(--toski-ease-out);
 }
 
-/* Menus (configurações e tamanhos dos wallpapers): surgem do botão e fecham mais rápido. */
-@keyframes toski-menu-in {
-  from {
-    opacity: 0;
-    transform: translateY(var(--menu-from, -6px)) scale(0.98);
-  }
-}
-@keyframes toski-menu-out {
-  to {
-    opacity: 0;
-    transform: translateY(var(--menu-from, -6px)) scale(0.98);
-  }
-}
-.toski-menu {
-  transform-origin: var(--menu-origin, top right);
-  animation: toski-menu-in 160ms var(--toski-ease-out);
-}
-.toski-menu[data-closing] {
-  animation: toski-menu-out 100ms var(--toski-ease-out) forwards;
-}
 
 /* Troca de tema: as cores passam de um tema para o outro (View Transitions). */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 250ms;
+  animation-duration: var(--toski-motion-enter);
   animation-timing-function: var(--toski-ease-in-out);
 }
 
@@ -187,19 +168,19 @@
   box-shadow: 0 1px 3px rgba(35, 27, 23, 0.14);
   pointer-events: none;
   transition:
-    transform 220ms var(--toski-ease-out),
-    width 220ms var(--toski-ease-out);
+    transform var(--toski-motion-enter) var(--toski-ease-out),
+    width var(--toski-motion-enter) var(--toski-ease-out);
 }
 
 /* Cards que levantam (só com mouse). O link principal cobre o card inteiro (.toski-stretch). */
 .toski-lift {
   position: relative;
   transition:
-    transform 200ms var(--toski-ease-out),
-    box-shadow 200ms var(--toski-ease-out);
+    transform var(--toski-motion-base) var(--toski-ease-out),
+    box-shadow var(--toski-motion-base) var(--toski-ease-out);
 }
 .toski-lift-art {
-  transition: transform 300ms var(--toski-ease-out);
+  transition: transform var(--toski-motion-enter) var(--toski-ease-out);
 }
 .toski-stretch::after {
   content: '';
@@ -217,13 +198,6 @@
   }
 }
 
-/* Botões afundando ao pressionar. Provisório: o lugar certo é o buttonClasses() do DS. */
-.rounded-button.select-none {
-  transition-property: color, background-color, border-color, transform;
-}
-.rounded-button.select-none:active {
-  transform: scale(0.97);
-}
 
 /* Seções aparecendo ao rolar (classe posta pelo script só no que começa fora da tela). */
 .toski-reveal > *,
