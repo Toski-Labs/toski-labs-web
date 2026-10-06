@@ -1,7 +1,7 @@
 ---
 title: Política de Privacidade
 lead: Seus dados e os dos seus pets são seus. Aqui está, sem juridiquês, o que o PetHealthTracker guarda, por quê e o que você pode fazer.
-updated: "5 de outubro de 2026"
+updated: "6 de outubro de 2026"
 ---
 
 ## Quem somos
@@ -60,6 +60,19 @@ Pela LGPD, você pode pedir acesso, correção, portabilidade e exclusão dos se
   Direto no app, em Ajustes › Conta › Excluir conta.
 - **Pedir uma cópia ou tirar dúvidas**
   Escreva para [toskilabs@gmail.com](mailto:toskilabs@gmail.com).
+
+## Este site
+
+O site da Toski Labs (toski-labs.web.app) não tem login, não usa cookies e não usa ferramentas de análise ou de publicidade.
+
+- **Suas preferências**
+  O tema e o idioma que você escolher ficam salvos só no seu navegador, para o site lembrar na próxima visita. Essa informação não sai do seu aparelho.
+- **Campanhas**
+  Durante uma promoção, o site consulta o Firebase Remote Config (Google) para saber se a oferta está ativa. Para isso, o Firebase cria no navegador um identificador técnico, sem ligação com você nem com a sua conta do app. Fora das campanhas, essa consulta não acontece.
+- **Hospedagem**
+  O site fica no Firebase Hosting (Google), que pode registrar dados técnicos de acesso, como o endereço IP, por segurança e para o site funcionar.
+- **Downloads**
+  Wallpapers e temas baixados pelos botões vêm do GitHub, do Visual Studio Marketplace ou do Open VSX, que têm as próprias políticas de privacidade.
 
 ## Mudanças nesta política
 
