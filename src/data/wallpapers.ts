@@ -62,7 +62,7 @@ export const wallpapers: Wallpaper[] = [
   {
     id: 'lick-or-treat',
     name: { pt: 'Lick or Treat', en: 'Lick or Treat' },
-    description: { pt: 'Estampa lilás com fantasminhas, esqueletinhos de doguinho, abóboras, pirulitos e “woof!”.', en: 'A lilac pattern with little ghosts, dog skeletons, pumpkins, lollipops and “woof!”.' },
+    description: { pt: 'Estampa lilás com fantasminhas, esqueletinhos de doguinho, abóboras, pirulitos e “woof!”.', en: 'A lilac pattern with little ghosts, little dog skeletons, pumpkins, lollipops and “woof!”.' },
     iphone: lickIphone,
     mac: lickMac,
     file: '07-lick-or-treat',
@@ -70,7 +70,7 @@ export const wallpapers: Wallpaper[] = [
   {
     id: 'minimal',
     name: { pt: 'Minimal', en: 'Minimal' },
-    description: { pt: 'A Toski e o nome sobre o papel. Discreto, combina com qualquer ícone.', en: 'Toski and the name on paper. Subtle, goes with any icons.' },
+    description: { pt: 'A Toski e o nome sobre o papel. Discreto, combina com qualquer ícone.', en: 'Toski and the name on paper. Subtle, goes with any icon set.' },
     iphone: minimalIphone,
     mac: minimalMac,
     file: '01-minimal',

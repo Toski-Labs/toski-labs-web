@@ -20,7 +20,7 @@ interface Props {
 const { page, title, description, noindex = false } = Astro.props;
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
-const fullTitle = title ? `${title} — ${t('site.name')}` : `${t('site.name')} — ${t('site.tagline')}`;
+const fullTitle = title ? `${title} — ${t('site.name')}` : `${t('site.name')} — ${t('site.tagline').replace(/\.$/, '')}`;
 const site = Astro.site ?? new URL('https://toski-labs.web.app');
 const canonical = new URL(routes[lang][page], site);
 const alternate = new URL(alternatePath(page, lang), site);
