@@ -43,6 +43,8 @@ const ogImage = new URL(`/og/og-${lang}.png`, site);
     </script>
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <!-- Google Search Console (verificação da propriedade https://toski-labs.web.app). Não remover. -->
+    <meta name="google-site-verification" content="1AX7GUxIzCQqaI5yi1_aQx5kyT3gww02j3W4Q9hZeVc" />
     {noindex ? (
       <meta name="robots" content="noindex" />
     ) : (
