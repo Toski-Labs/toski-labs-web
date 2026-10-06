@@ -14,6 +14,7 @@ const t = {
     lead: 'Fundos de tela da Toski Labs para celular e computador, em alta resolução. Grátis para uso pessoal.',
     filter: 'Filtrar por aparelho',
     listLabel: 'Lista de wallpapers (role para ver mais)',
+    swipeLabel: 'Lista de wallpapers (deslize para o lado para ver mais)',
     all: 'Todos',
     download: (name: string, device: string) => `Baixar ${name} para ${device}`,
     desktopPick: (name: string) => `Baixar ${name} para desktop: escolha o tamanho`,
@@ -31,6 +32,7 @@ const t = {
     lead: 'Toski Labs wallpapers for phones and desktops, in high resolution. Free for personal use.',
     filter: 'Filter by device',
     listLabel: 'Wallpaper list (scroll to see more)',
+    swipeLabel: 'Wallpaper list (swipe sideways to see more)',
     all: 'All',
     download: (name: string, device: string) => `Download ${name} for ${device}`,
     desktopPick: (name: string) => `Download ${name} for desktop: choose a size`,
@@ -70,21 +72,24 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
 
   <!-- Desktop: lista de tamanhos abre para cima no computador e embaixo do botão, dentro do card, no celular. -->
   <!-- Com mais de 4 wallpapers, do tablet em diante a lista ganha rolagem própria na altura dos 4 primeiros (script abaixo). -->
+  <!-- No celular os cards ficam lado a lado, com rolagem horizontal e o próximo card aparecendo na borda. -->
   <section aria-label={t.kicker} class="page pb-24">
     <div
-      class:list={['wallpaper-list', scrolls && 'toski-wall-scroll -mr-3 overflow-y-auto overscroll-y-contain pr-3']}
-      tabindex={scrolls ? 0 : undefined}
-      aria-label={scrolls ? t.listLabel : undefined}
+      class:list={['wallpaper-list', scrolls && 'toski-wall-scroll md:-mr-3 md:overflow-y-auto md:overscroll-y-contain md:pr-3']}
+      data-label={t.listLabel}
     >
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] gap-6">
+    <div
+      class="toski-wall-row grid grid-cols-[repeat(auto-fit,minmax(min(100%,460px),1fr))] gap-6 max-md:-mx-(--spacing-gutter) max-md:flex max-md:snap-x max-md:snap-mandatory max-md:items-start max-md:gap-4 max-md:overflow-x-auto max-md:overscroll-x-contain max-md:scroll-px-(--spacing-gutter) max-md:px-(--spacing-gutter) max-md:pb-1"
+      data-label={t.swipeLabel}
+    >
     {wallpapers.map((w) => (
       <article
-        class="flex flex-col overflow-hidden rounded-panel border border-line bg-surface"
+        class="flex flex-col overflow-hidden rounded-panel border border-line bg-surface max-md:w-[min(340px,84%)] max-md:shrink-0 max-md:snap-start"
         data-only={w.iphone && w.mac ? undefined : w.iphone ? 'iphone' : 'mac'}
       >
-        <div class="flex h-75 items-end justify-center gap-6 overflow-hidden bg-hero px-6 pt-7" aria-hidden="true">
+        <div class="flex h-75 items-end justify-center gap-6 overflow-hidden bg-hero px-6 pt-7 max-md:h-60 max-md:gap-4 max-md:px-5" aria-hidden="true">
           {w.mac && (
-            <div data-device="mac" class="mb-7 flex flex-col items-center">
+            <div data-device="mac" class="mb-7 flex min-w-0 shrink flex-col items-center max-md:mb-5">
               <div class="w-82.5 max-w-full rounded-t-xl rounded-b-sm bg-[#1B1511] p-1.75">
                 <Image src={w.mac} alt="" widths={[330, 660]} sizes="330px" class="block aspect-video w-full rounded-sm object-cover" />
               </div>
@@ -92,7 +97,7 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
             </div>
           )}
           {w.iphone && (
-            <div data-device="iphone" class="w-32 shrink-0 translate-y-3.5 rounded-t-3xl bg-[#1B1511] p-1.25">
+            <div data-device="iphone" class="w-32 shrink-0 translate-y-3.5 max-md:w-22 rounded-t-3xl bg-[#1B1511] p-1.25">
               <Image src={w.iphone} alt="" widths={[128, 256]} sizes="128px" class="block aspect-1320/2868 w-full rounded-t-[19px] object-cover" />
             </div>
           )}
@@ -178,7 +183,8 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
   .wallpapers:has(#f-mac:checked) [data-device='iphone'] {
     display: none;
   }
-  .toski-wall-scroll {
+  .toski-wall-scroll,
+  .toski-wall-row {
     scrollbar-width: thin;
     scrollbar-color: var(--color-line) transparent;
   }
@@ -189,12 +195,33 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
 </style>
 
 <script>
+  // Quem rola ganha foco pelo teclado e o rótulo: a fileira no celular, a caixa da lista no computador.
+  const focusable = (el: HTMLElement | null, on: boolean) => {
+    if (!el) return;
+    if (on) {
+      el.tabIndex = 0;
+      el.setAttribute('aria-label', el.dataset.label ?? '');
+    } else {
+      el.removeAttribute('tabindex');
+      el.removeAttribute('aria-label');
+    }
+  };
+  const row = document.querySelector<HTMLElement>('.toski-wall-row');
+  const wallList = document.querySelector<HTMLElement>('.wallpaper-list');
+  const label = () => {
+    const mobile = window.innerWidth < 768;
+    focusable(row, mobile && !!row && row.scrollWidth > row.clientWidth + 4);
+    focusable(wallList, !mobile && !!wallList?.style.maxHeight);
+  };
+  if (row) new ResizeObserver(label).observe(row);
+  document.querySelectorAll('input[name="filtro-wallpaper"]').forEach((input) => input.addEventListener('change', () => { if (row) row.scrollLeft = 0; label(); }));
+
   // Altura da lista = até o fim do 4º wallpaper visível (respeita o filtro e a largura da tela).
   const box = document.querySelector<HTMLElement>('.toski-wall-scroll');
   if (box) {
     const fit = () => {
       const cards = [...box.querySelectorAll<HTMLElement>('article')].filter((el) => el.offsetParent !== null);
-      // No celular a lista fica com a rolagem normal da página (rolagem dentro de rolagem atrapalha no toque).
+      // No celular a lista rola para o lado (rolagem vertical dentro da página atrapalha no toque).
       if (cards.length <= 4 || window.innerWidth < 768) {
         box.style.maxHeight = '';
       } else {
@@ -202,6 +229,7 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
         box.style.maxHeight = `${Math.ceil(cards[3].getBoundingClientRect().bottom - top - box.scrollTop + 4)}px`;
       }
       more();
+      label();
     };
     const more = () => box.toggleAttribute('data-more', box.scrollTop + box.clientHeight < box.scrollHeight - 4);
     box.addEventListener('scroll', more, { passive: true });
