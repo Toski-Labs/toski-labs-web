@@ -107,7 +107,7 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 ### Falta
 **Conteúdo e revisão**
 1. Revisar todos os textos em português e em inglês (páginas, FAQ, política, Estúdio, wallpapers, campanhas, mensagens do menu e do aviso de idioma): ortografia, tom, consistência de termos (Toski, Plus, pet) e se o inglês soa natural.
-2. Preços em inglês: página do PetHealthTracker mostra "Local price" e a oferta de Black Friday em inglês ainda tem `[PRICE]` em `src/data/campaigns.ts` — **precisa ser preenchido antes de 27/11**, senão aparece no site.
+2. Preços: a página do PetHealthTracker mostra "Em breve" / "Soon" até a precificação ser decidida (o teste de 7 dias continua). A oferta de Black Friday em `src/data/campaigns.ts` ainda tem preços antigos em PT e `[PRICE]` em EN — **revisar antes de 27/11**.
 3. Política: confirmar os 30 dias, nomear a rede de anúncios, faixa etária, revisão jurídica.
 
 **App e anúncios**
@@ -116,12 +116,12 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 6. Black Friday (27–30/11): ofertas no App Store Connect, chave no Remote Config do app e do site; testar antes com `?campanha=pethealthtracker.black_friday`.
 
 **Estúdio**
-7. Toski DS: mostrar no Estúdio como "em desenvolvimento", com link para o repositório `Toski-Labs/toski-ds` (hoje a faixa fica escondida com `ds.ready: false`). Desenhar no canvas e implementar.
+7. ~~Toski DS no Estúdio~~ ✅ (6 out): o site usa `@toski-labs/ds` como fonte única; a faixa está publicada (`ds.ready: true`) com Storybook, GitHub, npm e o comando de instalação.
 8. Open VSX: revisão do tema e pedido do namespace `toskilabs`.
 
 **SEO e compartilhamento**
 9. Conferir o card de compartilhamento nas redes (WhatsApp, Instagram/Facebook, X, LinkedIn, iMessage) para cada página em PT e EN: imagem, título e descrição. Avaliar imagens OG próprias para PetHealthTracker, Estúdio e Wallpapers.
-10. SEO: títulos e descrições de todas as páginas, Google Search Console com o `sitemap-index.xml`, dados estruturados (Organization e SoftwareApplication) e Lighthouse no site publicado.
+10. SEO: títulos e descrições de todas as páginas, dados estruturados (Organization e SoftwareApplication) e Lighthouse no site publicado. Search Console: ver a seção abaixo.
 
 **Animações**
 11. Mapear animações e microinterações do site: o que já existe (bolinha da Toski, menu de configurações, faixa de campanha, voltar ao topo) e onde vale adicionar (hover e clique em botões e cards, troca de tema, filtro e seletor de tamanho dos wallpapers, copiar cor do DS, abertura do FAQ, entrada das seções ao rolar). Tudo leve, só CSS sempre que der, respeitando `prefers-reduced-motion`. Desenhar no canvas antes de implementar.
@@ -131,3 +131,10 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 
 **Opcionais**
 13. Domínio próprio e deploy automático pelo GitHub Actions.
+
+## Google Search Console (6 out 2026)
+- Propriedade **Prefixo do URL** `https://toski-labs.web.app`, na conta Google da Toski Labs. Verificada pela **Tag HTML** (`google-site-verification` no `<head>` do `BaseLayout.astro` — não remover, senão a verificação cai). O método "Arquivo HTML" não serve aqui: o `cleanUrls` do Firebase redireciona `/arquivo.html`.
+- Sitemap enviado: `sitemap-index.xml` (aponta para `sitemap-0.xml`). O site serve os dois certinho; o status "Não foi possível buscar o sitemap" logo após o envio é provisório em propriedade nova. Se continuar depois de 2–3 dias: remover e reenviar, ou enviar `sitemap-0.xml`.
+- Solicitar indexação (Inspeção de URL) de `/` e `/pethealthtracker` deu "cota excedida" no primeiro dia — limite comum em propriedade nova. Tentar de novo nos dias seguintes; se não der, o Google encontra as páginas pelo sitemap.
+- Os relatórios de Desempenho e Páginas levam alguns dias para ter dados. Conferir no fim da semana.
+- Se a Toski Labs tiver domínio próprio no futuro, cadastrar também uma propriedade do tipo **Domínio** (verificação por DNS).
