@@ -41,11 +41,13 @@ const t = {
     freeList: ['1 pet ativo (arquivados não contam)', 'Todos os registros de saúde e lembretes, sem limite', '1 aviso por item, no horário que você escolher', 'Anúncios discretos, nunca na tela inicial nem nos formulários'],
     plusSub: 'Para a casa toda e para quem quer mais ajuda',
     trial: '7 dias grátis',
+    pricesNote: 'Os preços saem junto com o lançamento do app na App Store.',
     plusList: ['Pets ilimitados', 'Carteirinha e histórico em PDF', 'Calendário do iPhone e Google Agenda', 'Aviso extra antes do dia', 'Insistir se atrasar', 'Resumo do dia', 'Horário próprio por item', 'Ícones alternativos e sem anúncios'],
     prices: [
-      { name: 'Mensal', price: 'R$ 9,90', sub: 'por mês', featured: false },
-      { name: 'Anual', price: 'R$ 59,90', sub: 'por ano · R$ 4,99/mês', featured: true },
-      { name: 'Vitalício', price: 'R$ 149,90', sub: 'pagamento único', featured: false },
+      // Preços ainda não definidos: aparecem no lançamento, junto com a App Store.
+      { name: 'Mensal', price: 'Em breve', sub: 'cobrança mensal', featured: false },
+      { name: 'Anual', price: 'Em breve', sub: 'cobrança anual', featured: true },
+      { name: 'Vitalício', price: 'Em breve', sub: 'pagamento único', featured: false },
     ],
     detTitle: 'Detalhes',
     details: [['Aparelho', 'iPhone com iOS 18 ou mais recente'], ['Idiomas', 'Português (Brasil) e inglês'], ['Entrar com', 'Apple ou Google'], ['Seus dados', 'No iPhone, com cópia na nuvem em São Paulo']],
@@ -84,12 +86,12 @@ const t = {
     freeList: ['1 active pet (archived pets don’t count)', 'Every health record and reminder, unlimited', '1 alert per item, at the time you choose', 'Subtle ads, never on the home screen or in forms'],
     plusSub: 'For the whole household, with extra help',
     trial: '7-day free trial',
+    pricesNote: 'Prices will be announced when the app launches on the App Store.',
     plusList: ['Unlimited pets', 'Vaccine card and history as PDF', 'iPhone Calendar and Google Calendar', 'Extra heads-up before the day', 'Nudges when something is late', 'Daily summary', 'Custom time per item', 'Alternate icons, no ads'],
     prices: [
-      // Preço em cada moeda vem da App Store; em inglês mostramos só o plano até termos os valores por país.
-      { name: 'Monthly', price: 'Local price', sub: 'per month · shown in the App Store', featured: false },
-      { name: 'Yearly', price: 'Local price', sub: 'per year · best value', featured: true },
-      { name: 'Lifetime', price: 'Local price', sub: 'one-time purchase', featured: false },
+      { name: 'Monthly', price: 'Soon', sub: 'billed monthly', featured: false },
+      { name: 'Yearly', price: 'Soon', sub: 'billed yearly', featured: true },
+      { name: 'Lifetime', price: 'Soon', sub: 'one-time purchase', featured: false },
     ],
     detTitle: 'Details',
     details: [['Device', 'iPhone with iOS 18 or later'], ['Languages', 'English and Portuguese (Brazil)'], ['Sign in with', 'Apple or Google'], ['Your data', 'On your iPhone, backed up to the cloud in São Paulo']],
@@ -193,6 +195,7 @@ const t = {
             </li>
           ))}
         </ul>
+        <p class="text-[13px] text-muted">{t.pricesNote}</p>
       </Card>
     </div>
   </div>
