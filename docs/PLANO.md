@@ -136,5 +136,20 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 - Propriedade **Prefixo do URL** `https://toski-labs.web.app`, na conta Google da Toski Labs. Verificada pela **Tag HTML** (`google-site-verification` no `<head>` do `BaseLayout.astro` — não remover, senão a verificação cai). O método "Arquivo HTML" não serve aqui: o `cleanUrls` do Firebase redireciona `/arquivo.html`.
 - Sitemap enviado: `sitemap-index.xml` (aponta para `sitemap-0.xml`). O site serve os dois certinho; o status "Não foi possível buscar o sitemap" logo após o envio é provisório em propriedade nova. Se continuar depois de 2–3 dias: remover e reenviar, ou enviar `sitemap-0.xml`.
 - Solicitar indexação (Inspeção de URL) de `/` e `/pethealthtracker` deu "cota excedida" no primeiro dia — limite comum em propriedade nova. Tentar de novo nos dias seguintes; se não der, o Google encontra as páginas pelo sitemap.
+- Indexação por página (pedir em Inspeção de URL › Solicitar indexação, até ~5 por dia):
+  - [x] https://toski-labs.web.app/ — indexada (6 out)
+  - [x] https://toski-labs.web.app/pethealthtracker — pedida (6 out)
+  - [x] https://toski-labs.web.app/estudio — pedida (6 out)
+  - [x] https://toski-labs.web.app/estudio/wallpapers — pedida (6 out)
+  - [x] https://toski-labs.web.app/suporte — pedida (6 out)
+  - [x] https://toski-labs.web.app/en — pedida (6 out)
+  - [ ] https://toski-labs.web.app/estudio/temas
+  - [ ] https://toski-labs.web.app/privacidade
+  - [ ] https://toski-labs.web.app/en/pethealthtracker
+  - [ ] https://toski-labs.web.app/en/studio
+  - [ ] https://toski-labs.web.app/en/studio/wallpapers
+  - [ ] https://toski-labs.web.app/en/studio/themes
+  - [ ] https://toski-labs.web.app/en/support
+  - [ ] https://toski-labs.web.app/en/privacy
 - Os relatórios de Desempenho e Páginas levam alguns dias para ter dados. Conferir no fim da semana.
 - Se a Toski Labs tiver domínio próprio no futuro, cadastrar também uma propriedade do tipo **Domínio** (verificação por DNS).
