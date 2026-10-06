@@ -1,6 +1,6 @@
 ---
 /** Suporte (PT e EN): contato, código de suporte e perguntas frequentes. */
-import { Button, Card, IconBox, Kicker, SectionHeading } from '@toski-labs/ds';
+import { Button, Card, IconBox, Kicker, SectionHeading, buttonClasses } from '@toski-labs/ds';
 import { getLang, href, SUPPORT_EMAIL } from '../../i18n/ui';
 import FaqItem from '../ui/FaqItem.astro';
 
@@ -14,6 +14,8 @@ const t = {
     mailTitle: 'Fale com a gente',
     mailBody: `Mande um e-mail para ${SUPPORT_EMAIL}. Respondemos em até 2 dias úteis.`,
     mailCta: 'Escrever e-mail',
+    copyMail: 'Copiar e-mail',
+    copiedMail: 'E-mail copiado',
     mailSubject: 'Suporte PetHealthTracker',
     codeTitle: 'Inclua o seu código de suporte',
     codeBody: 'Ele ajuda a encontrar a sua conta sem você precisar mandar dados pessoais. Para copiar no app:',
@@ -41,6 +43,8 @@ const t = {
     mailTitle: 'Get in touch',
     mailBody: `Email ${SUPPORT_EMAIL}. We reply within 2 business days.`,
     mailCta: 'Send an email',
+    copyMail: 'Copy email',
+    copiedMail: 'Email copied',
     mailSubject: 'PetHealthTracker support',
     codeTitle: 'Include your support code',
     codeBody: 'It helps us find your account without you sending any personal details. To copy it in the app:',
@@ -73,7 +77,12 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
     <IconBox name="mail" />
     <h2 class="mt-1 text-2xl font-semibold">{t.mailTitle}</h2>
     <p class="text-base leading-normal text-muted">{t.mailBody}</p>
-    <Button href={mailto} size="md" className="mt-1.5 self-start">{t.mailCta}</Button>
+    <div class="mt-1.5 flex flex-wrap gap-2.5">
+      <Button href={mailto} size="md" className="max-sm:flex-auto">{t.mailCta}</Button>
+      <!-- Para quem não tem um app de e-mail configurado (aí o mailto não abre nada). -->
+      <button type="button" class={buttonClasses('secondary', 'md', 'toski-copy-mail max-sm:flex-auto')} data-copy={SUPPORT_EMAIL} data-copied={t.copiedMail}>{t.copyMail}</button>
+    </div>
+    <p class="sr-only" aria-live="polite" data-mail-status></p>
   </Card>
   <Card variant="hero" radius="panel" className="flex min-w-0 flex-[1_1_340px] flex-col gap-3.5 p-8">
     <IconBox name="copy" on="surface" />
@@ -104,3 +113,20 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
   <p class="text-[17px] text-muted">{t.privLine}</p>
   <a href={href(lang, 'privacy')} class="inline-flex min-h-11 items-center text-base font-semibold no-underline hover:underline">{t.privCta}</a>
 </section>
+
+<script>
+  const mailStatus = document.querySelector<HTMLElement>('[data-mail-status]');
+  for (const button of document.querySelectorAll<HTMLButtonElement>('.toski-copy-mail')) {
+    const original = button.textContent;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy!);
+      } catch {
+        return;
+      }
+      button.textContent = button.dataset.copied!;
+      if (mailStatus) mailStatus.textContent = `${button.dataset.copied}: ${button.dataset.copy}`;
+      setTimeout(() => (button.textContent = original), 1800);
+    });
+  }
+</script>
