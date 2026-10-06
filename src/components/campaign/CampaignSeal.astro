@@ -1,0 +1,26 @@
+---
+/** Selo pequeno da campanha dentro do card do projeto, na Home. Leva para a oferta na página do projeto. Quem mostra é o CampaignFlags. */
+import { blackFriday as campaign } from '../../data/campaigns';
+import { getLang, href } from '../../i18n/ui';
+import Icon from '../ui/Icon.astro';
+
+const lang = getLang(Astro.currentLocale);
+const c = campaign.copy[lang];
+---
+
+  <a
+    href={href(lang, 'pethealthtracker', 'oferta')}
+    class="toski-campaign-seal flex items-center gap-3.5 rounded-2xl bg-[#120D0A] py-3 pr-4 pl-3 text-papel no-underline hover:text-papel"
+    data-campaign-project={campaign.project}
+    data-campaign-flag={campaign.flag}
+    data-start={campaign.start}
+    data-end={campaign.end}
+    hidden
+  >
+    <span class="flex size-13 shrink-0 -rotate-10 items-center justify-center rounded-full bg-caramelo text-[15px] font-bold tracking-[-0.02em] text-[#120D0A]" aria-hidden="true">−50%</span>
+    <span class="flex min-w-0 grow flex-col gap-0.5">
+      <span class="text-xs font-bold tracking-[0.08em] text-caramelo">BLACK FRIDAY</span>
+      <span class="text-[15px] leading-[1.35]">{c.seal}</span>
+    </span>
+    <Icon name="arrow-right" size={18} stroke={2.2} class="text-caramelo" />
+  </a>

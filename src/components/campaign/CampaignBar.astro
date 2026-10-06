@@ -1,0 +1,29 @@
+---
+/** Faixa da campanha no topo de todas as páginas. Quem mostra é o CampaignFlags (datas + Remote Config); o X é lembrado no navegador. */
+import { blackFriday as campaign } from '../../data/campaigns';
+import { getLang, href } from '../../i18n/ui';
+
+const lang = getLang(Astro.currentLocale);
+const c = campaign.copy[lang];
+---
+
+  <div
+    class="toski-campaign-bar relative bg-[#120D0A] text-papel"
+    role="region"
+    aria-label={c.kicker}
+    data-campaign-project={campaign.project}
+    data-campaign-flag={campaign.flag}
+    data-start={campaign.start}
+    data-end={campaign.end}
+    data-dismiss-key={`toski-campanha-${campaign.id}`}
+    hidden
+  >
+    <div class="page flex min-h-13 flex-wrap items-center justify-center gap-x-3.5 gap-y-1.5 py-2.5 pr-16 text-center text-[15px]">
+      <span class="inline-flex h-6 items-center rounded-full bg-caramelo px-2.5 text-xs font-bold tracking-[0.06em] text-[#120D0A]">{c.tag}</span>
+      <span>{c.bar}</span>
+      <a href={href(lang, 'pethealthtracker', 'oferta')} class="font-semibold text-caramelo hover:text-[#E8B27C]">{c.barCta}</a>
+    </div>
+    <button type="button" aria-label={c.close} data-campaign-close class="absolute top-1 right-2 flex size-11 items-center justify-center rounded-full text-[#CDB9A3] hover:text-papel">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+    </button>
+  </div>

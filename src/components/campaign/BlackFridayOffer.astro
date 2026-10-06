@@ -1,0 +1,105 @@
+---
+/** Seção BLACK FRIDAY na página do PetHealthTracker, no visual da tela de Black Friday do app (tokens blackFriday). */
+import { blackFriday as campaign } from '../../data/campaigns';
+import { getLang } from '../../i18n/ui';
+import Icon from '../ui/Icon.astro';
+
+const lang = getLang(Astro.currentLocale);
+const c = campaign.copy[lang];
+---
+
+  <section
+    id="oferta"
+    aria-labelledby="oferta-titulo"
+    class="toski-campaign-offer band scroll-mt-6 overflow-hidden bg-[#120D0A] text-papel"
+    data-campaign-project={campaign.project}
+    data-campaign-flag={campaign.flag}
+    data-start={campaign.start}
+    data-end={campaign.end}
+    hidden
+  >
+    <div class="page flex flex-col gap-10 pt-18 pb-22">
+      <div class="flex flex-wrap items-center gap-x-14 gap-y-10">
+        <div class="flex min-w-0 flex-[1_1_520px] flex-col gap-5.5">
+          <p class="text-[13px] font-semibold tracking-widest text-[#CDB9A3] uppercase">{c.kicker}</p>
+          <h2 id="oferta-titulo" class="flex flex-col text-[clamp(72px,10vw,128px)] leading-[0.9] font-bold tracking-[-0.03em]">
+            <span class="text-caramelo">BLACK</span><span>FRIDAY</span>
+          </h2>
+          <p class="max-w-130 text-[22px] leading-[1.35] font-medium">{c.title}</p>
+          <p class="max-w-130 text-[17px] leading-[1.55] text-[#CDB9A3]">{c.lead}</p>
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="inline-flex h-12 items-center gap-2.5 rounded-button bg-[#2E241D] px-4 text-[15px] font-medium">
+              <Icon name="clock" size={18} stroke={2.2} class="text-caramelo" />{c.until}
+            </span>
+            <div class="flex gap-1.5" role="timer" aria-label={c.endsIn}>
+              {c.units.map((unit, i) => (
+                <div class="flex h-12 min-w-14.5 items-baseline justify-center gap-0.75 rounded-xl border-[1.5px] border-[#43352B] px-2 pt-2.75">
+                  <span class="text-xl font-bold" data-unit={i}>–</span><span class="text-xs text-[#CDB9A3]">{unit}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div class="flex min-w-0 flex-[0_1_380px] justify-center">
+          <div class="relative flex aspect-square w-full max-w-90 items-center justify-center rounded-full bg-[#2E241D]">
+            <svg width="70%" viewBox="-6 -6 222 212" aria-hidden="true">
+              <circle cx="34" cy="168" r="16" fill="#DB9A5B" stroke="#F4E4CC" stroke-width="5"></circle>
+              <path d="M24 156 Q36 168 24 180 M44 156 Q32 168 44 180" fill="none" stroke="#F4E4CC" stroke-width="2.5" stroke-linecap="round"></path>
+              <path d="M26 90 C26 84 32 80 40 79 L74 72 C82 70 86 62 94 56 C104 48 124 46 140 52 C158 58 166 76 168 96 C172 120 182 150 196 200 L72 200 C66 190 74 184 68 176 C62 168 72 162 68 154 C64 146 74 140 74 132 C70 126 64 122 58 118 C48 114 38 110 32 104 C27 100 25 95 26 90 Z" fill="#A9541F" stroke="#F4E4CC" stroke-width="5" stroke-linejoin="round"></path>
+              <path d="M112 64 C128 56 148 62 150 78 C154 98 150 116 140 126 C136 132 128 132 124 126 C120 120 122 114 118 110 C112 96 104 78 112 64 Z" fill="#A9541F" stroke="#F4E4CC" stroke-width="4" stroke-linejoin="round"></path>
+              <ellipse cx="96" cy="74" rx="4.4" ry="3" fill="#F4E4CC"></ellipse>
+              <ellipse cx="31" cy="88" rx="7" ry="6" fill="#100C0A"></ellipse>
+            </svg>
+            <div class="absolute -top-1.5 -right-1.5 flex size-34 -rotate-12 flex-col items-center justify-center rounded-full bg-caramelo text-[#120D0A] shadow-[0_0_0_6px_#120D0A]" aria-hidden="true">
+              <span class="text-[40px] leading-none font-bold tracking-[-0.02em]">−50%</span>
+              <span class="mt-1 text-[13px] font-semibold">{c.sticker}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ul class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4">
+        {c.prices.map((p) => (
+          <li class:list={['flex items-center justify-between gap-4 rounded-[20px] border-2 p-6', p.featured ? 'border-caramelo bg-[#2E241D]' : 'border-[#43352B] bg-[#1B1511]']}>
+            <span class="flex flex-col gap-1">
+              <span class="flex items-center gap-2 text-xl font-semibold">
+                {p.name}
+                {p.badge && <span class="rounded-[9px] bg-caramelo px-2 py-0.5 text-xs font-bold text-carvao">{p.badge}</span>}
+              </span>
+              <span class="text-sm text-[#CDB9A3]">{p.sub}</span>
+            </span>
+            <span class="flex flex-col items-end gap-0.5">
+              {p.old && <s class="text-sm text-[#A08B78]">{p.old}</s>}
+              <span class="text-[28px] font-bold tracking-[-0.01em]">{p.price}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+        <a href={campaign.appStoreUrl} class="inline-flex h-14 items-center gap-2.5 rounded-button bg-caramelo px-6.5 text-[17px] font-bold text-[#120D0A] no-underline hover:bg-[#E8B27C] hover:text-[#120D0A]">
+          {c.cta}<Icon name="arrow-right" size={18} stroke={2.2} />
+        </a>
+        <p class="max-w-150 text-sm leading-normal text-[#CDB9A3]">{c.fine}</p>
+      </div>
+    </div>
+  </section>
+
+<script>
+  const offer = document.querySelector<HTMLElement>('.toski-campaign-offer');
+  if (offer) {
+    const start = Date.parse(offer.dataset.start!);
+    const end = Date.parse(offer.dataset.end!);
+    const units = offer.querySelectorAll<HTMLElement>('[data-unit]');
+    const tick = () => {
+      const now = Date.now();
+      // Mostrar ou esconder fica com o CampaignFlags; aqui só a contagem regressiva.
+      if (now < start || now > end) return;
+      const minutes = Math.max(0, Math.floor((end - now) / 60000));
+      const values = [Math.floor(minutes / 1440), Math.floor((minutes % 1440) / 60), minutes % 60];
+      units.forEach((el, i) => (el.textContent = String(values[i]).padStart(2, '0')));
+    };
+    tick();
+    setInterval(tick, 30000);
+  }
+</script>

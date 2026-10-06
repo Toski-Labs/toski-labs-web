@@ -1,0 +1,97 @@
+---
+/**
+ * Decide, no navegador, quais elementos de campanha aparecem (faixa, selo, seção de oferta).
+ * Cada elemento traz data-campaign-project, data-campaign-flag, data-start e data-end.
+ *
+ * 1. Se nenhuma campanha está dentro das datas, para aqui: o Firebase nem é baixado.
+ * 2. Mostra na hora o que ficou guardado da última visita (sem a página pular).
+ * 3. Pergunta ao Remote Config (parâmetro `campanhas`) e atualiza; guarda a resposta.
+ * Padrão é desligado: se o Remote Config falhar e não houver nada guardado, nada aparece.
+ * Prévia: ?campanha=projeto.chave mostra a campanha ignorando datas e Remote Config (até fechar a aba).
+ */
+---
+
+<script>
+  import { CAMPAIGNS_PARAM, firebaseConfig } from '../../lib/firebase';
+
+  type Flags = Record<string, Record<string, boolean>>;
+  const CACHE_KEY = 'toski-campanhas';
+  const PREVIEW_KEY = 'toski-campanha-previa';
+
+  const elements = [...document.querySelectorAll<HTMLElement>('[data-campaign-flag]')];
+
+  const store = {
+    get(area: Storage, key: string) {
+      try {
+        return area.getItem(key);
+      } catch {
+        return null;
+      }
+    },
+    set(area: Storage, key: string, value: string) {
+      try {
+        area.setItem(key, value);
+      } catch {}
+    },
+  };
+
+  const idOf = (el: HTMLElement) => `${el.dataset.campaignProject}.${el.dataset.campaignFlag}`;
+  const inWindow = (el: HTMLElement, now = Date.now()) =>
+    now >= Date.parse(el.dataset.start!) && now <= Date.parse(el.dataset.end!);
+  const dismissed = (el: HTMLElement) => !!el.dataset.dismissKey && store.get(localStorage, el.dataset.dismissKey) === 'fechada';
+
+  const parse = (raw: string | null): Flags | null => {
+    if (!raw) return null;
+    try {
+      const value = JSON.parse(raw);
+      return value && typeof value === 'object' ? (value as Flags) : null;
+    } catch {
+      return null;
+    }
+  };
+
+  // Prévia pela URL: ?campanha=pethealthtracker.black_friday (vale até fechar a aba).
+  const previewParam = new URLSearchParams(location.search).get('campanha');
+  if (previewParam) store.set(sessionStorage, PREVIEW_KEY, previewParam);
+  const preview = store.get(sessionStorage, PREVIEW_KEY);
+
+  const apply = (flags: Flags | null) => {
+    for (const el of elements) {
+      const on = idOf(el) === preview || (inWindow(el) && flags?.[el.dataset.campaignProject!]?.[el.dataset.campaignFlag!] === true);
+      el.hidden = !on || dismissed(el);
+    }
+  };
+
+  const live = elements.filter((el) => inWindow(el));
+
+  if (preview) {
+    apply(null);
+  } else if (live.length > 0) {
+    apply(parse(store.get(localStorage, CACHE_KEY)));
+
+    (async () => {
+      try {
+        const [{ initializeApp }, rc] = await Promise.all([import('firebase/app'), import('firebase/remote-config')]);
+        const remoteConfig = rc.getRemoteConfig(initializeApp(firebaseConfig));
+        remoteConfig.settings.minimumFetchIntervalMillis = import.meta.env.DEV ? 0 : 5 * 60 * 1000;
+        remoteConfig.settings.fetchTimeoutMillis = 4000;
+        remoteConfig.defaultConfig = { [CAMPAIGNS_PARAM]: '{}' };
+        await rc.fetchAndActivate(remoteConfig);
+        const raw = rc.getValue(remoteConfig, CAMPAIGNS_PARAM).asString();
+        const flags = parse(raw) ?? {};
+        store.set(localStorage, CACHE_KEY, JSON.stringify(flags));
+        apply(flags);
+      } catch {
+        // Sem resposta: fica com o que estava guardado (ou nada, se não havia).
+      }
+    })();
+  }
+
+  // Fecha a faixa (ou outro elemento com data-dismiss-key) e lembra no navegador.
+  for (const el of elements) {
+    el.querySelector('[data-campaign-close]')?.addEventListener('click', () => {
+      el.hidden = true;
+      if (el.dataset.dismissKey) store.set(localStorage, el.dataset.dismissKey, 'fechada');
+    });
+  }
+</script>

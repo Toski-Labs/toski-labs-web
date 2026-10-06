@@ -1,0 +1,228 @@
+---
+/** Página do PetHealthTracker (PT e EN). */
+import { getLang, href } from '../../i18n/ui';
+import Button from '../ui/Button.astro';
+import Card from '../ui/Card.astro';
+import CheckList from '../ui/CheckList.astro';
+import FeatureCard from '../ui/FeatureCard.astro';
+import Icon, { type IconName } from '../ui/Icon.astro';
+import Kicker from '../ui/Kicker.astro';
+import Pill from '../ui/Pill.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import AppIcon from '../brand/AppIcon.astro';
+import PdfCard from '../brand/PdfCard.astro';
+import PhoneMock from '../brand/PhoneMock.astro';
+import BlackFridayOffer from '../campaign/BlackFridayOffer.astro';
+
+const lang = getLang(Astro.currentLocale);
+
+const t = {
+  pt: {
+    crumbLabel: 'Você está em',
+    crumbProjects: 'Projetos',
+    tagline: 'Vacinas, remédios e lembretes do seu pet, tudo num lugar só.',
+    body: 'Um app para iPhone que mostra o que fazer agora pelo seu pet, com calendário, histórico de saúde e lembretes que repetem do jeito da sua rotina.',
+    soon: 'Em breve na App Store',
+    seePlans: 'Ver grátis e Plus',
+    requirement: 'Para iPhone com iOS 18 ou mais recente.',
+    featKicker: 'Recursos',
+    featTitle: 'Tudo o que o seu pet precisa, sem planilha',
+    features: [
+      ['list', 'O que fazer agora', 'A tela inicial mostra o que está atrasado, o que é para hoje e o que vem nos próximos dias, de todos os pets ou de um só.'],
+      ['calendar', 'Calendário', 'Veja o mês ou a lista, filtre por pet e por tipo e marque como feito, remarque ou pule uma vez.'],
+      ['heart', 'Perfil de saúde', 'Vacinas, remédios, consultas, peso e contatos de cada pet guardados no mesmo lugar.'],
+      ['repeat', 'Lembretes que repetem', 'Banho, tosa, remédio e troca de ração a cada tantos dias, semanas ou meses.'],
+      ['paw', 'Cachorro, gato e outros', 'Sugestões de raças e vacinas para cães e gatos, e campos livres para qualquer outro bicho.'],
+      ['phone', 'Funciona sem internet', 'Tudo fica salvo no iPhone e sincroniza com a sua conta Apple ou Google quando dá.'],
+    ] as [IconName, string, string][],
+    pdfKicker: 'Destaque',
+    pdfTitle: 'O histórico do seu pet num PDF, pronto para enviar',
+    pdfBody: 'Gere a carteirinha de vacinação ou o histórico completo e mande para o veterinário, a creche ou o hotelzinho direto do iPhone, por WhatsApp, e-mail ou AirDrop.',
+    pdfList: ['Carteirinha com todas as vacinas, datas e próximas doses', 'Histórico completo: vacinas, remédios, consultas e peso', 'Pelo menu de compartilhar do iPhone, sem copiar nada à mão'],
+    plansKicker: 'Grátis e Plus',
+    plansTitle: 'Comece com 7 dias de Plus, sem cartão',
+    plansLead: 'Depois do teste, siga no grátis ou assine o Plus. O grátis limita como o app lembra, nunca quantas coisas ele lembra.',
+    freeName: 'Grátis',
+    freeSub: 'Para cuidar de um pet no dia a dia',
+    freeList: ['1 pet ativo (arquivados não contam)', 'Todos os registros de saúde e lembretes, sem limite', '1 aviso por item, no horário que você escolher', 'Anúncios discretos, nunca na tela inicial nem nos formulários'],
+    plusSub: 'Para a casa toda e para quem quer mais ajuda',
+    trial: '7 dias grátis',
+    plusList: ['Pets ilimitados', 'Carteirinha e histórico em PDF', 'Calendário do iPhone e Google Agenda', 'Aviso extra antes do dia', 'Insistir se atrasar', 'Resumo do dia', 'Horário próprio por item', 'Ícones alternativos e sem anúncios'],
+    prices: [
+      { name: 'Mensal', price: 'R$ 9,90', sub: 'por mês', featured: false },
+      { name: 'Anual', price: 'R$ 59,90', sub: 'por ano · R$ 4,99/mês', featured: true },
+      { name: 'Vitalício', price: 'R$ 149,90', sub: 'pagamento único', featured: false },
+    ],
+    detTitle: 'Detalhes',
+    details: [['Aparelho', 'iPhone com iOS 18 ou mais recente'], ['Idiomas', 'Português (Brasil) e inglês'], ['Entrar com', 'Apple ou Google'], ['Seus dados', 'No iPhone, com cópia na nuvem em São Paulo']],
+    helpTitle: 'Ficou alguma dúvida?',
+    helpBody: 'Veja as perguntas frequentes ou fale com a gente.',
+    support: 'Suporte',
+    privacy: 'Privacidade',
+  },
+  en: {
+    crumbLabel: 'You are here',
+    crumbProjects: 'Projects',
+    tagline: 'Your pet’s vaccines, medicines and reminders, all in one place.',
+    body: 'An iPhone app that shows what your pet needs right now, with a calendar, a health history and reminders that repeat the way your routine does.',
+    soon: 'Coming soon to the App Store',
+    seePlans: 'Free and Plus',
+    requirement: 'For iPhone with iOS 18 or later.',
+    featKicker: 'Features',
+    featTitle: 'Everything your pet needs, no spreadsheets',
+    features: [
+      ['list', 'What to do now', 'The home screen shows what’s overdue, what’s due today and what’s coming up, for all your pets or just one.'],
+      ['calendar', 'Calendar', 'Browse by month or as a list, filter by pet and type, and mark as done, reschedule or skip once.'],
+      ['heart', 'Health profile', 'Each pet’s vaccines, medicines, vet visits, weight and contacts, all in one place.'],
+      ['repeat', 'Repeating reminders', 'Baths, grooming, medicine and food changes every few days, weeks or months.'],
+      ['paw', 'Dogs, cats and more', 'Breed and vaccine suggestions for dogs and cats, plus free-form fields for any other animal.'],
+      ['phone', 'Works offline', 'Everything is saved on your iPhone and syncs to your Apple or Google account when it can.'],
+    ] as [IconName, string, string][],
+    pdfKicker: 'Highlight',
+    pdfTitle: 'Your pet’s health history as a PDF, ready to send',
+    pdfBody: 'Create the vaccine card or the full history and send it to the vet, daycare or pet hotel straight from your iPhone, by WhatsApp, email or AirDrop.',
+    pdfList: ['Vaccine card with every shot, date and next dose', 'Full history: vaccines, medicines, vet visits and weight', 'Uses the iPhone share menu, no copying by hand'],
+    plansKicker: 'Free and Plus',
+    plansTitle: 'Start with 7 days of Plus, no card needed',
+    plansLead: 'After the trial, keep the free plan or subscribe to Plus. Free limits how the app reminds you, never how many things it remembers.',
+    freeName: 'Free',
+    freeSub: 'For looking after one pet day to day',
+    freeList: ['1 active pet (archived pets don’t count)', 'Every health record and reminder, unlimited', '1 alert per item, at the time you choose', 'Subtle ads, never on the home screen or in forms'],
+    plusSub: 'For the whole household, with extra help',
+    trial: '7-day free trial',
+    plusList: ['Unlimited pets', 'Vaccine card and history as PDF', 'iPhone Calendar and Google Calendar', 'Extra heads-up before the day', 'Nudges when something is late', 'Daily summary', 'Custom time per item', 'Alternate icons, no ads'],
+    prices: [
+      // Preço em cada moeda vem da App Store; em inglês mostramos só o plano até termos os valores por país.
+      { name: 'Monthly', price: 'Local price', sub: 'per month · shown in the App Store', featured: false },
+      { name: 'Yearly', price: 'Local price', sub: 'per year · best value', featured: true },
+      { name: 'Lifetime', price: 'Local price', sub: 'one-time purchase', featured: false },
+    ],
+    detTitle: 'Details',
+    details: [['Device', 'iPhone with iOS 18 or later'], ['Languages', 'English and Portuguese (Brazil)'], ['Sign in with', 'Apple or Google'], ['Your data', 'On your iPhone, backed up to the cloud in São Paulo']],
+    helpTitle: 'Questions?',
+    helpBody: 'Check the FAQ or get in touch.',
+    support: 'Support',
+    privacy: 'Privacy',
+  },
+}[lang];
+---
+
+<nav aria-label={t.crumbLabel} class="page pt-2 text-sm text-muted">
+  <a href={href(lang, 'home', 'projetos')} class="text-muted no-underline hover:underline">{t.crumbProjects}</a>
+  <span aria-hidden="true"> / </span>
+  <span aria-current="page">PetHealthTracker</span>
+</nav>
+
+<!-- Topo -->
+<!-- No celular: ícone menor, botões do mesmo tamanho e iPhone reduzido. Do tablet (md) em diante, texto e iPhone lado a lado. -->
+<section class="page flex flex-wrap items-center gap-10 pt-6 pb-16 sm:pt-10 md:flex-nowrap md:gap-14 md:pb-24">
+  <div class="flex min-w-0 flex-[1_1_360px] flex-col gap-5 sm:gap-5.5">
+    <AppIcon size={96} class="size-16 sm:size-24" />
+    <div class="flex flex-col gap-3">
+      <h1 class="text-[clamp(40px,5.2vw,64px)] leading-[1.04] font-semibold tracking-tight">PetHealthTracker</h1>
+      <p class="max-w-130 text-xl leading-[1.4] font-medium sm:text-[22px]">{t.tagline}</p>
+      <p class="max-w-130 text-[17px] leading-[1.55] text-muted">{t.body}</p>
+    </div>
+    <div class="mt-1 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+      <span class="inline-flex h-12 items-center justify-center gap-2.5 rounded-button bg-ink px-5.5 text-base font-medium text-background sm:h-13.5">
+        <Icon name="clock" size={20} />{t.soon}
+      </span>
+      <Button href="#planos" variant="secondary" class="justify-center max-sm:h-12 max-sm:text-base">{t.seePlans}</Button>
+    </div>
+    <p class="text-sm text-muted">{t.requirement}</p>
+  </div>
+  <div class="flex min-w-0 flex-[1_1_300px] justify-center">
+    <div class="relative flex w-full max-w-115 justify-center py-7 max-sm:py-4">
+      <div class="absolute top-1/2 left-1/2 aspect-square w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-hero" aria-hidden="true"></div>
+      <PhoneMock class="max-sm:zoom-[0.8]" />
+    </div>
+  </div>
+</section>
+
+<!-- Recursos -->
+<section aria-labelledby="recursos-titulo" class="page flex flex-col gap-6 pb-16 sm:gap-8 sm:pb-24">
+  <SectionHeading id="recursos-titulo" kicker={t.featKicker} title={t.featTitle} />
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-3 sm:gap-5">
+    {t.features.map(([icon, title, body]) => <FeatureCard icon={icon} title={title}>{body}</FeatureCard>)}
+  </div>
+</section>
+
+<!-- Destaque: PDF -->
+<section aria-labelledby="pdf-titulo" class="page pb-16 sm:pb-24">
+  <Card variant="hero" class="flex flex-wrap items-center gap-x-16 gap-y-10 rounded-4xl p-6 sm:p-12">
+    <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-4.5">
+      <div class="flex flex-wrap items-center gap-2.5">
+        <Kicker>{t.pdfKicker}</Kicker>
+        <Pill variant="plus">PLUS</Pill>
+      </div>
+      <h2 id="pdf-titulo" class="text-[clamp(30px,3.6vw,44px)] leading-[1.08] font-semibold tracking-[-0.02em] text-balance">{t.pdfTitle}</h2>
+      <p class="max-w-130 text-base leading-[1.55] text-muted sm:text-lg">{t.pdfBody}</p>
+      <CheckList items={t.pdfList} class="mt-1" />
+    </div>
+    <div class="flex min-w-0 flex-[1_1_320px] justify-center">
+      <PdfCard />
+    </div>
+  </Card>
+</section>
+
+<!-- Black Friday (só aparece dentro das datas da campanha) -->
+<BlackFridayOffer />
+
+<!-- Grátis e Plus -->
+<section id="planos" aria-labelledby="planos-titulo" class="band scroll-mt-6 bg-tint">
+  <div class="page flex flex-col gap-7 py-14 sm:gap-9 sm:py-22">
+    <SectionHeading id="planos-titulo" kicker={t.plansKicker} title={t.plansTitle} lead={t.plansLead} />
+    <div class="flex flex-wrap items-stretch gap-4 sm:gap-6">
+      <Card variant="plain" radius="panel" class="flex min-w-0 flex-[1_1_300px] flex-col gap-5 p-6 sm:p-8">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-2xl font-semibold">{t.freeName}</h3>
+          <p class="text-[15px] text-muted">{t.freeSub}</p>
+        </div>
+        <CheckList items={t.freeList} tone="success" />
+      </Card>
+      <Card variant="plain" radius="panel" class="flex min-w-0 flex-[2_1_480px] flex-col gap-5 border-2 border-accent p-6 sm:gap-5.5 sm:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-2.5">
+          <div class="flex flex-col gap-1.5">
+            <h3 class="text-2xl font-semibold">Plus</h3>
+            <p class="text-[15px] text-muted">{t.plusSub}</p>
+          </div>
+          <span class="inline-flex h-8 items-center rounded-full bg-accent px-3.5 text-sm font-semibold text-on-accent">{t.trial}</span>
+        </div>
+        <CheckList items={t.plusList} columns />
+        <!-- Preços: no celular cada plano é uma linha (nome e detalhe à esquerda, preço à direita). -->
+        <ul class="grid gap-2.5 sm:grid-cols-[repeat(auto-fit,minmax(150px,1fr))] sm:gap-3">
+          {t.prices.map((p) => (
+            <li class:list={['grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-0.5 rounded-2xl border-[1.5px] px-4 py-3 sm:grid-cols-1 sm:items-start sm:gap-y-1 sm:p-4', p.featured ? 'border-accent bg-tint' : 'border-line bg-surface']}>
+              <span class:list={['text-sm font-semibold', p.featured ? 'text-accent-text' : 'text-muted']}>{p.name}</span>
+              <span class="col-start-2 row-span-2 row-start-1 text-xl font-semibold tracking-[-0.01em] sm:col-start-auto sm:row-span-1 sm:row-start-auto sm:text-2xl">{p.price}</span>
+              <span class="text-[13px] text-muted">{p.sub}</span>
+            </li>
+          ))}
+        </ul>
+      </Card>
+    </div>
+  </div>
+</section>
+
+<!-- Detalhes -->
+<section aria-labelledby="detalhes-titulo" class="page flex flex-col gap-6 py-16 sm:gap-7 sm:py-24">
+  <h2 id="detalhes-titulo" class="text-[28px] leading-[1.15] font-semibold tracking-[-0.01em]">{t.detTitle}</h2>
+  <dl class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-x-6 border-t border-line">
+    {t.details.map(([k, v]) => (
+      <div class="flex flex-col gap-1.5 border-b border-line py-5">
+        <dt class="text-[13px] font-semibold uppercase tracking-[0.06em] text-muted">{k}</dt>
+        <dd class="text-[17px] leading-[1.4]">{v}</dd>
+      </div>
+    ))}
+  </dl>
+  <Card variant="hero" radius="panel" class="mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 px-6 py-6 sm:px-8 sm:py-7">
+    <div class="flex flex-col gap-1">
+      <p class="text-[22px] font-semibold">{t.helpTitle}</p>
+      <p class="text-base text-muted">{t.helpBody}</p>
+    </div>
+    <div class="flex flex-wrap gap-3 max-sm:w-full">
+      <Button href={href(lang, 'support')} size="md" class="justify-center max-sm:flex-1">{t.support}</Button>
+      <Button href={href(lang, 'privacy')} size="md" variant="light" class="justify-center max-sm:flex-1">{t.privacy}</Button>
+    </div>
+  </Card>
+</section>
