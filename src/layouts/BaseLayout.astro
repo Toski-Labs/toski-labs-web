@@ -26,7 +26,10 @@ const canonical = new URL(routes[lang][page], site);
 const alternate = new URL(alternatePath(page, lang), site);
 const ptUrl = lang === 'pt' ? canonical : alternate;
 const enUrl = lang === 'en' ? canonical : alternate;
-const ogImage = new URL(`/og/og-${lang}.png`, site);
+// Imagem de compartilhamento: uma por seção (Suporte e Privacidade usam a da Home).
+const ogFiles: Partial<Record<PageKey, string>> = { pethealthtracker: 'pethealthtracker', studio: 'studio', wallpapers: 'wallpapers', themes: 'themes' };
+const ogImage = new URL(`/og/${ogFiles[page] ?? 'og'}-${lang}.png`, site);
+
 ---
 
 <!doctype html>
@@ -70,7 +73,7 @@ const ogImage = new URL(`/og/og-${lang}.png`, site);
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={t('site.tagline')} />
+    <meta property="og:image:alt" content={fullTitle} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="generator" content={Astro.generator} />
   </head>
