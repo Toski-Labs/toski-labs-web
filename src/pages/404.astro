@@ -1,0 +1,23 @@
+---
+/** Página não encontrada (o Firebase serve /404.html). Bilíngue, porque não sabemos o idioma de quem chegou. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import Mascot from '../components/brand/Mascot.astro';
+---
+
+<BaseLayout page="home" title="Página não encontrada" description="Esta página não existe." noindex>
+  <section class="page flex flex-col items-center gap-7 pt-12 pb-24 text-center">
+    <div class="flex size-60 items-center justify-center rounded-full bg-hero">
+      <Mascot width="72%" ball="ground" />
+    </div>
+    <div class="flex flex-col gap-3">
+      <h1 class="text-[clamp(32px,4vw,44px)] leading-[1.1] font-semibold tracking-[-0.02em]">A bolinha caiu longe.</h1>
+      <p class="mx-auto max-w-115 text-lg leading-normal text-muted">Não encontramos esta página. Ela pode ter mudado de lugar.</p>
+      <p lang="en" class="mx-auto max-w-115 text-base leading-normal text-muted">We couldn’t find this page. It may have moved.</p>
+    </div>
+    <div class="flex flex-wrap justify-center gap-3">
+      <Button href="/" size="md">Voltar para o início</Button>
+      <Button href="/en" size="md" variant="secondary" hreflang="en">Go to the English site</Button>
+    </div>
+  </section>
+</BaseLayout>

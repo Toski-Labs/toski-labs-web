@@ -1,0 +1,147 @@
+---
+/** Home (PT e EN). O idioma vem da rota; os textos ficam aqui. */
+import { Image } from 'astro:assets';
+import { getLang, href } from '../../i18n/ui';
+import { projects } from '../../data/projects';
+import Button from '../ui/Button.astro';
+import Card from '../ui/Card.astro';
+import IconBox from '../ui/IconBox.astro';
+import Kicker from '../ui/Kicker.astro';
+import Pill from '../ui/Pill.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import AppIcon from '../brand/AppIcon.astro';
+import Mascot from '../brand/Mascot.astro';
+import MascotHero from '../brand/MascotHero.astro';
+import CampaignSeal from '../campaign/CampaignSeal.astro';
+import pacoca from '../../assets/fotos/pacoca-sorrindo.jpg';
+
+const lang = getLang(Astro.currentLocale);
+const t = {
+  pt: {
+    heroKicker: 'Laboratório de tecnologia · Recife',
+    heroTitle: 'Soluções simples para problemas de verdade.',
+    heroBody: 'A Toski Labs é um laboratório de tecnologia que transforma necessidades do dia a dia em apps para o ecossistema Apple: rápidos de testar e cuidadosos em cada detalhe.',
+    seeProjects: 'Ver projetos',
+    aboutLab: 'Sobre o laboratório',
+    projKicker: 'Projetos',
+    projTitle: 'O que está no laboratório',
+    projLead: 'Cada projeto começa pequeno, ganha forma com quem usa e só chega à loja quando está pronto.',
+    seeProject: 'Ver projeto',
+    privacy: 'Privacidade',
+    support: 'Suporte',
+    nextKicker: 'Próximo projeto',
+    nextTitle: 'Ainda no forno',
+    nextBody: 'Novas ideias estão em teste. Elas aparecem aqui quando saírem do rascunho.',
+    aboutKicker: 'Sobre',
+    aboutTitle: 'Essa é a Paçoca, CEO da Toski Labs.',
+    about1: 'Toski é o apelido dessa golden retriever. Ela inspirou o nome, a logo, as cores e cada detalhe da nossa identidade, e é quem aprova (ou não) as ideias por aqui.',
+    about2: 'A Toski Labs nasceu da vontade de cuidar melhor dela: vacina, remédio e banho, tudo no lugar certo. Desse cuidado veio o primeiro app e o jeito de trabalhar que levamos para todo projeto: testar rápido, ouvir quem usa e caprichar nos detalhes, com o mesmo carinho que a gente tem com quem mora com a gente.',
+    madeBy: 'Feito em Recife por Stefany, com supervisão da Paçoca ·',
+    photoAlt: 'Paçoca, a CEO da Toski Labs, sorrindo',
+  },
+  en: {
+    heroKicker: 'Tech lab · Recife, Brazil',
+    heroTitle: 'Simple solutions for real problems.',
+    heroBody: 'Toski Labs is a technology lab that turns everyday needs into apps for the Apple ecosystem: quick to try, and crafted with care in every detail.',
+    seeProjects: 'See projects',
+    aboutLab: 'About the lab',
+    projKicker: 'Projects',
+    projTitle: 'What’s in the lab',
+    projLead: 'Every project starts small, takes shape with the people who use it, and only ships when it’s ready.',
+    seeProject: 'View project',
+    privacy: 'Privacy',
+    support: 'Support',
+    nextKicker: 'Next project',
+    nextTitle: 'Still in the oven',
+    nextBody: 'New ideas are being tested. They show up here once they leave the sketchbook.',
+    aboutKicker: 'About',
+    aboutTitle: 'Meet Paçoca, CEO of Toski Labs.',
+    about1: 'Toski is this golden retriever’s nickname. She inspired the name, the logo, the colors and every detail of our identity, and she’s the one who approves (or doesn’t) the ideas around here.',
+    about2: 'Toski Labs was born from wanting to take better care of her: vaccines, medicines and baths, all in the right place. That care became the first app and the way we approach every project: test fast, listen to the people who use it and sweat the details, with the same love we give the ones we live with.',
+    madeBy: 'Made in Recife by Stefany, supervised by Paçoca ·',
+    photoAlt: 'Paçoca, CEO of Toski Labs, smiling',
+  },
+}[lang];
+---
+
+<!-- Topo: no celular e no tablet em pé, tudo centralizado num eixo só (Paçoca, título, texto e botões); do md em diante, lado a lado. -->
+<section class="page grid items-center gap-5 pt-2 pb-14 text-center md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:gap-14 md:pt-12 md:pb-24 md:text-left">
+  <div class="order-2 flex min-w-0 flex-col items-center gap-4 md:order-1 md:items-start md:gap-6">
+    <Kicker>{t.heroKicker}</Kicker>
+    <h1 class="text-[clamp(34px,9.2vw,44px)] leading-[1.05] font-semibold tracking-tight text-balance md:text-[clamp(48px,5.4vw,66px)]">{t.heroTitle}</h1>
+    <p class="max-w-130 text-[17px] leading-normal text-pretty text-muted md:text-[19px]">{t.heroBody}</p>
+    <div class="mt-3 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-center md:justify-start">
+      <Button href="#projetos" icon="arrow-down" class="justify-center max-sm:h-12 max-sm:text-base">{t.seeProjects}</Button>
+      <Button href="#sobre" variant="secondary" class="justify-center max-sm:h-12 max-sm:text-base">{t.aboutLab}</Button>
+    </div>
+  </div>
+  <div class="order-1 flex min-w-0 justify-center">
+    <MascotHero class="max-w-34 sm:max-w-44 md:max-w-110" />
+  </div>
+</section>
+
+<!-- Projetos -->
+<section id="projetos" aria-labelledby="projetos-titulo" class="page flex scroll-mt-6 flex-col gap-8 pb-24">
+  <SectionHeading id="projetos-titulo" kicker={t.projKicker} title={t.projTitle} lead={t.projLead} />
+  <div class="flex flex-wrap items-stretch gap-6">
+    {projects.map((project) => (
+      <Card as="article" radius="panel" class="flex min-w-0 flex-[2_1_540px] flex-col gap-5 p-6 sm:gap-5.5 sm:p-8">
+        <div class="flex items-center gap-4 sm:flex-wrap sm:justify-between">
+          <AppIcon size={88} class="size-16 shrink-0 sm:size-22" />
+          <div class="flex min-w-0 flex-1 flex-wrap justify-end gap-2 sm:flex-none">
+            <Pill variant="status">{project.status[lang]}</Pill>
+            <Pill variant="outline">{project.platform[lang]}</Pill>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2.5">
+          <h3 class="text-[28px] leading-[1.1] sm:text-[32px] font-semibold tracking-[-0.02em]">{project.name}</h3>
+          <p class="max-w-140 text-base leading-normal text-muted sm:text-[17px]">{project.description[lang]}</p>
+        </div>
+        {project.page === 'pethealthtracker' && <CampaignSeal />}
+        <ul class="flex flex-wrap gap-2">
+          {project.tags[lang].map((tag) => <li><Pill class="max-sm:h-7 max-sm:px-2.5 max-sm:text-[13px]">{tag}</Pill></li>)}
+        </ul>
+        <div class="mt-auto flex flex-col gap-1 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-2">
+          <Button href={href(lang, project.page)} size="md" icon="arrow-right" class="justify-center">{t.seeProject}</Button>
+          <div class="flex justify-center gap-8 sm:contents">
+          <a href={href(lang, 'privacy')} class="inline-flex min-h-11 items-center text-[15px] font-medium no-underline hover:underline">{t.privacy}</a>
+          <a href={href(lang, 'support')} class="inline-flex min-h-11 items-center text-[15px] font-medium no-underline hover:underline">{t.support}</a>
+          </div>
+        </div>
+      </Card>
+    ))}
+    <Card as="article" variant="dashed" radius="panel" class="flex min-w-0 flex-[1_1_280px] flex-col gap-3.5 p-6 sm:p-8">
+      <IconBox name="flask" size="lg" tone="muted" class="max-sm:size-16 max-sm:rounded-2xl" />
+      <Kicker tone="muted" class="mt-2">{t.nextKicker}</Kicker>
+      <h3 class="text-[26px] leading-[1.15] font-semibold tracking-[-0.01em]">{t.nextTitle}</h3>
+      <p class="text-base leading-normal text-muted">{t.nextBody}</p>
+    </Card>
+  </div>
+</section>
+
+<!-- Por que Toski? -->
+<section id="sobre" aria-labelledby="sobre-titulo" class="band scroll-mt-6 bg-tint">
+  <div class="page flex flex-wrap items-center gap-x-16 gap-y-12 py-22">
+    <figure class="relative mx-auto w-full max-w-75 flex-[0_1_300px]">
+      <Image
+        src={pacoca}
+        alt={t.photoAlt}
+        widths={[300, 600, 900]}
+        sizes="300px"
+        class="aspect-4/5 w-full rounded-panel bg-hero object-cover object-[50%_30%]"
+      />
+      <span class="absolute -right-3.5 -bottom-3.5 flex size-19 items-center justify-center rounded-full bg-tint" aria-hidden="true">
+        <span class="flex size-16 items-center justify-center rounded-full bg-hero">
+          <Mascot width={44} ball="none" />
+        </span>
+      </span>
+    </figure>
+    <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-4">
+      <Kicker>{t.aboutKicker}</Kicker>
+      <h2 id="sobre-titulo" class="text-[clamp(30px,3.6vw,42px)] leading-[1.1] font-semibold tracking-[-0.02em]">{t.aboutTitle}</h2>
+      <p class="max-w-150 text-lg leading-[1.55]">{t.about1}</p>
+      <p class="max-w-150 text-lg leading-[1.55] text-muted">{t.about2}</p>
+      <p class="mt-2 text-base text-muted">{t.madeBy} <a href="https://stefany-sa.com.br" class="font-medium">stefany-sa.com.br</a></p>
+    </div>
+  </div>
+</section>
