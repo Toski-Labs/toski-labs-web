@@ -80,9 +80,9 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
     <div class="mt-1.5 flex flex-wrap gap-2.5">
       <Button href={mailto} size="md" className="max-sm:flex-auto">{t.mailCta}</Button>
       <!-- Para quem não tem um app de e-mail configurado (aí o mailto não abre nada). -->
-      <button type="button" class={buttonClasses('secondary', 'md', 'toski-copy-mail max-sm:flex-auto')} data-copy={SUPPORT_EMAIL} data-copied={t.copiedMail}>{t.copyMail}</button>
+      <button type="button" class={buttonClasses('secondary', 'md', 'toski-copy max-sm:flex-auto')} data-copy={SUPPORT_EMAIL} data-copied={t.copiedMail}><svg class="toski-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg><span data-text>{t.copyMail}</span></button>
     </div>
-    <p class="sr-only" aria-live="polite" data-mail-status></p>
+    <p class="sr-only" aria-live="polite" data-copy-status></p>
   </Card>
   <Card variant="hero" radius="panel" className="flex min-w-0 flex-[1_1_340px] flex-col gap-3.5 p-8">
     <IconBox name="copy" on="surface" />
@@ -114,19 +114,3 @@ const mailto = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.mailSubje
   <a href={href(lang, 'privacy')} class="inline-flex min-h-11 items-center text-base font-semibold no-underline hover:underline">{t.privCta}</a>
 </section>
 
-<script>
-  const mailStatus = document.querySelector<HTMLElement>('[data-mail-status]');
-  for (const button of document.querySelectorAll<HTMLButtonElement>('.toski-copy-mail')) {
-    const original = button.textContent;
-    button.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(button.dataset.copy!);
-      } catch {
-        return;
-      }
-      button.textContent = button.dataset.copied!;
-      if (mailStatus) mailStatus.textContent = `${button.dataset.copied}: ${button.dataset.copy}`;
-      setTimeout(() => (button.textContent = original), 1800);
-    });
-  }
-</script>

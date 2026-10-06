@@ -51,11 +51,11 @@ const sectionLabel = 'text-[13px] font-semibold uppercase tracking-[0.06em] text
     role="dialog"
     aria-label={t('settings.title')}
     hidden
-    class="absolute top-13 right-0 z-40 flex w-[min(320px,calc(100vw-32px))] flex-col gap-4.5 rounded-card border border-line bg-surface p-4.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)]"
+    class="toski-menu absolute top-13 right-0 z-40 flex w-[min(320px,calc(100vw-32px))] flex-col gap-4.5 rounded-card border border-line bg-surface p-4.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)]"
   >
     <div class="flex flex-col gap-2.5">
       <p id="rotulo-tema" class={sectionLabel}>{t('settings.theme')}</p>
-      <div role="radiogroup" aria-labelledby="rotulo-tema" class="grid grid-cols-3 gap-1 rounded-icon bg-tint p-1">
+      <div role="radiogroup" aria-labelledby="rotulo-tema" class="toski-seg grid grid-cols-3 gap-1 rounded-icon bg-tint p-1">
         {themes.map((theme) => (
           <button
             type="button"
@@ -103,6 +103,8 @@ const sectionLabel = 'text-[13px] font-semibold uppercase tracking-[0.06em] text
 <script>
   type Theme = 'auto' | 'light' | 'dark';
 
+  const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function store(key: string, value: string | null) {
     try {
       if (value === null) localStorage.removeItem(key);
@@ -145,32 +147,44 @@ const sectionLabel = 'text-[13px] font-semibold uppercase tracking-[0.06em] text
     applyTheme(saved === 'light' || saved === 'dark' ? saved : 'auto');
 
     const open = () => {
+      delete panel.dataset.closing;
       panel.hidden = false;
       trigger.setAttribute('aria-expanded', 'true');
       root.querySelector<HTMLElement>('[data-theme-option][aria-checked=true]')?.focus();
     };
+    // Fecha com uma saída curta (100 ms); com "reduzir movimento", na hora.
     const close = (focusTrigger = false) => {
-      panel.hidden = true;
       trigger.setAttribute('aria-expanded', 'false');
       if (focusTrigger) trigger.focus();
+      if (reduceMotion()) {
+        panel.hidden = true;
+        return;
+      }
+      panel.dataset.closing = '';
+      window.setTimeout(() => {
+        if (trigger.getAttribute('aria-expanded') === 'false') panel.hidden = true;
+        delete panel.dataset.closing;
+      }, 100);
     };
 
-    trigger.addEventListener('click', () => (panel.hidden ? open() : close()));
+    trigger.addEventListener('click', () => (trigger.getAttribute('aria-expanded') === 'true' ? close() : open()));
     root.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && !panel.hidden) {
+      if (event.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
         event.stopPropagation();
         close(true);
       }
     });
     document.addEventListener('click', (event) => {
-      if (!panel.hidden && !root.contains(event.target as Node)) close();
+      if (trigger.getAttribute('aria-expanded') === 'true' && !root.contains(event.target as Node)) close();
     });
 
     options.forEach((option, index) => {
       option.addEventListener('click', () => {
         const theme = option.dataset.themeOption as Theme;
         store(themeKey, theme === 'auto' ? null : theme);
-        applyTheme(theme);
+        // As cores passam de um tema para o outro (250 ms, no CSS). Sem suporte ou com "reduzir movimento", troca na hora.
+        if (document.startViewTransition && !reduceMotion()) document.startViewTransition(() => applyTheme(theme));
+        else applyTheme(theme);
       });
       // Setas trocam a opção, como num grupo de rádio.
       option.addEventListener('keydown', (event) => {

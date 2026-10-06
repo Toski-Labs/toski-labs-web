@@ -57,7 +57,7 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
   <Breadcrumb current="Wallpapers" />
   <section class="page flex flex-wrap items-end justify-between gap-x-12 gap-y-6 pt-7 pb-8 max-sm:pt-4">
     <SectionHeading as="h1" kicker={t.kicker} title={t.title} lead={t.lead} className="min-w-0 flex-[1_1_520px]" />
-    <fieldset class="flex gap-1.5 rounded-button bg-tint p-1">
+    <fieldset class="toski-seg flex gap-1.5 rounded-button bg-tint p-1">
       <legend class="sr-only">{t.filter}</legend>
       {filters.map((f, i) => (
         <label class="cursor-pointer rounded-[10px] text-[15px] font-semibold text-muted transition-colors has-checked:bg-segment has-checked:text-ink has-checked:shadow-[0_1px_3px_rgba(35,27,23,0.14)] has-focus-visible:outline-2 has-focus-visible:outline-accent">
@@ -122,7 +122,7 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
                   <span class="flex flex-col leading-[1.2]"><span class="text-[15px] font-semibold">Desktop</span><span class="text-xs text-muted">{t.sizes(desktopSizes.length)}</span></span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ml-1 text-muted transition-transform group-open:rotate-180"><path d="m6 9 6 6 6-6"></path></svg>
                 </summary>
-                <ul class="absolute bottom-full left-0 z-10 mb-2 flex w-max min-w-full flex-col gap-0.5 rounded-card border border-line bg-surface p-1.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)] max-sm:static max-sm:mt-2 max-sm:mb-0 max-sm:w-full max-sm:shadow-none">
+                <ul class="toski-menu [--menu-from:6px] [--menu-origin:bottom_left] max-sm:[--menu-from:-6px] max-sm:[--menu-origin:top_left] absolute bottom-full left-0 z-10 mb-2 flex w-max min-w-full flex-col gap-0.5 rounded-card border border-line bg-surface p-1.5 shadow-[0_18px_44px_rgba(35,27,23,0.18)] max-sm:static max-sm:mt-2 max-sm:mb-0 max-sm:w-full max-sm:shadow-none">
                   {desktopSizes.map((size) => (
                     <li>
                       <a
@@ -211,8 +211,30 @@ const btn = 'inline-flex min-h-12 items-center gap-2.5 rounded-icon border-[1.5p
   }
 
   // Seletor de tamanhos: abre um por vez e fecha ao clicar fora ou apertar Esc.
+  // Fechar tem uma saída curta (100 ms) antes de recolher; com "reduzir movimento", fecha na hora.
   const pickers = [...document.querySelectorAll<HTMLDetailsElement>('.toski-sizes')];
-  pickers.forEach((d) => d.addEventListener('toggle', () => { if (d.open) pickers.forEach((o) => o !== d && (o.open = false)); }));
-  document.addEventListener('click', (e) => pickers.forEach((d) => { if (d.open && !d.contains(e.target as Node)) d.open = false; }));
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') pickers.forEach((d) => { if (d.open) { d.open = false; d.querySelector('summary')?.focus(); } }); });
+  const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const closePicker = (d: HTMLDetailsElement) => {
+    const menu = d.querySelector<HTMLElement>('.toski-menu');
+    if (!d.open || !menu || menu.hasAttribute('data-closing')) return;
+    if (reduceMotion()) {
+      d.open = false;
+      return;
+    }
+    menu.dataset.closing = '';
+    window.setTimeout(() => {
+      d.open = false;
+      delete menu.dataset.closing;
+    }, 100);
+  };
+  pickers.forEach((d) => {
+    d.addEventListener('toggle', () => { if (d.open) pickers.forEach((o) => o !== d && closePicker(o)); });
+    d.querySelector('summary')?.addEventListener('click', (e) => {
+      if (!d.open) return;
+      e.preventDefault();
+      closePicker(d);
+    });
+  });
+  document.addEventListener('click', (e) => pickers.forEach((d) => { if (d.open && !d.contains(e.target as Node)) closePicker(d); }));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') pickers.forEach((d) => { if (d.open) { closePicker(d); d.querySelector('summary')?.focus(); } }); });
 </script>

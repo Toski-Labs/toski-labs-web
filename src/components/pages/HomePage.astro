@@ -78,7 +78,7 @@ const t = {
   <SectionHeading id="projetos-titulo" kicker={t.projKicker} title={t.projTitle} lead={t.projLead} />
   <div class="flex flex-wrap items-stretch gap-6">
     {projects.map((project) => (
-      <Card as="article" radius="panel" className="flex min-w-0 flex-[2_1_540px] flex-col gap-5 p-6 sm:gap-5.5 sm:p-8">
+      <Card as="article" radius="panel" className="toski-lift flex min-w-0 flex-[2_1_540px] flex-col gap-5 p-6 sm:gap-5.5 sm:p-8">
         <div class="flex items-center gap-4 sm:flex-wrap sm:justify-between">
           <AppIcon size={88} className="size-16 shrink-0 sm:size-22" />
           <div class="flex min-w-0 flex-1 flex-wrap justify-end gap-2 sm:flex-none">
@@ -95,10 +95,10 @@ const t = {
           {project.tags[lang].map((tag) => <li><Pill className="max-sm:h-7 max-sm:px-2.5 max-sm:text-[13px]">{tag}</Pill></li>)}
         </ul>
         <div class="mt-auto flex flex-col gap-1 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-2">
-          <Button href={href(lang, project.page)} size="md" icon="arrow-right" className="justify-center">{t.seeProject}</Button>
+          <Button href={href(lang, project.page)} size="md" icon="arrow-right" className="toski-stretch justify-center">{t.seeProject}</Button>
           <div class="flex justify-center gap-8 sm:contents">
-          <a href={href(lang, 'privacy')} class="inline-flex min-h-11 items-center text-[15px] font-medium no-underline hover:underline">{t.privacy}</a>
-          <a href={href(lang, 'support')} class="inline-flex min-h-11 items-center text-[15px] font-medium no-underline hover:underline">{t.support}</a>
+          <a href={href(lang, 'privacy')} class="relative z-1 inline-flex min-h-11 items-center text-[15px] font-medium no-underline hover:underline">{t.privacy}</a>
+          <a href={href(lang, 'support')} class="relative z-1 inline-flex min-h-11 items-center text-[15px] font-medium no-underline hover:underline">{t.support}</a>
           </div>
         </div>
       </Card>

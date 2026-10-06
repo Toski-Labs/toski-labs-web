@@ -120,14 +120,14 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 8. Open VSX: revisão do tema e pedido do namespace `toskilabs`.
 
 **SEO e compartilhamento**
-9. Conferir o card de compartilhamento nas redes (WhatsApp, Instagram/Facebook, X, LinkedIn, iMessage) para cada página em PT e EN: imagem, título e descrição. Avaliar imagens OG próprias para PetHealthTracker, Estúdio e Wallpapers.
-10. SEO: títulos e descrições de todas as páginas, dados estruturados (Organization e SoftwareApplication) e Lighthouse no site publicado. Search Console: ver a seção abaixo.
+9. ~~Card de compartilhamento~~ ✅ (6 out): imagens OG próprias por seção (Home, PetHealthTracker, Estúdio, Wallpapers, Temas) em PT e EN, conferidas no site publicado.
+10. ~~SEO~~ ✅ (6 out): títulos e descrições, dados estruturados (Organization, WebSite, MobileApplication, BreadcrumbList), Lighthouse 98–100. Search Console: ver a seção abaixo.
 
 **Animações**
-11. Mapear animações e microinterações do site: o que já existe (bolinha da Toski, menu de configurações, faixa de campanha, voltar ao topo) e onde vale adicionar (hover e clique em botões e cards, troca de tema, filtro e seletor de tamanho dos wallpapers, copiar cor do DS, abertura do FAQ, entrada das seções ao rolar). Tudo leve, só CSS sempre que der, respeitando `prefers-reduced-motion`. Desenhar no canvas antes de implementar.
+11. ~~Animações e microinterações~~ ✅ (6 out): proposta aprovada no canvas (página "Animações") e implementada em `src/scripts/motion.ts` + `global.css`: confirmação de cópia, menus abrindo e fechando, troca de tema com View Transitions, filtro que desliza, cards que levantam (botão principal cobre o card), botão afundando (provisório até ir para o `buttonClasses()` do DS), seções do PetHealthTracker aparecendo ao rolar e bolinha pulando no logo. Tudo respeita `prefers-reduced-motion`.
 
 **Manutenção**
-12. Canvas de design: página de Wallpapers ainda na v1 (sem tamanhos de desktop, Halloween e Lick or Treat).
+12. ~~Canvas de design~~ ✅ (6 out): Wallpapers v2, Estúdio, Suporte, PetHealthTracker e Privacidade iguais ao site.
 
 **Opcionais**
 13. Domínio próprio e deploy automático pelo GitHub Actions.

@@ -91,7 +91,7 @@ const primary = buttonClasses('primary', 'md', 'max-sm:flex-auto');
     <SectionHeading as="h1" kicker={t.kicker} title={t.title} lead={t.lead} className="min-w-0 flex-[1_1_520px]" />
     <fieldset class="flex flex-col gap-2">
       <legend class="mb-2 text-[13px] font-medium text-muted">{t.preview}</legend>
-      <div class="flex gap-1.5 rounded-button bg-tint p-1">
+      <div class="toski-seg flex gap-1.5 rounded-button bg-tint p-1">
         {modes.map((m, i) => (
           <label class="cursor-pointer rounded-[10px] text-[15px] font-semibold text-muted transition-colors has-checked:bg-segment has-checked:text-ink has-checked:shadow-[0_1px_3px_rgba(35,27,23,0.14)] has-focus-visible:outline-2 has-focus-visible:outline-accent">
             <input type="radio" name="previa-tema" id={`tema-${m.id}`} value={m.id} checked={i === 0} class="sr-only" />
@@ -122,8 +122,9 @@ const primary = buttonClasses('primary', 'md', 'max-sm:flex-auto');
           <span class="text-[13px] font-medium text-muted">{t.orTerminal}</span>
           <div class="flex items-center gap-2 rounded-xl border border-line bg-background py-1.5 pr-1.5 pl-3.5">
             <code tabindex="0" class="min-w-0 flex-auto overflow-x-auto font-mono text-[13px] whitespace-nowrap">{command}</code>
-            <button type="button" class="toski-copy-cmd h-9 shrink-0 rounded-[9px] bg-tint px-3 text-[13px] font-semibold text-ink" data-copy={command} data-copied={t.copied} aria-label={t.copyLabel}>{t.copy}</button>
+            <button type="button" class="toski-copy inline-flex h-9 shrink-0 items-center rounded-[9px] bg-tint px-3 text-[13px] font-semibold text-ink" data-copy={command} data-copied={t.copied} aria-label={t.copyLabel}><svg class="toski-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg><span data-text>{t.copy}</span></button>
           </div>
+          <p class="sr-only" aria-live="polite" data-copy-status></p>
         </div>
         <p class="text-[13px] text-muted">{t.meta} · <a href={vscode.githubUrl} class="font-medium">{t.code}</a></p>
       </div>
@@ -183,18 +184,3 @@ const primary = buttonClasses('primary', 'md', 'max-sm:flex-auto');
     display: none;
   }
 </style>
-
-<script>
-  for (const button of document.querySelectorAll<HTMLButtonElement>('.toski-copy-cmd')) {
-    const original = button.textContent;
-    button.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(button.dataset.copy!);
-      } catch {
-        return;
-      }
-      button.textContent = button.dataset.copied!;
-      setTimeout(() => (button.textContent = original), 1500);
-    });
-  }
-</script>

@@ -138,14 +138,14 @@ const t = {
 <!-- Recursos -->
 <section aria-labelledby="recursos-titulo" class="page flex flex-col gap-6 pb-16 sm:gap-8 sm:pb-24">
   <SectionHeading id="recursos-titulo" kicker={t.featKicker} title={t.featTitle} />
-  <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-3 sm:gap-5">
+  <div data-reveal class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-3 sm:gap-5">
     {t.features.map(([icon, title, body]) => <FeatureCard icon={icon} title={title}>{body}</FeatureCard>)}
   </div>
 </section>
 
 <!-- Destaque: PDF -->
 <section aria-labelledby="pdf-titulo" class="page pb-16 sm:pb-24">
-  <Card variant="hero" className="flex flex-wrap items-center gap-x-16 gap-y-10 rounded-4xl p-6 sm:p-12">
+  <Card variant="hero" data-reveal="self" className="flex flex-wrap items-center gap-x-16 gap-y-10 rounded-4xl p-6 sm:p-12">
     <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-4.5">
       <div class="flex flex-wrap items-center gap-2.5">
         <Kicker>{t.pdfKicker}</Kicker>
@@ -168,7 +168,7 @@ const t = {
 <section id="planos" aria-labelledby="planos-titulo" class="band scroll-mt-6 bg-tint">
   <div class="page flex flex-col gap-7 py-14 sm:gap-9 sm:py-22">
     <SectionHeading id="planos-titulo" kicker={t.plansKicker} title={t.plansTitle} lead={t.plansLead} />
-    <div class="flex flex-wrap items-stretch gap-4 sm:gap-6">
+    <div data-reveal class="flex flex-wrap items-stretch gap-4 sm:gap-6">
       <Card variant="plain" radius="panel" className="flex min-w-0 flex-[1_1_300px] flex-col gap-5 p-6 sm:p-8">
         <div class="flex flex-col gap-1.5">
           <h3 class="text-2xl font-semibold">{t.freeName}</h3>

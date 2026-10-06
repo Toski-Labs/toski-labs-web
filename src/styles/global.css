@@ -97,3 +97,178 @@
     color: var(--toski-ink);
   }
 }
+
+/*
+ * Microinterações (proposta aprovada no canvas, página "Animações").
+ * Só transform e opacity, 100 a 250 ms, curvas do DS. Com "reduzir movimento",
+ * o DS zera as durações de tudo. O comportamento fica em src/scripts/motion.ts.
+ * Fora de @layer de propósito: precisa valer sobre as classes utilitárias.
+ */
+
+/* Confirmação de cópia: o check entra com um pulinho e o texto troca. */
+.toski-copy {
+  gap: 0;
+}
+.toski-check {
+  width: 0;
+  margin-inline-end: 0;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: scale(0.6);
+  color: var(--toski-success);
+  transition:
+    width 150ms var(--toski-ease-out),
+    margin 150ms var(--toski-ease-out),
+    opacity 150ms var(--toski-ease-out),
+    transform 200ms var(--toski-ease-out);
+}
+.toski-copy[data-state='copied'] .toski-check {
+  width: 1.1em;
+  margin-inline-end: 0.4em;
+  opacity: 1;
+  transform: scale(1);
+}
+@keyframes toski-pop {
+  0% {
+    transform: scale(0.85);
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.toski-swatch[data-state='copied'] [data-label] {
+  animation: toski-pop 220ms var(--toski-ease-out);
+}
+
+/* Menus (configurações e tamanhos dos wallpapers): surgem do botão e fecham mais rápido. */
+@keyframes toski-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--menu-from, -6px)) scale(0.98);
+  }
+}
+@keyframes toski-menu-out {
+  to {
+    opacity: 0;
+    transform: translateY(var(--menu-from, -6px)) scale(0.98);
+  }
+}
+.toski-menu {
+  transform-origin: var(--menu-origin, top right);
+  animation: toski-menu-in 160ms var(--toski-ease-out);
+}
+.toski-menu[data-closing] {
+  animation: toski-menu-out 100ms var(--toski-ease-out) forwards;
+}
+
+/* Troca de tema: as cores passam de um tema para o outro (View Transitions). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 250ms;
+  animation-timing-function: var(--toski-ease-in-out);
+}
+
+/* Filtro segmentado: com JavaScript, um fundo único desliza até a opção escolhida. */
+.toski-seg[data-slide] {
+  position: relative;
+}
+.toski-seg[data-slide] > :is(label, button) {
+  position: relative;
+  background: transparent;
+  box-shadow: none;
+}
+.toski-seg-thumb {
+  position: absolute;
+  left: 0;
+  background: var(--toski-segment);
+  box-shadow: 0 1px 3px rgba(35, 27, 23, 0.14);
+  pointer-events: none;
+  transition:
+    transform 220ms var(--toski-ease-out),
+    width 220ms var(--toski-ease-out);
+}
+
+/* Cards que levantam (só com mouse). O link principal cobre o card inteiro (.toski-stretch). */
+.toski-lift {
+  position: relative;
+  transition:
+    transform 200ms var(--toski-ease-out),
+    box-shadow 200ms var(--toski-ease-out);
+}
+.toski-lift-art {
+  transition: transform 300ms var(--toski-ease-out);
+}
+.toski-stretch::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+@media (hover: hover) {
+  .toski-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(35, 27, 23, 0.14);
+  }
+  .toski-lift:hover .toski-lift-art {
+    transform: scale(1.04);
+  }
+}
+
+/* Botões afundando ao pressionar. Provisório: o lugar certo é o buttonClasses() do DS. */
+.rounded-button.select-none {
+  transition-property: color, background-color, border-color, transform;
+}
+.rounded-button.select-none:active {
+  transform: scale(0.97);
+}
+
+/* Seções aparecendo ao rolar (classe posta pelo script só no que começa fora da tela). */
+.toski-reveal > *,
+.toski-reveal[data-reveal='self'] {
+  transition:
+    opacity 400ms var(--toski-ease-out) var(--reveal-delay, 0ms),
+    transform 400ms var(--toski-ease-out) var(--reveal-delay, 0ms);
+}
+.toski-reveal:not(.is-in) > *,
+.toski-reveal[data-reveal='self']:not(.is-in) {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.toski-reveal[data-reveal='self'] > * {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* Bolinha da Paçoca pulando no logo do topo, uma vez a cada hover. */
+@keyframes toski-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  /* Unidades do desenho do ícone (viewBox de 222): no logo de 36 px, o pulo fica com uns 6 px. */
+  40% {
+    transform: translateY(-38px);
+  }
+  70% {
+    transform: translateY(0);
+  }
+  82% {
+    transform: translateY(-10px);
+  }
+}
+.toski-logo svg {
+  overflow: visible;
+}
+.toski-logo circle {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@media (hover: hover) {
+  .toski-logo:hover circle {
+    animation: toski-hop 700ms var(--toski-ease-in-out);
+  }
+}
