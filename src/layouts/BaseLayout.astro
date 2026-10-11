@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+// Fonte do corpo do texto (latin), carregada logo no início para não mexer o layout quando chega (CLS).
+import outfitLatin from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import LangBanner from '../components/LangBanner.astro';
@@ -108,6 +110,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
       </>
     )}
 
+    <link rel="preload" href={outfitLatin} as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#F7F1E8" media="(prefers-color-scheme: light)" />
