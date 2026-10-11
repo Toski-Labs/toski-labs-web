@@ -56,6 +56,8 @@ export interface Campaign {
       prices: CampaignPrice[];
     }
   >;
+  /** Para onde a faixa e o selo levam: a Home do site do app (subdomínio), por idioma. */
+  url: Record<Lang, string>;
   /** Link da App Store (preencher quando o app estiver publicado). */
   appStoreUrl: string;
 }
@@ -67,6 +69,7 @@ export const blackFriday: Campaign = {
   start: '2026-11-27T00:00:00-03:00',
   // Mesma data da tela de Black Friday do app ("Só até 30 de novembro, 23:59").
   end: '2026-11-30T23:59:59-03:00',
+  url: { pt: 'https://pethealth.toski-labs.com.br', en: 'https://pethealth.toski-labs.com.br/en' },
   appStoreUrl: '#',
   copy: {
     pt: {

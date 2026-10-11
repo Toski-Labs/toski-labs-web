@@ -1,15 +1,15 @@
 ---
-/** Selo pequeno da campanha dentro do card do projeto, na Home. Leva para a oferta na página do projeto. Quem mostra é o CampaignFlags. */
+/** Selo pequeno da campanha dentro do card do projeto, na Home. Leva para o site do app. Quem mostra é o CampaignFlags. */
 import { Icon } from '@toski-labs/ds';
 import { blackFriday as campaign } from '../../data/campaigns';
-import { getLang, href } from '../../i18n/ui';
+import { getLang } from '../../i18n/ui';
 
 const lang = getLang(Astro.currentLocale);
 const c = campaign.copy[lang];
 ---
 
   <a
-    href={href(lang, 'pethealthtracker', 'oferta')}
+    href={campaign.url[lang]}
     class="toski-campaign-seal relative z-1 flex items-center gap-3.5 rounded-2xl bg-[#120D0A] py-3 pr-4 pl-3 text-papel no-underline hover:text-papel"
     data-campaign-project={campaign.project}
     data-campaign-flag={campaign.flag}
@@ -17,10 +17,10 @@ const c = campaign.copy[lang];
     data-end={campaign.end}
     hidden
   >
-    <span class="flex size-13 shrink-0 -rotate-10 items-center justify-center rounded-full bg-caramelo text-[15px] font-bold tracking-[-0.02em] text-[#120D0A]" aria-hidden="true">−50%</span>
+    <span class="flex size-13 shrink-0 -rotate-10 items-center justify-center rounded-full bg-[#A9B4E8] text-[15px] font-bold tracking-[-0.02em] text-[#120D0A]" aria-hidden="true">−50%</span>
     <span class="flex min-w-0 grow flex-col gap-0.5">
-      <span class="text-xs font-bold tracking-[0.08em] text-caramelo">BLACK FRIDAY</span>
+      <span class="text-xs font-bold tracking-[0.08em] text-[#A9B4E8]">BLACK FRIDAY</span>
       <span class="text-[15px] leading-[1.35]">{c.seal}</span>
     </span>
-    <Icon name="arrow-right" size={18} stroke={2.2} className="text-caramelo" />
+    <Icon name="arrow-right" size={18} stroke={2.2} className="text-[#A9B4E8]" />
   </a>

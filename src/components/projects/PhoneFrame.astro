@@ -1,0 +1,33 @@
+---
+/**
+ * Celular decorativo com uma tela do app. Tamanho fixo (260×542) e nada clicável: CLS 0.
+ * PetHealthTracker: snapshot do app (claro e escuro, só em português). Koti: tela em HTML/CSS (KotiScreen).
+ */
+import { Image } from 'astro:assets';
+import { getLang } from '../../i18n/ui';
+import type { Project } from '../../data/projects';
+import KotiScreen from './KotiScreen.astro';
+import phtLight from '../../assets/apps/pethealth-calendario-claro.png';
+import phtDark from '../../assets/apps/pethealth-calendario-escuro.png';
+
+interface Props {
+  project: Project;
+  class?: string;
+}
+const { project, class: className } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const label = project.screenLabel[lang];
+---
+
+<div role="img" aria-label={label} class:list={['pointer-events-none relative box-border w-65 rounded-[42px] bg-[#1B1511] p-2.25 shadow-[0_24px_60px_rgba(35,27,23,0.22)]', className]}>
+  <div aria-hidden="true" class="h-131 w-60.5 overflow-hidden rounded-[33px]">
+    {project.id === 'pethealth' ? (
+      <>
+        <Image src={phtLight} alt="" width={242} height={524} widths={[242, 484, 726]} sizes="242px" data-art="light" class="block size-full" />
+        <Image src={phtDark} alt="" width={242} height={524} widths={[242, 484, 726]} sizes="242px" data-art="dark" class="block size-full" />
+      </>
+    ) : (
+      <div class="origin-top-left" style="zoom:0.6205;width:390px;height:844px"><KotiScreen /></div>
+    )}
+  </div>
+</div>

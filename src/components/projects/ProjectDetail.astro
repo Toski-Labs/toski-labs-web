@@ -1,0 +1,50 @@
+---
+/** Bloco de um projeto na página de Projetos: resumo, recursos, planos, botões e o celular ao lado. */
+import { Card, Pill } from '@toski-labs/ds';
+import { getLang } from '../../i18n/ui';
+import type { Project } from '../../data/projects';
+import ProductIcon from './ProductIcon.astro';
+import ProjectActions from './ProjectActions.astro';
+import PhoneFrame from './PhoneFrame.astro';
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const forWho = lang === 'pt' ? 'Para quem:' : 'Who it’s for:';
+---
+
+<Card as="article" radius="panel" data-product={project.id} aria-labelledby={`ov-${project.id}`} className="flex flex-wrap items-center gap-x-14 gap-y-10 p-6 sm:p-10">
+  <div class="flex min-w-0 flex-[1_1_520px] flex-col gap-5.5">
+    <div class="flex flex-wrap items-center gap-4">
+      <ProductIcon product={project.id} size={72} class="size-18 rounded-2xl" />
+      <div class="flex min-w-0 flex-col gap-2">
+        <h2 id={`ov-${project.id}`} class="text-[34px] leading-[1.1] font-semibold tracking-[-0.02em]">{project.name}</h2>
+        <div class="flex flex-wrap gap-2">
+          <Pill variant="status" className="h-7.5 text-[13px]">{project.status[lang]}</Pill>
+          <Pill variant="outline" className="h-7.5 text-[13px]">{project.platform[lang]}</Pill>
+        </div>
+      </div>
+    </div>
+    <p class="text-[22px] leading-[1.35] font-medium text-accent-text">{project.tagline[lang]}</p>
+    <p class="max-w-150 text-[17px] leading-[1.55]">{project.what[lang]}</p>
+    <p class="max-w-150 text-base leading-normal text-muted"><strong class="font-semibold text-ink">{forWho}</strong> {project.who[lang]}</p>
+    <ul role="list" class="mt-1 grid gap-x-6 gap-y-4 sm:grid-cols-2">
+      {project.features[lang].map((f) => (
+        <li class="flex items-start gap-3">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-[11px] bg-tint text-accent-text">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={f.icon}></path></svg>
+          </span>
+          <span class="flex min-w-0 flex-col gap-0.5"><span class="text-base font-semibold">{f.title}</span><span class="text-sm leading-[1.45] text-muted">{f.body}</span></span>
+        </li>
+      ))}
+    </ul>
+    <p class="text-sm text-muted">{project.plans[lang]}</p>
+    <ProjectActions project={project} class="mt-1" />
+  </div>
+  <div class="relative flex min-w-0 flex-[0_1_340px] justify-center py-6 max-sm:w-full">
+    <div class="absolute top-1/2 left-1/2 aspect-square w-full max-w-85 -translate-x-1/2 -translate-y-1/2 rounded-full bg-tint" aria-hidden="true"></div>
+    <PhoneFrame project={project} class="max-sm:zoom-[0.86]" />
+  </div>
+</Card>

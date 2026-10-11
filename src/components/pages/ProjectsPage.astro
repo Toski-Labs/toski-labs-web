@@ -1,0 +1,45 @@
+---
+/** Projetos (PT e EN): um resumo de cada app, com a tela dele ao lado. */
+import { Card, IconBox, Kicker } from '@toski-labs/ds';
+import { getLang } from '../../i18n/ui';
+import { projects } from '../../data/projects';
+import ProjectDetail from '../projects/ProjectDetail.astro';
+
+const lang = getLang(Astro.currentLocale);
+const t = {
+  pt: {
+    kicker: 'Projetos',
+    title: 'O que sai do laboratório',
+    lead: 'Soluções que nascem de necessidades reais e são feitas para pessoas reais. Começamos por algo que atrapalha a rotina e só paramos quando a solução fica tão simples que parece óbvia.',
+    nextKicker: 'Próximo projeto',
+    nextTitle: 'Ainda no forno',
+    nextBody: 'Novas ideias estão em teste. Elas aparecem aqui quando saírem do rascunho.',
+  },
+  en: {
+    kicker: 'Projects',
+    title: 'What comes out of the lab',
+    lead: 'Solutions born from real needs, made for real people. We start with something that gets in the way of everyday life and keep going until the answer feels obvious.',
+    nextKicker: 'Next project',
+    nextTitle: 'Still in the oven',
+    nextBody: 'New ideas are being tested. They show up here once they leave the sketchbook.',
+  },
+}[lang];
+---
+
+<section class="page flex flex-col gap-3.5 pt-10 pb-12">
+  <Kicker>{t.kicker}</Kicker>
+  <h1 class="text-[clamp(36px,4.6vw,56px)] leading-[1.06] font-semibold tracking-tight">{t.title}</h1>
+  <p class="max-w-170 text-[19px] leading-normal text-muted">{t.lead}</p>
+</section>
+
+<div class="page flex flex-col gap-7 pb-24">
+  {projects.map((project) => <ProjectDetail project={project} />)}
+  <Card as="article" variant="dashed" radius="panel" className="flex flex-wrap items-center gap-x-7 gap-y-5 p-8">
+    <IconBox name="flask" size="lg" tone="muted" className="max-sm:size-16 max-sm:rounded-2xl" />
+    <div class="flex min-w-0 flex-[1_1_280px] flex-col gap-2">
+      <Kicker tone="muted">{t.nextKicker}</Kicker>
+      <h2 class="text-[26px] leading-[1.15] font-semibold tracking-[-0.01em]">{t.nextTitle}</h2>
+      <p class="text-base leading-normal text-muted">{t.nextBody}</p>
+    </div>
+  </Card>
+</div>

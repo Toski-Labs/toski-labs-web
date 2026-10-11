@@ -1,72 +1,51 @@
 ---
 /** Suporte (PT e EN): contato, código de suporte e perguntas frequentes. */
-import { Card, Icon, IconBox, Kicker, SectionHeading, buttonClasses } from '@toski-labs/ds';
+import { Card, Icon, IconBox, SectionHeading, buttonClasses } from '@toski-labs/ds';
 import { getLang, href, SUPPORT_EMAIL } from '../../i18n/ui';
-import FaqItem from '../ui/FaqItem.astro';
+import { projects } from '../../data/projects';
+import ProductIcon from '../projects/ProductIcon.astro';
 
 const lang = getLang(Astro.currentLocale);
 const t = {
   pt: {
     kicker: 'Suporte',
     title: 'Como podemos ajudar?',
-    lead: 'As respostas mais comuns estão aqui embaixo. Se não achar o que precisa, fale com a gente.',
+    lead: 'Cada app tem o próprio suporte, com as perguntas mais comuns. Para falar com a Toski Labs, escreva para a gente.',
     contactLabel: 'Contato',
     mailTitle: 'Fale com a gente',
     mailBody: `Mande um e-mail para ${SUPPORT_EMAIL}. Respondemos em até 2 dias úteis.`,
     mailCta: 'Escrever e-mail',
     copyMail: 'Copiar e-mail',
     copiedMail: 'E-mail copiado',
-    mailSubject: 'Suporte PetHealthTracker',
+    mailSubject: 'Suporte Toski Labs',
     mailWeb: 'no navegador',
     mailApp: 'App de e-mail',
     mailAppHint: 'Mail ou o app do seu aparelho',
-    codeTitle: 'Inclua o seu código de suporte',
-    codeBody: 'Ele ajuda a encontrar a sua conta sem você precisar mandar dados pessoais. Para copiar no app:',
-    codeSteps: ['Ajustes', 'Ajuda e feedback', 'Sua conta', 'Copiar código'],
-    codeStepsLabel: 'Caminho no app',
-    faqTitle: 'Perguntas frequentes',
-    faqLead: 'Sobre assinatura, conta e lembretes do PetHealthTracker.',
-    faq: [
-      ['Como restauro minha compra?', 'Em Ajustes, toque no card do seu plano e em Restaurar compras, usando o mesmo ID Apple da assinatura. O Plus acompanha o seu ID Apple, então funciona em qualquer iPhone com ele.'],
-      ['Como cancelo a assinatura?', 'Em Ajustes, toque em Gerenciar assinatura no card do plano, ou vá em Ajustes do iPhone › seu nome › Assinaturas. Você continua no Plus até o fim do período já pago.'],
-      ['Como peço reembolso?', 'Quem decide os reembolsos é a Apple. No app, vá em Ajustes › Ajuda e feedback › Pedir reembolso, que abre o pedido direto na Apple.'],
-      ['O que acontece com meus pets se eu sair do Plus?', 'Você escolhe um pet para continuar ativo. Os outros ficam congelados: dá para ver tudo, mas eles saem da tela inicial e do calendário e param de lembrar. Nada é apagado, e todos voltam quando você assinar de novo.'],
-      ['O app funciona sem internet?', 'Sim. Tudo fica salvo no iPhone e sincroniza com a sua conta quando a conexão voltar.'],
-      ['Os lembretes não estão chegando.', 'Confira se as notificações do PetHealthTracker estão ligadas em Ajustes do iPhone › Notificações. Se estiverem desligadas, o app também avisa em Ajustes › Notificações.'],
-      ['Como excluo minha conta?', 'Em Ajustes › Conta › Excluir conta. Isso apaga os seus dados e os dos seus pets. A assinatura é cancelada à parte, na Apple.'],
-    ],
+    appsKicker: 'Projetos',
+    appsTitle: 'Suporte de cada app',
+    appsLead: 'Assinatura, conta, lembretes e outras dúvidas ficam no site de cada app.',
+    appSupport: 'Suporte do',
     privLine: 'Quer saber o que fazemos com os seus dados?',
     privCta: 'Ler a Política de Privacidade',
   },
   en: {
     kicker: 'Support',
     title: 'How can we help?',
-    lead: 'The most common answers are below. If you can’t find what you need, get in touch.',
+    lead: 'Each app has its own support, with the most common answers. To reach Toski Labs, send us a message.',
     contactLabel: 'Contact',
     mailTitle: 'Get in touch',
     mailBody: `Email ${SUPPORT_EMAIL}. We reply within 2 business days.`,
     mailCta: 'Send an email',
     copyMail: 'Copy email',
     copiedMail: 'Email copied',
-    mailSubject: 'PetHealthTracker support',
+    mailSubject: 'Toski Labs support',
     mailWeb: 'in your browser',
     mailApp: 'Email app',
     mailAppHint: 'Mail or your device’s app',
-    codeTitle: 'Include your support code',
-    codeBody: 'It helps us find your account without you sending any personal details. To copy it in the app:',
-    codeSteps: ['Settings', 'Help & feedback', 'Your account', 'Copy code'],
-    codeStepsLabel: 'Path in the app',
-    faqTitle: 'FAQ',
-    faqLead: 'About PetHealthTracker subscriptions, accounts and reminders.',
-    faq: [
-      ['How do I restore my purchase?', 'In Settings, tap your plan card and then Restore purchases, using the same Apple ID as your subscription. Plus follows your Apple ID, so it works on any iPhone signed in with it.'],
-      ['How do I cancel my subscription?', 'In Settings, tap Manage subscription on the plan card, or go to iPhone Settings › your name › Subscriptions. You keep Plus until the end of the period you paid for.'],
-      ['How do I ask for a refund?', 'Apple decides on refunds. In the app, go to Settings › Help & feedback › Request a refund, which opens the request with Apple.'],
-      ['What happens to my pets if I leave Plus?', 'You choose one pet to keep active. The others are frozen: you can still see everything, but they leave the home screen and calendar and stop reminding you. Nothing is deleted, and they all come back when you subscribe again.'],
-      ['Does the app work offline?', 'Yes. Everything is saved on your iPhone and syncs to your account when you’re back online.'],
-      ['My reminders aren’t showing up.', 'Check that notifications for PetHealthTracker are on in iPhone Settings › Notifications. If they’re off, the app also lets you know in Settings › Notifications.'],
-      ['How do I delete my account?', 'Go to Settings › Account › Delete account. This erases your data and your pets’ data. Your subscription is cancelled separately, with Apple.'],
-    ],
+    appsKicker: 'Projects',
+    appsTitle: 'Support for each app',
+    appsLead: 'Subscriptions, accounts, reminders and other questions live on each app’s site.',
+    appSupport: 'Support for',
     privLine: 'Want to know what we do with your data?',
     privCta: 'Read the Privacy Policy',
   },
@@ -118,27 +97,20 @@ const outlook = `https://outlook.live.com/mail/0/deeplink/compose?to=${SUPPORT_E
   </Card>
   <Card variant="hero" radius="panel" className="flex min-w-0 flex-[1_1_340px] flex-col gap-3.5 p-8">
     <IconBox name="copy" on="surface" />
-    <h2 class="mt-1 text-2xl font-semibold">{t.codeTitle}</h2>
-    <p class="text-base leading-normal text-muted">{t.codeBody}</p>
-    <ol role="list" aria-label={t.codeStepsLabel} class="mt-1.5 flex flex-wrap items-center gap-2">
-      {t.codeSteps.map((step) => (
-        <li class="inline-flex h-8.5 items-center rounded-[10px] bg-surface px-3 text-sm font-medium">{step}</li>
+    <h2 class="mt-1 text-2xl font-semibold">{t.appsTitle}</h2>
+    <p class="text-base leading-normal text-muted">{t.appsLead}</p>
+    <ul role="list" class="mt-1.5 flex flex-col gap-2.5">
+      {projects.map((p) => (
+        <li data-product={p.id} class="rounded-card">
+          <a href={p.urls[lang].support} class="flex min-h-14 items-center gap-3 rounded-card bg-surface px-3.5 py-2 text-ink no-underline hover:text-ink">
+            <ProductIcon product={p.id} size={36} class="size-9 rounded-[10px]" />
+            <span class="grow text-base font-semibold">{t.appSupport} {p.name}</span>
+            <Icon name="external-link" size={18} stroke={2} className="text-accent-text" />
+          </a>
+        </li>
       ))}
-    </ol>
+    </ul>
   </Card>
-</section>
-
-<section aria-labelledby="faq-titulo" class="band bg-tint">
-  <div class="page flex flex-wrap gap-x-16 gap-y-8 pt-20 pb-24">
-    <div class="flex min-w-0 flex-[1_1_260px] flex-col gap-2.5">
-      <Kicker>PetHealthTracker</Kicker>
-      <h2 id="faq-titulo" class="text-[clamp(30px,3.6vw,42px)] leading-[1.1] font-semibold tracking-[-0.02em]">{t.faqTitle}</h2>
-      <p class="text-base leading-normal text-muted">{t.faqLead}</p>
-    </div>
-    <div class="flex min-w-0 flex-[999_1_560px] flex-col gap-2.5">
-      {t.faq.map(([q, a]) => <FaqItem question={q}><p>{a}</p></FaqItem>)}
-    </div>
-  </div>
 </section>
 
 <section class="page flex flex-wrap items-center justify-between gap-4 pt-14 pb-20">

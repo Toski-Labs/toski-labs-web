@@ -1,11 +1,11 @@
 ---
 /** Home (PT e EN). O idioma vem da rota; os textos ficam aqui. */
-import { AppIcon, Button, Card, IconBox, Kicker, Mascot, Pill, SectionHeading } from '@toski-labs/ds';
+import { Button, Icon, Kicker, Mascot, SectionHeading } from '@toski-labs/ds';
 import { Image } from 'astro:assets';
 import { getLang, href } from '../../i18n/ui';
 import { projects } from '../../data/projects';
 import MascotHero from '../brand/MascotHero.astro';
-import CampaignSeal from '../campaign/CampaignSeal.astro';
+import ProjectCard from '../projects/ProjectCard.astro';
 import pacoca from '../../assets/fotos/pacoca-sorrindo.jpg';
 
 const lang = getLang(Astro.currentLocale);
@@ -19,12 +19,7 @@ const t = {
     projKicker: 'Projetos',
     projTitle: 'O que está no laboratório',
     projLead: 'Cada projeto começa pequeno, ganha forma com quem usa e só chega à loja quando está pronto.',
-    seeProject: 'Ver projeto',
-    privacy: 'Privacidade',
-    support: 'Suporte',
-    nextKicker: 'Próximo projeto',
-    nextTitle: 'Ainda no forno',
-    nextBody: 'Novas ideias estão em teste. Elas aparecem aqui quando saírem do rascunho.',
+    allProjects: 'Ver todos os projetos',
     aboutKicker: 'Sobre',
     aboutTitle: 'Essa é a Paçoca, CEO da Toski Labs.',
     about1: 'Toski é o apelido dessa golden retriever. Ela inspirou o nome, a logo, as cores e cada detalhe da nossa identidade, e é quem aprova (ou não) as ideias por aqui.',
@@ -41,12 +36,7 @@ const t = {
     projKicker: 'Projects',
     projTitle: 'What’s in the lab',
     projLead: 'Every project starts small, takes shape with the people who use it, and only ships when it’s ready.',
-    seeProject: 'See project',
-    privacy: 'Privacy',
-    support: 'Support',
-    nextKicker: 'Next project',
-    nextTitle: 'Still in the oven',
-    nextBody: 'New ideas are being tested. They show up here once they leave the sketchbook.',
+    allProjects: 'See all projects',
     aboutKicker: 'About',
     aboutTitle: 'Meet Paçoca, CEO of Toski Labs.',
     about1: 'Toski is this golden retriever’s nickname. She inspired the name, the logo, the colors and every detail of our identity, and she’s the one who approves (or doesn’t) the ideas around here.',
@@ -64,7 +54,7 @@ const t = {
     <h1 class="text-[clamp(34px,9.2vw,44px)] leading-[1.05] font-semibold tracking-tight text-balance md:text-[clamp(48px,5.4vw,66px)]">{t.heroTitle}</h1>
     <p class="max-w-130 text-[17px] leading-normal text-pretty text-muted md:text-[19px]">{t.heroBody}</p>
     <div class="mt-3 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-center md:justify-start">
-      <Button href="#projetos" icon="arrow-down" className="justify-center max-sm:h-12 max-sm:text-base">{t.seeProjects}</Button>
+      <Button href={href(lang, 'projects')} icon="arrow-right" className="justify-center max-sm:h-12 max-sm:text-base">{t.seeProjects}</Button>
       <Button href="#sobre" variant="secondary" className="justify-center max-sm:h-12 max-sm:text-base">{t.aboutLab}</Button>
     </div>
   </div>
@@ -75,40 +65,12 @@ const t = {
 
 <!-- Projetos -->
 <section id="projetos" aria-labelledby="projetos-titulo" class="page flex scroll-mt-6 flex-col gap-8 pb-24">
-  <SectionHeading id="projetos-titulo" kicker={t.projKicker} title={t.projTitle} lead={t.projLead} />
+  <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+    <SectionHeading id="projetos-titulo" kicker={t.projKicker} title={t.projTitle} lead={t.projLead} />
+    <a href={href(lang, 'projects')} class="inline-flex min-h-11 items-center gap-2 text-base font-semibold text-link no-underline hover:underline">{t.allProjects}<Icon name="arrow-right" size={18} stroke={2.2} /></a>
+  </div>
   <div class="flex flex-wrap items-stretch gap-6">
-    {projects.map((project) => (
-      <Card as="article" radius="panel" className="toski-lift flex min-w-0 flex-[2_1_540px] flex-col gap-5 p-6 sm:gap-5.5 sm:p-8">
-        <div class="flex items-center gap-4 sm:flex-wrap sm:justify-between">
-          <AppIcon size={88} className="size-16 shrink-0 sm:size-22" />
-          <div class="flex min-w-0 flex-1 flex-wrap justify-end gap-2 sm:flex-none">
-            <Pill variant="status">{project.status[lang]}</Pill>
-            <Pill variant="outline">{project.platform[lang]}</Pill>
-          </div>
-        </div>
-        <div class="flex flex-col gap-2.5">
-          <h3 class="text-[28px] leading-[1.1] sm:text-[32px] font-semibold tracking-[-0.02em]">{project.name}</h3>
-          <p class="max-w-140 text-base leading-normal text-muted sm:text-[17px]">{project.description[lang]}</p>
-        </div>
-        {project.page === 'pethealthtracker' && <CampaignSeal />}
-        <ul role="list" class="flex flex-wrap gap-2">
-          {project.tags[lang].map((tag) => <li><Pill className="max-sm:h-7 max-sm:px-2.5 max-sm:text-[13px]">{tag}</Pill></li>)}
-        </ul>
-        <div class="mt-auto flex flex-col gap-1 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-2">
-          <Button href={href(lang, project.page)} size="md" icon="arrow-right" className="toski-stretch justify-center">{t.seeProject}</Button>
-          <div class="flex justify-center gap-8 sm:contents">
-          <a href={href(lang, 'privacy')} class="relative z-1 inline-flex min-h-11 items-center text-[15px] font-medium no-underline hover:underline">{t.privacy}</a>
-          <a href={href(lang, 'support')} class="relative z-1 inline-flex min-h-11 items-center text-[15px] font-medium no-underline hover:underline">{t.support}</a>
-          </div>
-        </div>
-      </Card>
-    ))}
-    <Card as="article" variant="dashed" radius="panel" className="flex min-w-0 flex-[1_1_280px] flex-col gap-3.5 p-6 sm:p-8">
-      <IconBox name="flask" size="lg" tone="muted" className="max-sm:size-16 max-sm:rounded-2xl" />
-      <Kicker tone="muted" className="mt-2">{t.nextKicker}</Kicker>
-      <h3 class="text-[26px] leading-[1.15] font-semibold tracking-[-0.01em]">{t.nextTitle}</h3>
-      <p class="text-base leading-normal text-muted">{t.nextBody}</p>
-    </Card>
+    {projects.map((project) => <ProjectCard project={project} />)}
   </div>
 </section>
 

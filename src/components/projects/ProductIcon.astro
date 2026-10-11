@@ -1,0 +1,18 @@
+---
+/** Ícone do app (do DS) no tema da página: claro ou escuro. */
+import { ProductIcon } from '@toski-labs/ds';
+import type { ProductId } from '../../data/projects';
+
+interface Props {
+  product: ProductId;
+  /** Lado em px do arquivo (qualidade). O tamanho na tela vem das classes (size-*). */
+  size: number;
+  class?: string;
+}
+const { product, size, class: className } = Astro.props;
+---
+
+<span class:list={['block shrink-0 overflow-hidden [&_span]:block [&_span]:size-full [&_svg]:size-full', className]}>
+  <span data-art="light"><ProductIcon product={product} variant="light" size={size} /></span>
+  <span data-art="dark"><ProductIcon product={product} variant="dark" size={size} /></span>
+</span>

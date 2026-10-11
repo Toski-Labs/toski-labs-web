@@ -1,0 +1,176 @@
+---
+/**
+ * Tela Hoje do Koti (390×844), estática e decorativa, feita em HTML/CSS a partir do canvas aprovado
+ * (AppKotiHoje e AppKotiHojeEscuro). O app ainda não tem build, então não há captura real.
+ * Acompanha o tema da página. Textos em src/data/projects.ts › kotiScreen. Nada aqui é interativo.
+ */
+import { getLang } from '../../i18n/ui';
+import { kotiScreen } from '../../data/projects';
+
+const lang = getLang(Astro.currentLocale);
+const t = kotiScreen[lang];
+const kinds = { list: 'k-tag-list' } as const;
+---
+
+<div class="kscreen" aria-hidden="true">
+  <div class="body">
+    <div class="top">
+      <span class="house">{t.home}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+      <span class="avatar">A</span>
+    </div>
+    <div class="head"><b class="title">{t.title}</b><span class="muted15">{t.date}</span></div>
+
+    <div class="now">
+      <div class="row">
+        <span class="avatar j ring">J</span>
+        <div class="col grow">
+          <span class="kick now-kick">{t.nowLabel}</span>
+          <b class="now-title">{t.nowTitle}</b>
+          <span class="now-sub">{t.nowSub}</span>
+        </div>
+      </div>
+      <div class="bar"><div style="width:53%"></div></div>
+      <div class="now-cta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>{t.nowCta}</div>
+    </div>
+
+    <div class="col gap10">
+      <div class="between"><span class="label">{t.forYou}</span><span class="hint">{t.swipe}</span></div>
+      <div class="cards">
+        <div class="card urgent">
+          <span class="chip chip-task">{t.task.tag}</span>
+          <div class="row"><span class="ico ico-crit"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 9"></path><path d="M20 4v5h-5"></path><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15"></path><path d="M4 20v-5h5"></path></svg></span><div class="col grow"><b class="ctitle">{t.task.title}</b><span class="crit">{t.task.sub}</span></div></div>
+          <div class="row gap8"><span class="btn solid">{t.task.ok}</span><span class="btn ghost">{t.task.no}</span></div>
+        </div>
+        <div class="card">
+          <span class="chip chip-bill">{t.bill.tag}</span>
+          <div class="row"><span class="ico ico-accent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2.5"></rect><path d="M8 8h8M8 12h8M8 16h4"></path></svg></span><div class="col grow"><b class="ctitle">{t.bill.title}</b><span class="muted13">{t.bill.sub}</span></div></div>
+        </div>
+      </div>
+      <div class="also"><span class="avatar j sm">J</span>{t.also}</div>
+    </div>
+
+    <div class="col gap10">
+      <div class="between"><span class="label">{t.lists}</span><span class="link">{t.allLists}</span></div>
+      <div class="grid">
+        {t.cards.map((c) => (
+          <div class="lcard">
+            <div class="between top-start"><b class="ctitle">{c.name}</b><span class="plus">+</span></div>
+            <span class="muted13">{c.sub}</span>
+            <div class="bar lbar"><div style={`width:${c.pct}%`}></div></div>
+            <span class:list={['due', c.urgent && 'due-urgent']}>{c.due}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="col gap10">
+      <div class="col gap2"><span class="label">{t.activity}</span><span class="hint">{t.activitySub}</span></div>
+      <div class="feed">
+        {t.feed.map((f) => (
+          <div class="item">
+            <span class:list={['avatar sm', f.who === 'J' ? 'j' : 'a']}>{f.who}</span>
+            <div class="col grow gap4"><span class="ftext">{f.text}</span><span class:list={['chip', kinds[f.kind]]}>{f.from}</span></div>
+            <span class="hint when">{f.when}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <span class="fab"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></span>
+
+  <div class="tabs">
+    <span class="tab on"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-6.5 8 6.5"></path><circle cx="12" cy="11.5" r="1.6" fill="currentColor"></circle><path d="M12 15v4.5"></path></svg>{t.tabs[0]}</span>
+    <span class="tab"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18h2"></path></svg>{t.tabs[1]}</span>
+    <span class="tab"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>{t.tabs[2]}</span>
+    <span class="tab"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="3.2"></circle><circle cx="16.5" cy="10" r="2.6"></circle><path d="M3.5 19c.8-3.2 3-4.8 5.5-4.8s4.7 1.6 5.5 4.8M14.5 15c2.4-.4 4.6.8 5.5 3.6"></path></svg>{t.tabs[3]}</span>
+  </div>
+</div>
+
+<style>
+  .kscreen {
+    --k-bg: #F7F1E8; --k-surface: #FFFFFF; --k-text: #231B17; --k-text2: #6B5648; --k-hint: #75634F; --k-border: #E6D8C5; --k-line: #EFE4D6;
+    --k-accent: #7A3F6E; --k-on-accent: #FFF8EE; --k-soft: #F0E1EC; --k-crit: #A3341A; --k-crit-bg: #F6DFD7; --k-crit-border: #E7B3A5;
+    --k-hero-bg: #7A3F6E; --k-hero-text: #FFF8EE; --k-hero-kick: #E8C2DD; --k-hero-sub: #F0E1EC; --k-hero-ring: #7A3F6E; --k-hero-ring2: #E8C2DD; --k-hero-btn: rgba(255, 248, 238, 0.16); --k-hero-btn-text: #FFF8EE;
+    --k-task: #3F6E3B; --k-task-bg: #E3EBDD; --k-bill: #94481A; --k-bill-bg: #FBEFDF; --k-pay: #3F6E3B; --k-on-pay: #FFFFFF; --k-urgent: #A3341A; --k-urgent-bg: #F6DFD7; --k-warn: #94481A; --k-warn-bg: #FBEFDF;
+    --k-tabs: #FFFFFF; --k-tab-off: #75634F; --k-fab-shadow: rgba(122, 63, 110, 0.35); --k-list-tag: #7A3F6E; --k-list-tag-bg: #F0E1EC; --k-avatar-a: #D9A6CC;
+    position: relative; width: 390px; height: 844px; overflow: hidden; background: var(--k-bg); color: var(--k-text); font-family: 'Outfit Variable', Outfit, system-ui, sans-serif; line-height: normal;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .kscreen {
+      --k-bg: #231B17; --k-surface: #2E241D; --k-text: #F7F1E8; --k-text2: #C2AE98; --k-hint: #A08B78; --k-border: #43352B; --k-line: #43352B;
+      --k-accent: #D9A6CC; --k-on-accent: #231B17; --k-soft: #3A2436; --k-crit: #F09A78; --k-crit-bg: #45261A; --k-crit-border: #E7B3A5;
+      --k-hero-bg: #D9A6CC; --k-hero-text: #231B17; --k-hero-kick: #5E2F55; --k-hero-sub: #3A2436; --k-hero-ring: #D9A6CC; --k-hero-ring2: #5E2F55; --k-hero-btn: rgba(255, 248, 238, 0.16); --k-hero-btn-text: #231B17;
+      --k-task: #9CC48F; --k-task-bg: #2C3A27; --k-bill: #DB9A5B; --k-bill-bg: #3A2D23; --k-pay: #9CC48F; --k-on-pay: #2E241D; --k-urgent: #F09A78; --k-urgent-bg: #45261A; --k-warn: #DB9A5B; --k-warn-bg: #3A2D23;
+      --k-tabs: #1B1511; --k-tab-off: #A08B78; --k-fab-shadow: rgba(0, 0, 0, 0.5); --k-list-tag: #D9A6CC; --k-list-tag-bg: #3A2436;
+    }
+  }
+  :global(:root[data-theme='dark']) .kscreen {
+    --k-bg: #231B17; --k-surface: #2E241D; --k-text: #F7F1E8; --k-text2: #C2AE98; --k-hint: #A08B78; --k-border: #43352B; --k-line: #43352B;
+    --k-accent: #D9A6CC; --k-on-accent: #231B17; --k-soft: #3A2436; --k-crit: #F09A78; --k-crit-bg: #45261A; --k-crit-border: #E7B3A5;
+    --k-hero-bg: #D9A6CC; --k-hero-text: #231B17; --k-hero-kick: #5E2F55; --k-hero-sub: #3A2436; --k-hero-ring: #D9A6CC; --k-hero-ring2: #5E2F55; --k-hero-btn: rgba(255, 248, 238, 0.16); --k-hero-btn-text: #231B17;
+    --k-task: #9CC48F; --k-task-bg: #2C3A27; --k-bill: #DB9A5B; --k-bill-bg: #3A2D23; --k-pay: #9CC48F; --k-on-pay: #2E241D; --k-urgent: #F09A78; --k-urgent-bg: #45261A; --k-warn: #DB9A5B; --k-warn-bg: #3A2D23;
+    --k-tabs: #1B1511; --k-tab-off: #A08B78; --k-fab-shadow: rgba(0, 0, 0, 0.5); --k-list-tag: #D9A6CC; --k-list-tag-bg: #3A2436;
+  }
+  .body { box-sizing: border-box; padding: 54px 20px 130px; display: flex; flex-direction: column; gap: 22px; }
+  .row { display: flex; align-items: center; gap: 12px; }
+  .col { display: flex; flex-direction: column; gap: 1px; }
+  .gap2 { gap: 2px; } .gap4 { gap: 4px; } .gap8 { gap: 8px; } .gap10 { gap: 10px; }
+  .grow { flex-grow: 1; min-width: 0; }
+  .between { display: flex; justify-content: space-between; align-items: baseline; }
+  .top-start { align-items: flex-start; }
+  .top { display: flex; justify-content: space-between; align-items: center; height: 40px; }
+  .house { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; color: var(--k-text2); }
+  .avatar { width: 40px; height: 40px; border-radius: 20px; background: var(--k-avatar-a); font-size: 17px; font-weight: 600; color: #231B17; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .avatar.j { background: #DB9A5B; }
+  .avatar.a { background: var(--k-avatar-a); }
+  .avatar.sm { width: 28px; height: 28px; border-radius: 14px; font-size: 12px; }
+  .avatar.ring { box-shadow: 0 0 0 3px var(--k-hero-ring), 0 0 0 5px var(--k-hero-ring2); }
+  .head { display: flex; flex-direction: column; gap: 2px; margin-top: -10px; }
+  .title { font-size: 34px; font-weight: 600; line-height: 1.1; }
+  .muted15 { font-size: 15px; color: var(--k-text2); }
+  .muted13 { font-size: 13px; color: var(--k-text2); }
+  .now { background: var(--k-hero-bg); color: var(--k-hero-text); border-radius: 22px; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .kick { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .now-kick { color: var(--k-hero-kick); }
+  .now-title { font-size: 17px; font-weight: 600; }
+  .now-sub { font-size: 14px; color: var(--k-hero-sub); }
+  .bar { height: 6px; border-radius: 3px; background: rgba(255, 248, 238, 0.22); overflow: hidden; }
+  .bar > div { height: 6px; background: #DB9A5B; }
+  .now-cta { height: 44px; border-radius: 14px; background: var(--k-hero-btn); color: var(--k-hero-btn-text); font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .label { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--k-text2); }
+  .hint { font-size: 13px; color: var(--k-hint); }
+  .link { font-size: 15px; font-weight: 500; color: var(--k-accent); }
+  .cards { display: flex; gap: 12px; margin: 0 -20px; padding: 0 20px 4px; overflow: hidden; }
+  .card { width: 300px; flex-shrink: 0; box-sizing: border-box; background: var(--k-surface); border: 1px solid var(--k-border); border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .card.urgent { border: 1.5px solid var(--k-crit-border); }
+  .chip { align-self: flex-start; font-size: 12px; font-weight: 600; border-radius: 99px; padding: 3px 9px; }
+  .chip-task { color: var(--k-task); background: var(--k-task-bg); }
+  .chip-bill { color: var(--k-bill); background: var(--k-bill-bg); }
+  .k-tag-list { color: var(--k-list-tag); background: var(--k-list-tag-bg); }
+  .ico { width: 36px; height: 36px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ico-crit { background: var(--k-crit-bg); color: var(--k-crit); }
+  .ico-accent { background: var(--k-soft); color: var(--k-accent); }
+  .ctitle { font-size: 16px; font-weight: 600; line-height: 1.2; }
+  .crit { font-size: 13px; color: var(--k-crit); }
+  .btn { flex: 1; height: 40px; border-radius: 12px; font-size: 15px; display: flex; align-items: center; justify-content: center; }
+  .btn.solid { background: var(--k-accent); color: var(--k-on-accent); font-weight: 600; }
+  .btn.ghost { border: 1px solid var(--k-border); color: var(--k-text2); font-weight: 500; }
+  .also { display: flex; align-items: center; gap: 10px; padding: 0 4px; font-size: 14px; color: var(--k-text2); }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .lcard { background: var(--k-surface); border: 1px solid var(--k-border); border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .plus { width: 28px; height: 28px; border-radius: 14px; background: var(--k-soft); color: var(--k-accent); font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .lbar { background: var(--k-soft); }
+  .lbar > div { background: var(--k-accent); }
+  .due { align-self: flex-start; height: 24px; padding: 0 9px; border-radius: 12px; background: var(--k-warn-bg); color: var(--k-warn); font-size: 12px; font-weight: 600; display: flex; align-items: center; white-space: nowrap; }
+  .due-urgent { background: var(--k-urgent-bg); color: var(--k-urgent); }
+  .feed { background: var(--k-surface); border: 1px solid var(--k-border); border-radius: 18px; overflow: hidden; }
+  .item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--k-line); }
+  .item:first-child { border-top: 0; }
+  .ftext { font-size: 15px; line-height: 1.35; }
+  .when { flex-shrink: 0; padding-top: 3px; font-size: 12px; }
+  .fab { position: absolute; right: 20px; bottom: 104px; width: 58px; height: 58px; border-radius: 29px; background: var(--k-accent); color: var(--k-on-accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px var(--k-fab-shadow); }
+  .tabs { position: absolute; left: 0; bottom: 0; width: 390px; height: 84px; box-sizing: border-box; padding: 8px 8px 26px; background: var(--k-tabs); border-top: 1px solid var(--k-border); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--k-tab-off); font-size: 11px; font-weight: 500; }
+  .tab.on { color: var(--k-accent); font-weight: 600; }
+</style>

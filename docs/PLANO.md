@@ -7,12 +7,41 @@ Regra: tudo gratuito. Site estático, sem cookies, sem Google Analytics. O únic
 ## Decisões
 - E-mail de suporte e contato: **toskilabs@gmail.com** (site, política, App Store e Google).
 - Idiomas: português em `/`, inglês em `/en/`. Sem redirecionamento automático pelo navegador; o botão PT/EN no cabeçalho troca para a página equivalente.
-- Rotas: `/`, `/pethealthtracker`, `/privacidade`, `/suporte` · `/en/`, `/en/pethealthtracker`, `/en/privacy`, `/en/support`. Esses endereços vão para App Store Connect e Google: não mudar depois de cadastrados.
+- Rotas: `/`, `/projetos`, `/estudio`, `/privacidade`, `/suporte` · `/en/`, `/en/projects`, `/en/studio`, `/en/privacy`, `/en/support`. `/pethealthtracker` e `/en/pethealthtracker` saíram deste site e redirecionam (301) para o subdomínio do app.
 - Tema: claro e escuro automáticos pelo sistema (`prefers-color-scheme`), sem botão — igual ao app.
 - Fonte: Outfit hospedada no site (`@fontsource-variable/outfit`), sem Google Fonts.
 - Projetos vêm de uma lista de dados (`src/data/projects.ts`) para um novo projeto entrar sem mexer no layout.
 - Privacidade e Suporte escritos em Markdown (content collections), um arquivo por idioma.
 - Fotos da Paçoca já em `src/assets/fotos/` (`pacoca-sorrindo.jpg` com o fundo tratado é a padrão). Usar `<Image>` do Astro (gera WebP e tamanhos).
+
+## Projetos: Home com dois apps e página /projetos ✅ (10 out 2026, em PR)
+Cada app tem o próprio site (`pethealth.toski-labs.com.br`, `koti.toski-labs.com.br`). Este site só apresenta os projetos.
+
+**Decisões (10 out)**
+- Home: dois cards lado a lado (PetHealthTracker e Koti), com ícone do DS 0.5.3, status, frase na cor do produto, tags, "Ver o site", selo desativado "Em breve na App Store", Privacidade e Suporte do subdomínio e o endereço em texto pequeno. "Ainda no forno" foi para `/projetos`.
+- `/projetos` (`/en/projects`): um bloco por app (o que é, para quem, 4 recursos, planos, botões) com celular ao lado, e "Ainda no forno" no fim. Título da aba "Toski Labs: Projetos". Dados em `src/data/projects.ts`.
+- Cor do produto só dentro do card: variáveis locais com o nome do token em `global.css` (`[data-product]`), com `TODO(ds)` e as regras de `@media` e `data-theme`. `Button` e `Pill` do DS herdam sem classes novas (o `@theme inline` lê `--toski-*` em tempo de uso). `--toski-tint` recebe o valor de `--toski-hero` do tema (cor do canvas).
+- Telas no celular: PetHealthTracker usa o snapshot do app (`calendar1.light/dark.png`, só em português; o `alt` em inglês avisa); Koti é um componente HTML/CSS estático (`KotiScreen.astro`, aba Hoje, PT e EN, textos em `projects.ts`). Decorativas: `role="img"` com `aria-label`, tamanho fixo, nada clicável.
+- Privacidade: cobre só o site da Toski e lista a política de cada app. Suporte: contato da Toski e links para o suporte de cada app. As URLs `/privacidade` e `/suporte` continuam.
+- Black Friday: faixa e selo levam para a Home do subdomínio (`https://pethealth.toski-labs.com.br` e `/en`); selo lilás, faixa caramelo. Segue desligada até o app estar na App Store.
+- Rodapé: coluna Projetos com PetHealthTracker, Koti (subdomínios) e Estúdio.
+- JSON-LD: Organization com `@id` `https://toski-labs.com.br/#organization` e `ItemList` em `/projetos` com os dois `MobileApplication` (`@id` `…/#app` de cada site). O `koti-web` ainda usa `https://toski-labs.web.app/#toski-labs` e será ajustado à parte.
+- `SITE` e canonical continuam `toski-labs.web.app` até o domínio estar conectado no Firebase.
+- Saíram: `PetHealthTrackerPage`, `PhoneMock`, `PdfCard`, `FeatureCard`, `BlackFridayOffer`, `FaqItem`, as rotas do PetHealthTracker e as imagens `og/pethealthtracker-*`.
+- Entrou `public/google1c343bc8814b41ea.html` (verificação do Search Console da propriedade nova). Atenção: com `cleanUrls` o Firebase pode redirecionar esse `.html`; se a verificação falhar, usar DNS (propriedade de domínio) ou a meta tag.
+- Corrigido o tipo do `hidden` no `SettingsMenu.astro` (o `astro check` falhava antes).
+
+**Pendências do DS** (para levar ao `toski-ds`)
+1. Tema de produto por elemento: seletor `[data-product]` sem `:root`, para valer dentro de um card.
+2. `Button`, `Pill`, `Card`, `IconBox` etc. acompanhando o tema do contêiner (hoje herdam só por variáveis locais repetidas).
+3. `ProductIcon`/`ProductMascot` escolhendo claro/escuro pelo tema da página (hoje cada chamador renderiza as duas versões com `data-art`).
+
+**Verificações (10 out)**
+- `astro check`: 0 erros, 0 avisos. Build: 15 páginas.
+- axe (WCAG 2.0 a 2.2 A/AA e boas práticas): 0 violações em 15 páginas, 390 e 1280 px, claro e escuro, com o menu de configurações aberto.
+- Lighthouse (mediana de 3): 100/100/100/100 em `/`, `/en`, `/projetos` e `/en/projects`, celular e computador, claro e escuro. CLS 0 em todas, depois de pré-carregar a fonte Outfit (latin) no `BaseLayout` (antes `/projetos` no celular tinha 0,031 pela troca da fonte). Repetido no celular, claro e escuro, após o preload.
+- `npm run check` roda o `astro check` (`@astrojs/check` e `typescript` nas devDependencies): 0 erros.
+- 301 conferidos: `/pethealthtracker` e `/en/pethealthtracker` vão para o subdomínio.
 
 ## Fase 0 — Fundação ✅ (5 out 2026)
 Feita: tokens em `src/styles/global.css`, Outfit local, SVGs em `src/assets/brand/`, favicon e apple-touch-icon, i18n em `src/i18n/ui.ts` (rotas, textos, `SUPPORT_EMAIL`), `BaseLayout`, `Header`, `Footer`, 8 rotas com página provisória (`Placeholder.astro`, some na Fase 2). Build gera `/privacidade.html` etc. (`build.format: 'file'`).
@@ -34,7 +63,7 @@ Feita. `src/components/ui/`: `Icon` (lista de ícones de traço), `Button` (prim
 Feita. Rotas finas em `src/pages/` chamam os componentes de página em `src/components/pages/` (`HomePage`, `PetHealthTrackerPage`, `PrivacyPage`, `SupportPage`), que escolhem os textos pelo idioma. Projetos da Home vêm de `src/data/projects.ts`. Política em Markdown: `src/content/legal/pt/privacidade.md` e `src/content/legal/en/privacy.md` (coleção `legal` em `src/content.config.ts`; seções numeradas e sumário gerados dos `##`). FAQ do Suporte fica no próprio `SupportPage.astro`. Foto da Paçoca otimizada para WebP pelo `<Image>`. `404.astro` bilíngue com `noindex`. Conferido em 1280 e 390 px, claro e escuro.
 
 1. Home (`/`, `/en/`): hero ("Soluções simples para problemas de verdade.") com a Paçoca ilustrada · Projetos (card do PetHealthTracker + card "Ainda no forno") · Por que Toski? em faixa `tint` com a foto.
-2. PetHealthTracker: hero + `PhoneMock` · Recursos (6 cards) · Destaque PDF (PLUS) · Grátis × Plus com preços (EN: `[PRICE]` até definir) · Detalhes · CTA Suporte/Privacidade.
+2. PetHealthTracker: (saiu em 10 out; o app tem site próprio, ver a seção Projetos).
 3. Privacidade: sumário lateral + seções numeradas (Markdown). Placeholders a preencher: data, prazos, rede de anúncios.
 4. Suporte: contato, código de suporte, FAQ.
 5. 404 com a Paçoca e a bolinha no chão (`pacoca-bolinha-chao-*.svg`).

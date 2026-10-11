@@ -3,7 +3,7 @@ export type Lang = keyof typeof languages;
 export const defaultLang: Lang = 'pt';
 
 /** Páginas do site. A chave é a mesma nos dois idiomas; o endereço muda. */
-export type PageKey = 'home' | 'pethealthtracker' | 'studio' | 'wallpapers' | 'themes' | 'privacy' | 'support';
+export type PageKey = 'home' | 'projects' | 'studio' | 'wallpapers' | 'themes' | 'privacy' | 'support';
 
 /**
  * Endereços públicos. Privacidade e Suporte vão para a App Store e o Google:
@@ -12,7 +12,7 @@ export type PageKey = 'home' | 'pethealthtracker' | 'studio' | 'wallpapers' | 't
 export const routes: Record<Lang, Record<PageKey, string>> = {
   pt: {
     home: '/',
-    pethealthtracker: '/pethealthtracker',
+    projects: '/projetos',
     studio: '/estudio',
     wallpapers: '/estudio/wallpapers',
     themes: '/estudio/temas',
@@ -21,7 +21,7 @@ export const routes: Record<Lang, Record<PageKey, string>> = {
   },
   en: {
     home: '/en',
-    pethealthtracker: '/en/pethealthtracker',
+    projects: '/en/projects',
     studio: '/en/studio',
     wallpapers: '/en/studio/wallpapers',
     themes: '/en/studio/themes',
