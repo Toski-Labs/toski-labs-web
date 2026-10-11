@@ -6,6 +6,7 @@ import LangBanner from '../components/LangBanner.astro';
 import BackToTop from '../components/BackToTop.astro';
 import CampaignFlags from '../components/campaign/CampaignFlags.astro';
 import CampaignBar from '../components/campaign/CampaignBar.astro';
+import { projects } from '../data/projects';
 import { alternatePath, getLang, routes, STORAGE, SUPPORT_EMAIL, useTranslations, type PageKey } from '../i18n/ui';
 
 interface Props {
@@ -28,11 +29,12 @@ const alternate = new URL(alternatePath(page, lang), site);
 const ptUrl = lang === 'pt' ? canonical : alternate;
 const enUrl = lang === 'en' ? canonical : alternate;
 // Imagem de compartilhamento: uma por seção (Suporte e Privacidade usam a da Home).
-const ogFiles: Partial<Record<PageKey, string>> = { pethealthtracker: 'pethealthtracker', studio: 'studio', wallpapers: 'wallpapers', themes: 'themes' };
+const ogFiles: Partial<Record<PageKey, string>> = { studio: 'studio', wallpapers: 'wallpapers', themes: 'themes' };
 const ogImage = new URL(`/og/${ogFiles[page] ?? 'og'}-${lang}.png`, site);
 
 // Dados estruturados (schema.org) para o Google entender o site. Não aparecem na tela.
-const orgId = new URL('/#toski-labs', site).href;
+// Mesmo @id nos sites do PetHealthTracker e do Koti: a Organization é uma só, no domínio principal.
+const orgId = 'https://toski-labs.com.br/#organization';
 const organization = {
   '@type': 'Organization',
   '@id': orgId,
@@ -53,16 +55,26 @@ const breadcrumb = (name: string) => ({
 });
 const graph: Record<string, unknown>[] = [organization];
 if (page === 'home') graph.push({ '@type': 'WebSite', name: 'Toski Labs', url: new URL('/', site).href, inLanguage: ['pt-BR', 'en'], publisher: { '@id': orgId } });
-if (page === 'pethealthtracker')
+if (page === 'projects')
   graph.push({
-    '@type': 'MobileApplication',
-    name: 'PetHealthTracker',
-    url: canonical.href,
-    description,
-    operatingSystem: 'iOS 18+',
-    applicationCategory: 'LifestyleApplication',
-    inLanguage: ['pt-BR', 'en'],
-    publisher: { '@id': orgId },
+    '@type': 'ItemList',
+    '@id': `${canonical.href}#projetos`,
+    name: lang === 'pt' ? 'Projetos da Toski Labs' : 'Toski Labs projects',
+    itemListElement: projects.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'MobileApplication',
+        '@id': `${p.urls.pt.site}/#app`,
+        name: p.name,
+        url: p.urls[lang].site,
+        description: p.description[lang],
+        operatingSystem: 'iOS 18.0 or later',
+        applicationCategory: 'LifestyleApplication',
+        inLanguage: ['pt-BR', 'en'],
+        publisher: { '@id': orgId },
+      },
+    })),
   });
 if (page === 'wallpapers') graph.push(breadcrumb('Wallpapers'));
 if (page === 'themes') graph.push(breadcrumb(lang === 'pt' ? 'Temas' : 'Themes'));

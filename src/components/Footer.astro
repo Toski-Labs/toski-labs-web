@@ -1,6 +1,7 @@
 ---
 import Wordmark from './brand/Wordmark.astro';
 import { getLang, href, useTranslations } from '../i18n/ui';
+import { projects } from '../data/projects';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
@@ -19,7 +20,7 @@ const titleClass = 'mb-1.5 text-[13px] font-semibold uppercase tracking-[0.06em]
       <div class="flex flex-wrap gap-12">
         <nav aria-labelledby="rodape-projetos" class="flex flex-col gap-1">
           <p id="rodape-projetos" class={titleClass}>{t('footer.projects')}</p>
-          <a href={href(lang, 'pethealthtracker')} class={linkClass}>PetHealthTracker</a>
+          {projects.map((p) => <a href={p.urls[lang].site} class={linkClass}>{p.name}</a>)}
           <a href={href(lang, 'studio')} class={linkClass}>{t('nav.studio')}</a>
         </nav>
         <nav aria-labelledby="rodape-ajuda" class="flex flex-col gap-1">

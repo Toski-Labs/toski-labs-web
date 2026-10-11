@@ -12,7 +12,7 @@ const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
 const nav = [
-  { label: t('nav.projects'), href: href(lang, 'home', 'projetos') },
+  { label: t('nav.projects'), href: href(lang, 'projects'), current: page === 'projects' },
   { label: t('nav.studio'), href: href(lang, 'studio'), current: page === 'studio' || page === 'wallpapers' || page === 'themes' },
   { label: t('nav.support'), href: href(lang, 'support'), current: page === 'support' },
 ];

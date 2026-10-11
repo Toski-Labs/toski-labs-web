@@ -257,3 +257,67 @@
     border: 2px solid Highlight;
   }
 }
+
+/*
+  Cor de cada produto dentro do card (Home e Projetos).
+  TODO(ds): os temas do DS (themes/pethealth.css e themes/koti.css) só valem em :root[data-product].
+  Enquanto o DS não tiver um tema por elemento, repetimos aqui os valores dos temas, com o nome dos
+  tokens. --toski-tint recebe o valor de --toski-hero do tema, que é a cor do canvas aprovado.
+  Button e Pill herdam: as classes bg-accent, text-on-accent e bg-tint leem estas variáveis (@theme inline).
+*/
+[data-product='pethealth'] {
+  --toski-tint: #E3E6F5;
+  --toski-hero: #E3E6F5;
+  --toski-accent: #3E4C8A;
+  --toski-accent-hover: #2C376A;
+  --toski-on-accent: #FFF8EE;
+  --toski-accent-text: #3E4C8A;
+  --toski-link: #2C376A;
+}
+[data-product='koti'] {
+  --toski-tint: #E8D2E1;
+  --toski-hero: #E8D2E1;
+  --toski-accent: #7A3F6E;
+  --toski-accent-hover: #5E2F55;
+  --toski-on-accent: #FFF8EE;
+  --toski-accent-text: #7A3F6E;
+  --toski-link: #5E2F55;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) [data-product='pethealth'] {
+    --toski-tint: #2A2E45;
+    --toski-hero: #2A2E45;
+    --toski-accent: #A9B4E8;
+    --toski-accent-hover: #C9D0F2;
+    --toski-on-accent: #231B17;
+    --toski-accent-text: #A9B4E8;
+    --toski-link: #C9D0F2;
+  }
+  :root:not([data-theme='light']) [data-product='koti'] {
+    --toski-tint: #46293F;
+    --toski-hero: #46293F;
+    --toski-accent: #D9A6CC;
+    --toski-accent-hover: #E8C2DD;
+    --toski-on-accent: #231B17;
+    --toski-accent-text: #D9A6CC;
+    --toski-link: #E8C2DD;
+  }
+}
+:root[data-theme='dark'] [data-product='pethealth'] {
+  --toski-tint: #2A2E45;
+  --toski-hero: #2A2E45;
+  --toski-accent: #A9B4E8;
+  --toski-accent-hover: #C9D0F2;
+  --toski-on-accent: #231B17;
+  --toski-accent-text: #A9B4E8;
+  --toski-link: #C9D0F2;
+}
+:root[data-theme='dark'] [data-product='koti'] {
+  --toski-tint: #46293F;
+  --toski-hero: #46293F;
+  --toski-accent: #D9A6CC;
+  --toski-accent-hover: #E8C2DD;
+  --toski-on-accent: #231B17;
+  --toski-accent-text: #D9A6CC;
+  --toski-link: #E8C2DD;
+}

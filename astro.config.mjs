@@ -10,7 +10,7 @@ const SITE = 'https://toski-labs.web.app';
 // Mesma página em PT e EN (espelha src/i18n/ui.ts › routes). Usado no sitemap.
 const pagePairs = [
   ['/', '/en'],
-  ['/pethealthtracker', '/en/pethealthtracker'],
+  ['/projetos', '/en/projects'],
   ['/estudio', '/en/studio'],
   ['/estudio/wallpapers', '/en/studio/wallpapers'],
   ['/estudio/temas', '/en/studio/themes'],

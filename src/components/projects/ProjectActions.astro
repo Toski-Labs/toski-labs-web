@@ -1,0 +1,31 @@
+---
+/** Botão "Ver o site", selo desativado da App Store e links de Privacidade e Suporte do app. Vale dentro de um [data-product]. */
+import { Button, Icon } from '@toski-labs/ds';
+import { getLang } from '../../i18n/ui';
+import type { Project } from '../../data/projects';
+
+interface Props {
+  project: Project;
+  /** Home: botões empilhados no celular. */
+  class?: string;
+}
+const { project, class: className } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = {
+  pt: { cta: 'Ver o site', soon: 'Em breve na App Store', privacy: 'Privacidade', support: 'Suporte' },
+  en: { cta: 'Visit the site', soon: 'Coming soon to the App Store', privacy: 'Privacy', support: 'Support' },
+}[lang];
+const urls = project.urls[lang];
+const linkClass = 'inline-flex min-h-11 items-center px-2 text-[15px] font-medium text-[var(--toski-link)] hover:underline';
+---
+
+<div class:list={['flex flex-wrap items-center gap-x-3 gap-y-2.5 max-sm:flex-col max-sm:items-stretch max-sm:gap-1', className]}>
+  <Button href={urls.site} size="md" icon="external-link" className="justify-center">{t.cta}</Button>
+  <span aria-disabled="true" class="inline-flex h-12 items-center justify-center gap-2 rounded-button border-[1.5px] border-line px-4.5 text-[15px] font-medium text-muted">
+    <Icon name="clock" size={18} stroke={1.8} />{t.soon}
+  </span>
+  <div class="flex justify-center gap-8 sm:contents">
+    <a href={urls.privacy} class={linkClass}>{t.privacy}</a>
+    <a href={urls.support} class={linkClass}>{t.support}</a>
+  </div>
+</div>
