@@ -39,7 +39,8 @@ Cada app tem o próprio site (`pethealth.toski-labs.com.br`, `koti.toski-labs.co
 **Verificações (10 out)**
 - `astro check`: 0 erros, 0 avisos. Build: 15 páginas.
 - axe (WCAG 2.0 a 2.2 A/AA e boas práticas): 0 violações em 15 páginas, 390 e 1280 px, claro e escuro, com o menu de configurações aberto.
-- Lighthouse (mediana de 3): 100/100/100/100 em `/`, `/en`, `/projetos` e `/en/projects`, celular e computador, claro e escuro. CLS 0 nas telas dos celulares; `/projetos` no celular tem 0,031 por troca da fonte Outfit.
+- Lighthouse (mediana de 3): 100/100/100/100 em `/`, `/en`, `/projetos` e `/en/projects`, celular e computador, claro e escuro. CLS 0 em todas, depois de pré-carregar a fonte Outfit (latin) no `BaseLayout` (antes `/projetos` no celular tinha 0,031 pela troca da fonte). Repetido no celular, claro e escuro, após o preload.
+- `npm run check` roda o `astro check` (`@astrojs/check` e `typescript` nas devDependencies): 0 erros.
 - 301 conferidos: `/pethealthtracker` e `/en/pethealthtracker` vão para o subdomínio.
 
 ## Fase 0 — Fundação ✅ (5 out 2026)
