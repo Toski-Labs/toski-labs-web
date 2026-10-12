@@ -1,7 +1,7 @@
 # Site da Toski Labs — plano de desenvolvimento
 
 Fonte da verdade visual: canvas "Toski Labs — Site" (Artifact de Design) + `../../design/` (tokens, SVGs da Paçoca, animações).
-Stack: Astro 7 + TypeScript (strict) + Tailwind 4 (via `@tailwindcss/vite`). Hospedagem: Firebase Hosting, projeto `toski-labs` (Plano Spark), em `toski-labs.web.app`.
+Stack: Astro 7 + TypeScript (strict) + Tailwind 4 (via `@tailwindcss/vite`). Hospedagem: Firebase Hosting, projeto `toski-labs` (Plano Spark), em `toski-labs.com.br` (o `toski-labs.web.app` continua respondendo, mas não é mais o oficial).
 Regra: tudo gratuito. Site estático, sem cookies, sem Google Analytics. O único uso do Firebase no navegador é o Remote Config das campanhas, baixado só durante uma campanha.
 
 ## Decisões
@@ -26,7 +26,7 @@ Cada app tem o próprio site (`pethealth.toski-labs.com.br`, `koti.toski-labs.co
 - Black Friday: faixa e selo levam para a Home do subdomínio (`https://pethealth.toski-labs.com.br` e `/en`); selo lilás, faixa caramelo. Segue desligada até o app estar na App Store.
 - Rodapé: coluna Projetos com PetHealthTracker, Koti (subdomínios) e Estúdio.
 - JSON-LD: Organization com `@id` `https://toski-labs.com.br/#organization` e `ItemList` em `/projetos` com os dois `MobileApplication` (`@id` `…/#app` de cada site). O `koti-web` ainda usa `https://toski-labs.web.app/#toski-labs` e será ajustado à parte.
-- `SITE` e canonical continuam `toski-labs.web.app` até o domínio estar conectado no Firebase.
+- Domínio oficial: `https://toski-labs.com.br` (12 out 2026). `SITE`, canonical, hreflang, sitemap, `robots.txt`, Open Graph e JSON-LD usam esse endereço. Ver a seção "Domínio oficial" abaixo.
 - Saíram: `PetHealthTrackerPage`, `PhoneMock`, `PdfCard`, `FeatureCard`, `BlackFridayOffer`, `FaqItem`, as rotas do PetHealthTracker e as imagens `og/pethealthtracker-*`.
 - Entrou `public/google1c343bc8814b41ea.html` (verificação do Search Console da propriedade nova). Atenção: com `cleanUrls` o Firebase pode redirecionar esse `.html`; se a verificação falhar, usar DNS (propriedade de domínio) ou a meta tag.
 - Corrigido o tipo do `hidden` no `SettingsMenu.astro` (o `astro check` falhava antes).
@@ -77,11 +77,11 @@ Feita. `@astrojs/sitemap` com PT/EN ligados (`/sitemap-index.xml`, sem a 404), `
 - Performance: Lighthouse ≥ 95 em tudo; imagens via `<Image>`.
 
 ## Fase 4 — Publicação no Firebase ✅ (6 out 2026)
-No ar em `https://toski-labs.web.app`.
+No ar em `https://toski-labs.com.br` (publicado primeiro em `toski-labs.web.app`).
 
 1. `firebase init hosting` nesta pasta → projeto `toski-labs`, public `dist`, SPA **não**, GitHub **não**.
 2. `firebase.json`: `cleanUrls: true`, `trailingSlash: false`, cache longo para `/_astro/**`, `404.html`.
-3. `npm run build && firebase deploy --only hosting` → `https://toski-labs.web.app`.
+3. `npm run build && firebase deploy --only hosting` → `https://toski-labs.com.br`.
 4. Mais tarde: `public/app-ads.txt` quando os anúncios entrarem; deploy automático pelo GitHub Actions se fizer falta.
 
 ## Novidades ✅ (5 out 2026)
@@ -125,7 +125,7 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 ### Feito e conferido no código
 - Fases 0 a 4 completas: starter removido, tokens e Outfit locais (sem Google Fonts), i18n em `src/i18n/ui.ts`, BaseLayout com canonical, `hreflang` (pt-BR, en, x-default), Open Graph, Twitter card e `theme-color` claro/escuro; componentes de UI e marca; 7 páginas em PT e EN + 404 com `noindex`; sitemap sem a 404 e sem páginas não publicadas; `robots.txt`; imagens OG.
 - Novidades: menu de configurações (tema e idioma), aviso de idioma do navegador, campanhas por Remote Config, Estúdio com Wallpapers (6 coleções, release v2.1) e Temas (VS Code, iTerm2 e Oh My Zsh publicados, `themes.ready: true`), botão de voltar ao topo.
-- No ar em `toski-labs.web.app` (as 14 páginas respondem; `/wallpapers` redireciona). `npm run deploy` publica.
+- No ar em `toski-labs.com.br` (as 14 páginas respondem; `/wallpapers` redireciona). `npm run deploy` publica.
 - axe-core (6 out): nenhuma violação em 15 páginas, 1280/390 px, claro e escuro.
 - PageSpeed no site publicado (6 out): 100 em desempenho, acessibilidade, práticas e SEO (Home, PetHealthTracker, Wallpapers, Temas; celular e computador).
 - Também no ar em 6 out:
@@ -168,9 +168,16 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 12. ~~Canvas de design~~ ✅ (6 out): Wallpapers v2, Estúdio, Suporte, PetHealthTracker e Privacidade iguais ao site.
 
 **Opcionais**
-13. Domínio próprio e deploy automático pelo GitHub Actions.
+13. ~~Domínio próprio~~ ✅ (12 out): `toski-labs.com.br`, ver "Domínio oficial". Deploy automático pelo GitHub Actions segue pendente.
+
+## Domínio oficial: toski-labs.com.br ✅ (12 out 2026)
+- O domínio já estava conectado no Firebase Hosting. O endereço oficial do site passou de `toski-labs.web.app` para `https://toski-labs.com.br`; o `web.app` continua funcionando.
+- Mudou: `SITE` em `astro.config.mjs` (sitemap e hreflang do sitemap saem dele), fallback e comentário do `BaseLayout.astro` (canonical, hreflang pt-BR/en/x-default, `og:url`, `og:image` e JSON-LD saem de `site`), `Sitemap:` do `robots.txt`, texto das políticas de privacidade (PT e EN), README e este plano.
+- Não mudou: a meta `google-site-verification` e `public/google1c343bc8814b41ea.html` (mantêm verificada a propriedade antiga), e os redirecionamentos do `firebase.json` (já apontam para os subdomínios).
+- Falta fora deste repositório: ajustar o `@id` da Organization no `koti-web` e, depois do deploy, enviar o sitemap novo na propriedade de domínio do Search Console.
 
 ## Google Search Console (6 out 2026)
+- **Nota (12 out):** propriedade antiga (`https://toski-labs.web.app`), mantida como histórico; a oficial agora é a propriedade de domínio `toski-labs.com.br` (verificada por TXT no Registro.br, a mesma dos subdomínios pethealth e koti), onde o sitemap novo deve ser enviado depois do deploy. As URLs antigas desta seção ficam como estavam.
 - Propriedade **Prefixo do URL** `https://toski-labs.web.app`, na conta Google da Toski Labs. Verificada pela **Tag HTML** (`google-site-verification` no `<head>` do `BaseLayout.astro` — não remover, senão a verificação cai). O método "Arquivo HTML" não serve aqui: o `cleanUrls` do Firebase redireciona `/arquivo.html`.
 - Sitemap enviado: `sitemap-index.xml` (aponta para `sitemap-0.xml`). O site serve os dois certinho; o status "Não foi possível buscar o sitemap" logo após o envio é provisório em propriedade nova. Se continuar depois de 2–3 dias: remover e reenviar, ou enviar `sitemap-0.xml`.
 - Solicitar indexação (Inspeção de URL) de `/` e `/pethealthtracker` deu "cota excedida" no primeiro dia — limite comum em propriedade nova. Tentar de novo nos dias seguintes; se não der, o Google encontra as páginas pelo sitemap.

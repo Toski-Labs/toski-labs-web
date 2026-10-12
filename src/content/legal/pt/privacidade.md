@@ -6,7 +6,7 @@ updated: "10 de outubro de 2026"
 
 ## Quem somos
 
-A Toski Labs é um laboratório de tecnologia de Recife, responsável pelo site toski-labs.web.app e pelo tratamento dos dados descritos aqui. Contato: [toskilabs@gmail.com](mailto:toskilabs@gmail.com).
+A Toski Labs é um laboratório de tecnologia de Recife, responsável pelo site toski-labs.com.br e pelo tratamento dos dados descritos aqui. Contato: [toskilabs@gmail.com](mailto:toskilabs@gmail.com).
 
 ## Política de cada app
 

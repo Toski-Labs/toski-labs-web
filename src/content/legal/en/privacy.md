@@ -6,7 +6,7 @@ updated: "October 10, 2026"
 
 ## Who we are
 
-Toski Labs is a technology lab from Recife, Brazil, responsible for the toski-labs.web.app website and for the processing of the data described here. Contact: [toskilabs@gmail.com](mailto:toskilabs@gmail.com).
+Toski Labs is a technology lab from Recife, Brazil, responsible for the toski-labs.com.br website and for the processing of the data described here. Contact: [toskilabs@gmail.com](mailto:toskilabs@gmail.com).
 
 ## Each app’s policy
 

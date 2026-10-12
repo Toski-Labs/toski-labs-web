@@ -2,7 +2,7 @@
 
 Site da Toski Labs: projetos, Estúdio (wallpapers e temas), suporte e política de privacidade, em português e inglês.
 
-No ar em **https://toski-labs.web.app**
+No ar em **https://toski-labs.com.br**
 
 ## Stack
 
@@ -39,15 +39,27 @@ A primeira vez: `npm install -g firebase-tools` e `firebase login`. O projeto Fi
 
 ## Páginas
 
-| Português              | Inglês                    |
-| :--------------------- | :------------------------ |
-| `/`                    | `/en`                     |
-| `/pethealthtracker`    | `/en/pethealthtracker`    |
-| `/estudio`             | `/en/studio`              |
-| `/estudio/wallpapers`  | `/en/studio/wallpapers`   |
-| `/estudio/temas`       | `/en/studio/themes`       |
-| `/suporte`             | `/en/support`             |
-| `/privacidade`         | `/en/privacy`             |
+Português:
+
+- https://toski-labs.com.br
+- https://toski-labs.com.br/projetos
+- https://toski-labs.com.br/estudio
+- https://toski-labs.com.br/estudio/wallpapers
+- https://toski-labs.com.br/estudio/temas
+- https://toski-labs.com.br/suporte
+- https://toski-labs.com.br/privacidade
+
+Inglês:
+
+- https://toski-labs.com.br/en
+- https://toski-labs.com.br/en/projects
+- https://toski-labs.com.br/en/studio
+- https://toski-labs.com.br/en/studio/wallpapers
+- https://toski-labs.com.br/en/studio/themes
+- https://toski-labs.com.br/en/support
+- https://toski-labs.com.br/en/privacy
+
+O `toski-labs.web.app` continua respondendo, mas o endereço oficial é o `.com.br`. `/pethealthtracker` e `/en/pethealthtracker` redirecionam para o site do app em `pethealth.toski-labs.com.br`.
 
 Os endereços de Suporte e Privacidade estão cadastrados na App Store e no Google: não mudar. `/wallpapers` redireciona para `/estudio/wallpapers`.
 
