@@ -25,7 +25,7 @@ const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 // Padrão: "Toski Labs" na Home e "Toski Labs: Página" nas outras (aba, Google e cards de compartilhamento).
 const fullTitle = title ? `${t('site.name')}: ${title}` : t('site.name');
-const site = Astro.site ?? new URL('https://toski-labs.web.app');
+const site = Astro.site ?? new URL('https://toski-labs.com.br');
 const canonical = new URL(routes[lang][page], site);
 const alternate = new URL(alternatePath(page, lang), site);
 const ptUrl = lang === 'pt' ? canonical : alternate;
@@ -97,7 +97,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     </script>
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <!-- Google Search Console (verificação da propriedade https://toski-labs.web.app). Não remover. -->
+    <!-- Google Search Console (verificação da propriedade https://toski-labs.com.br). Não remover. -->
     <meta name="google-site-verification" content="qjQAE1TWx_tZbA8Hlg-cpCpQ74gL0l8K9foXwFUM9TU" />
     {noindex ? (
       <meta name="robots" content="noindex" />

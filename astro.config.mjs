@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import { unpublishedPaths } from './src/data/studio.ts';
 
-const SITE = 'https://toski-labs.web.app';
+const SITE = 'https://toski-labs.com.br';
 
 // Mesma página em PT e EN (espelha src/i18n/ui.ts › routes). Usado no sitemap.
 const pagePairs = [
@@ -20,7 +20,7 @@ const pagePairs = [
 
 // https://astro.build/config
 export default defineConfig({
-  // Endereço público do site (Firebase Hosting, projeto toski-labs).
+  // Endereço público do site (Firebase Hosting, projeto toski-labs, domínio toski-labs.com.br).
   site: SITE,
   // Gera /privacidade.html em vez de /privacidade/index.html.
   // O Firebase serve como /privacidade (cleanUrls) e sem barra no fim.
