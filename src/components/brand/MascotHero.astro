@@ -28,6 +28,7 @@ const { class: className } = Astro.props;
             <span
               class="toski-enfeite"
               data-para={tema}
+              data-anim={e.anim ?? 'flutua'}
               aria-hidden="true"
               style={{
                 '--top': `${e.computador.top}%`,
@@ -39,6 +40,9 @@ const { class: className } = Astro.props;
                 aspectRatio: `1 / ${e.ratio}`,
                 animationDelay: `${e.delay ?? 0}s`,
                 opacity: e.opacity ?? 1,
+                ...(e.rotate && { rotate: `${e.rotate}deg` }),
+                ...(e.flip && { scale: '-1 1' }),
+                ...(e.origem && { transformOrigin: e.origem }),
                 '--img-claro': arquivoDe(tema, e.claro),
                 ...(e.escuro && { '--img-escuro': arquivoDe(tema, e.escuro) }),
               }}

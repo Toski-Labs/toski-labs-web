@@ -381,7 +381,7 @@ span.toski-icone-data {
   width: var(--w-sm);
   pointer-events: none;
   background: var(--img) center / contain no-repeat;
-  animation: toski-enfeite-flutua 3.2s ease-in-out infinite;
+  animation: var(--enfeite-anim, toski-enfeite-flutua) var(--enfeite-duracao, 3.2s) ease-in-out infinite;
   @media (width >= 48rem) {
     top: var(--top);
     left: var(--left);
@@ -389,6 +389,21 @@ span.toski-icone-data {
   }
   @media (prefers-reduced-motion: reduce) {
     animation: none;
+  }
+}
+/* Balançar a partir do topo, como a guirlanda do quadro SzSiteNatal (szSway: 4 s, ±1,2°). */
+span.toski-enfeite[data-anim='balanca'] {
+  transform-origin: 50% 0;
+  --enfeite-anim: toski-enfeite-balanca;
+  --enfeite-duracao: 4s;
+}
+@keyframes toski-enfeite-balanca {
+  0%,
+  100% {
+    transform: rotate(-1.2deg);
+  }
+  50% {
+    transform: rotate(1.2deg);
   }
 }
 @keyframes toski-enfeite-flutua {
