@@ -1,6 +1,11 @@
 ---
 import { Mascot } from '@toski-labs/ds';
-/** Paçoca dentro do círculo bege (topo da Home). O tamanho máximo vem de fora, via class (ex.: max-w-[440px]). */
+import { arquivoDe, datas, temas } from '../../data/datas';
+/**
+ * Paçoca dentro do círculo bege (topo da Home). O tamanho máximo vem de fora, via class (ex.: max-w-[440px]).
+ * Nas datas especiais: enfeites em volta do círculo e a bolinha vira abóbora ou bola de árvore (global.css,
+ * "Datas especiais"). Tudo decorativo (aria-hidden) e escondido fora da data, sem baixar nada.
+ */
 
 interface Props {
   class?: string;
@@ -8,8 +13,34 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<div class:list={['relative aspect-square w-full', className]}>
+<div class:list={['toski-hero-mascot relative aspect-square w-full', className]}>
   <div class="absolute inset-0 flex items-center justify-center rounded-full bg-hero">
     <Mascot width="66%" />
   </div>
+  {
+    temas.map((tema) => (
+      <>
+        {/* Por cima da bolinha do DS (x 15–53, y 149–187 no viewBox -6 -6 222 212 do desenho, que ocupa 66% da caixa). */}
+        <span class="toski-bolinha-data toski-ball" data-para={tema} style={{ '--img-claro': arquivoDe(tema, 'bolinha-toski.svg') }} aria-hidden="true" />
+        {datas[tema].enfeites
+          .filter((e) => e.claro)
+          .map((e) => (
+            <span
+              class="toski-enfeite"
+              data-para={tema}
+              aria-hidden="true"
+              style={{
+                top: `${e.top}%`,
+                left: `${e.left}%`,
+                width: `${e.width}%`,
+                aspectRatio: `1 / ${e.ratio}`,
+                animationDelay: `${e.delay ?? 0}s`,
+                '--img-claro': arquivoDe(tema, e.claro),
+                ...(e.escuro && { '--img-escuro': arquivoDe(tema, e.escuro) }),
+              }}
+            />
+          ))}
+      </>
+    ))
+  }
 </div>

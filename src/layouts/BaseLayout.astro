@@ -8,6 +8,9 @@ import LangBanner from '../components/LangBanner.astro';
 import BackToTop from '../components/BackToTop.astro';
 import CampaignFlags from '../components/campaign/CampaignFlags.astro';
 import CampaignBar from '../components/campaign/CampaignBar.astro';
+import DataBar from '../components/datas/DataBar.astro';
+import DatasEspeciais from '../components/datas/DatasEspeciais.astro';
+import { datasScript } from '../lib/datas-script.mjs';
 import { projects } from '../data/projects';
 import { alternatePath, getLang, routes, STORAGE, SUPPORT_EMAIL, useTranslations, type PageKey } from '../i18n/ui';
 
@@ -111,7 +114,9 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     )}
 
     <link rel="preload" href={outfitLatin} as="font" type="font/woff2" crossorigin />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" data-favicon="/favicon.svg" />
+    <!-- Data especial (Halloween, Natal…) aplicada antes da pintura: marca o <html> com data-tema e troca o favicon acima. -->
+    <script is:inline set:html={datasScript} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#F7F1E8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#231B17" media="(prefers-color-scheme: dark)" />
@@ -144,6 +149,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
       {t('skip')}
     </a>
     <CampaignBar />
+    <DataBar />
     <Header page={page} />
     <main id="conteudo" class="grow">
       <slot />
@@ -151,6 +157,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     <Footer />
     <BackToTop />
     <CampaignFlags />
+    <DatasEspeciais />
     <LangBanner page={page} />
     <script>
       import '../scripts/motion.ts';
