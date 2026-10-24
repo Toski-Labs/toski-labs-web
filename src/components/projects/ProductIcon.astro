@@ -1,5 +1,8 @@
 ---
-/** Ícone do app (do DS) no tema da página: claro ou escuro. Com `datas`, troca pelo ícone da data especial quando houver (global.css). */
+/**
+ * Ícone do app (do DS) no tema da página: claro ou escuro. O do Pawta troca pelo ícone da data especial quando houver
+ * (global.css), em todo lugar onde aparece: card da Home, /projetos e /suporte.
+ */
 import { ProductIcon } from '@toski-labs/ds';
 import type { ProductId } from '../../data/projects';
 import { arquivoDe, datas as datasEspeciais, temas } from '../../data/datas';
@@ -9,11 +12,9 @@ interface Props {
   /** Lado em px do arquivo (qualidade). O tamanho na tela vem das classes (size-*). */
   size: number;
   class?: string;
-  /** Mostra o ícone da data especial por cima (só o card do Pawta, na Home). */
-  datas?: boolean;
 }
-const { product, size, class: className, datas = false } = Astro.props;
-const icones = datas ? temas.filter((tema) => datasEspeciais[tema].iconePawta.claro) : [];
+const { product, size, class: className } = Astro.props;
+const icones = product === 'pawta' ? temas.filter((tema) => datasEspeciais[tema].iconePawta.claro) : [];
 ---
 
 <span class:list={['relative block shrink-0 overflow-hidden [&_span]:block [&_span]:size-full [&_svg]:size-full', className]}>

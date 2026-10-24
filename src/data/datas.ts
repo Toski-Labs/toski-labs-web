@@ -41,7 +41,7 @@ export interface DataEspecial {
   /** Faixa do topo: fala do laboratório (o Pawta aparece pelo ícone da data no card dele). */
   faixa: Record<Lang, { label: string; text: string; close: string }>;
   enfeites: Enfeite[];
-  /** Ícone do Pawta da data, no card da Home (do S.18). Vazio = fica o ícone de sempre. */
+  /** Ícone do Pawta da data, onde o ícone do Pawta aparece (Home, /projetos, /suporte). Vazio = fica o de sempre. */
   iconePawta: { claro: string; escuro?: string };
 }
 

@@ -16,7 +16,7 @@ const lang = getLang(Astro.currentLocale);
 
 <Card as="article" radius="panel" data-product={project.id} aria-labelledby={`proj-${project.id}`} className="flex min-w-0 flex-[1_1_460px] flex-col gap-5.5 p-6 sm:p-8">
   <div class="flex items-center justify-between gap-4 sm:flex-wrap">
-    <ProductIcon product={project.id} size={88} class="size-16 rounded-[20px] sm:size-22" datas={project.id === 'pawta'} />
+    <ProductIcon product={project.id} size={88} class="size-16 rounded-[20px] sm:size-22" />
     <div class="flex min-w-0 flex-1 flex-wrap justify-end gap-2 sm:flex-none">
       <Pill variant="status">{project.status[lang]}</Pill>
       <Pill variant="outline">{project.platform[lang]}</Pill>

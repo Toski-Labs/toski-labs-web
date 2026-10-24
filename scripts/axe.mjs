@@ -3,7 +3,7 @@
 // menu de configurações; na Home o menu também é testado aberto.
 // Datas especiais, além do axe: sem data nada de /datas/ é baixado; com data o favicon troca e todo arquivo de /datas/
 // existe; enfeites e bolinha não cobrem texto nem botões e ficam parados com "reduzir movimento"; a Black Friday
-// ganha a faixa; o X da faixa é lembrado.
+// ganha a faixa; o X da faixa é lembrado; onde o ícone do Pawta aparece (Home, /projetos, /suporte), o da data entra.
 import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import { pages, report } from './lib.mjs';
@@ -16,6 +16,8 @@ const errors = [];
 const browser = await chromium.launch();
 const tags = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'];
 let runs = 0;
+/** Páginas que mostram o ícone do Pawta (card da Home, bloco em Projetos, lista de apps no Suporte). */
+const PAGINAS_COM_PAWTA = new Set(['/', '/en', '/projetos', '/en/projects', '/suporte', '/en/support']);
 
 /** Contexto novo (sessionStorage limpo) no tema e na largura pedidos, sem rede externa (o Remote Config não é usado na prévia). */
 async function contexto(theme, width) {
@@ -66,6 +68,10 @@ for (const theme of ['light', 'dark']) {
           if (!(await bar.isVisible())) errors.push(`${where}: faixa da data não apareceu`);
           if ((await page.locator('.toski-date-bar:visible').count()) !== 1) errors.push(`${where}: mais de uma faixa de data visível`);
         }
+        // Ícone do Pawta da data: em toda página com o ícone do Pawta, visível só com o tema que tem ícone.
+        const icones = await page.evaluate(() => [...document.querySelectorAll('.toski-icone-data')].map((el) => ({ para: el.dataset.para, visivel: getComputedStyle(el).display !== 'none' })));
+        if (PAGINAS_COM_PAWTA.has(p.url) && !icones.length) errors.push(`${where}: sem o ícone do Pawta da data`);
+        for (const i of icones) if (i.visivel !== (i.para === tema)) errors.push(`${where}: ícone do Pawta de ${i.para} ${i.visivel ? 'visível' : 'escondido'}`);
         if (p.url === '/' || p.url === '/en') {
           const s = await page.evaluate(sobreposicoes);
           for (const o of s.out) errors.push(`${where}: enfeite em cima de ${o}`);

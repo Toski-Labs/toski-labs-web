@@ -419,7 +419,7 @@ span.toski-icone-data {
   --toski-motion-ball-rise: 36.84%;
 }
 
-/* Ícone do Pawta da data no card da Home, por cima do de sempre. */
+/* Ícone do Pawta da data, por cima do de sempre, onde o ícone do Pawta aparece (Home, /projetos, /suporte). */
 :root[data-tema='halloween'][data-tema-icone] span.toski-icone-data[data-para='halloween'],
 :root[data-tema='natal'][data-tema-icone] span.toski-icone-data[data-para='natal'] {
   display: block;
