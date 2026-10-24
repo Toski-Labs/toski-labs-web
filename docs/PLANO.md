@@ -229,3 +229,9 @@ Halloween e Natal também neste site, com o mesmo parâmetro e as mesmas datas d
 - Natal: bengalinhas, guirlanda e ícone do Pawta vêm do S.18 (`public/datas/natal/` no `pethealth-web`). Copiar e preencher `claro`/`escuro` em `src/data/datas.ts` (lugares já definidos).
 
 **TODO(ds)**: levar para o Toski DS o script do `<head>`, a leitura das datas (`datas-especiais.mjs`) e os SVGs dos enfeites, para os dois sites não se separarem.
+
+## Cache do HTML (24 out 2026)
+- Problema: com `cleanUrls`, a regra `**/*.html` do `firebase.json` nunca casava (o endereço é `/projetos`, não `/projetos.html`), e as páginas saíam com o padrão do Firebase, `max-age=3600`. Depois de um deploy, quem tinha aberto o site na última hora ficava com o HTML antigo apontando para arquivos de `/_astro/` que já não existiam (imagens quebradas e nome antigo do projeto em `/projetos`, depois do deploy do #4). Sitemap e `robots.txt` também ficavam com 1 hora.
+- Agora: `**` com `Cache-Control: no-cache` (o navegador confere a cada visita; com ETag, volta 304 sem baixar de novo) e `/_astro/**` (nome com hash) com `public, max-age=31536000, immutable`, por último. Quando duas regras definem o mesmo cabeçalho, o Firebase usa a de baixo (conferido no ar: as imagens de `/_astro/` saíam com os 7 dias da regra de imagens, não com o `immutable`).
+- Favicon, `apple-touch-icon`, `/og/` e `/datas/` também passam a `no-cache` (não têm hash; trocar um desenho chega na hora).
+- `npm run check:cache` (no `npm run ci`) confere os cabeçalhos pelo `serve.mjs`.
