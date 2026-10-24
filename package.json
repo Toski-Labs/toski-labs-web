@@ -10,6 +10,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "test": "node --test scripts/test-datas.mjs",
+    "check:seo": "node scripts/check-seo.mjs",
+    "check:axe": "node scripts/axe.mjs",
+    "ci": "npm run check && npm run build && npm test && npm run check:seo && npm run check:axe",
     "deploy": "astro build && firebase deploy --only hosting",
     "astro": "astro"
   },
@@ -30,8 +34,12 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.14.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "node-html-parser": "^9.0.5",
+    "playwright": "^1.64.1",
     "typescript": "^6.0.3"
   }
 }
