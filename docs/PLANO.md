@@ -225,8 +225,11 @@ Halloween e Natal também neste site, com o mesmo parâmetro e as mesmas datas d
 - Halloween sem esperar o S.18: `public/datas/halloween/fantasminha.svg` recortado do quadro `SzSiteHalloween` (desenho e cores; SVG sem CSS, para o site do Pawta copiar) e `icone-pawta.svg` do quadro `SzIcones` (ícone do card). Três fantasminhas (grande, médio e pequeno, opacidade 1/0,9/0,8) com o movimento do canvas (`szFloat`: 3,2 s, sobe e balança ±4°); lugares separados no computador (cantos em volta do círculo) e no celular (menores, nos lados).
 - Textos da faixa passam a falar do laboratório ("Feliz Halloween da Toski Labs! O laboratório está fantasiado até 31/10." / "Boas festas da Toski Labs! O laboratório já entrou no clima de Natal.", e os equivalentes em inglês), sem o link para o site do Pawta. O Pawta segue no ícone da data, no card dele.
 
-**Falta**
-- Natal: bengalinhas, guirlanda e ícone do Pawta vêm do S.18 (`public/datas/natal/` no `pethealth-web`). Copiar e preencher `claro`/`escuro` em `src/data/datas.ts` (lugares já definidos).
+**Enfeites de Natal (24 out)**
+- Do S.18 (`public/datas/natal/` da branch `feat/datas-especiais` do `pethealth-web`, commit `1a7f00b`, PR #5 de lá): `bengalinha.svg` e o ícone do Pawta (`icone.svg`, aqui `icone-pawta.svg`, em todo lugar onde o ícone do Pawta aparece).
+- Duas bengalinhas cruzadas em X em cima do círculo, acima da cabeça da Paçoca (o mesmo arquivo, uma espelhada, ganchos para fora).
+- A guirlanda do S.18 é uma faixa reta para a largura da tela. Aqui, `guirlanda-toski.svg` usa as mesmas peças (folhas, bolinhas, bengalinhas e estrelas, mesmas formas e cores) em arco, abraçando a parte de baixo do círculo, abaixo da bolinha.
+- Movimento do canvas para o Natal: `szSway` (balança ±1,2° em 4 s; a guirlanda gira em volta do centro do círculo), parado com "reduzir movimento". Cada enfeite pode ter `anim`, `rotate`, `flip` e `origem` em `src/data/datas.ts`.
 
 **TODO(ds)**: levar para o Toski DS o script do `<head>`, a leitura das datas (`datas-especiais.mjs`) e os SVGs dos enfeites, para os dois sites não se separarem.
 
