@@ -28,8 +28,10 @@
     "redirects": [
       { "source": "/wallpapers", "destination": "/estudio/wallpapers", "type": 301 },
       { "source": "/en/wallpapers", "destination": "/en/studio/wallpapers", "type": 301 },
-      { "source": "/pethealthtracker", "destination": "https://pethealth.toski-labs.com.br", "type": 301 },
-      { "source": "/en/pethealthtracker", "destination": "https://pethealth.toski-labs.com.br/en", "type": 301 }
+      { "source": "/pethealthtracker", "destination": "https://pawta.toski-labs.com.br", "type": 301 },
+      { "source": "/en/pethealthtracker", "destination": "https://pawta.toski-labs.com.br/en", "type": 301 },
+      { "source": "/pawta", "destination": "https://pawta.toski-labs.com.br", "type": 301 },
+      { "source": "/en/pawta", "destination": "https://pawta.toski-labs.com.br/en", "type": 301 }
     ]
   }
 }

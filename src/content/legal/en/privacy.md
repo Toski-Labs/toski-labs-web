@@ -12,8 +12,8 @@ Toski Labs is a technology lab from Recife, Brazil, responsible for the toski-la
 
 The apps have their own policy, on each app’s site:
 
-- **PetHealthTracker**
-  [PetHealthTracker Privacy Policy](https://pethealth.toski-labs.com.br/en/privacy)
+- **Pawta**
+  [Pawta Privacy Policy](https://pawta.toski-labs.com.br/en/privacy)
 - **Koti**
   [Koti Privacy Policy](https://koti.toski-labs.com.br/en/privacy)
 

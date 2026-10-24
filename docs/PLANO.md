@@ -7,7 +7,7 @@ Regra: tudo gratuito. Site estático, sem cookies, sem Google Analytics. O únic
 ## Decisões
 - E-mail de suporte e contato: **toskilabs@gmail.com** (site, política, App Store e Google).
 - Idiomas: português em `/`, inglês em `/en/`. Sem redirecionamento automático pelo navegador; o botão PT/EN no cabeçalho troca para a página equivalente.
-- Rotas: `/`, `/projetos`, `/estudio`, `/privacidade`, `/suporte` · `/en/`, `/en/projects`, `/en/studio`, `/en/privacy`, `/en/support`. `/pethealthtracker` e `/en/pethealthtracker` saíram deste site e redirecionam (301) para o subdomínio do app.
+- Rotas: `/`, `/projetos`, `/estudio`, `/privacidade`, `/suporte` · `/en/`, `/en/projects`, `/en/studio`, `/en/privacy`, `/en/support`. `/pethealthtracker` e `/en/pethealthtracker` saíram deste site e redirecionam (301) direto para o site do Pawta (`pawta.toski-labs.com.br`, sem passar pelo endereço antigo); `/pawta` e `/en/pawta` também.
 - Tema: claro e escuro automáticos pelo sistema (`prefers-color-scheme`), sem botão — igual ao app.
 - Fonte: Outfit hospedada no site (`@fontsource-variable/outfit`), sem Google Fonts.
 - Projetos vêm de uma lista de dados (`src/data/projects.ts`) para um novo projeto entrar sem mexer no layout.
@@ -15,16 +15,16 @@ Regra: tudo gratuito. Site estático, sem cookies, sem Google Analytics. O únic
 - Fotos da Paçoca já em `src/assets/fotos/` (`pacoca-sorrindo.jpg` com o fundo tratado é a padrão). Usar `<Image>` do Astro (gera WebP e tamanhos).
 
 ## Projetos: Home com dois apps e página /projetos ✅ (10 out 2026, em PR)
-Cada app tem o próprio site (`pethealth.toski-labs.com.br`, `koti.toski-labs.com.br`). Este site só apresenta os projetos.
+Cada app tem o próprio site (`pawta.toski-labs.com.br`, `koti.toski-labs.com.br`). Este site só apresenta os projetos.
 
 **Decisões (10 out)**
-- Home: dois cards lado a lado (PetHealthTracker e Koti), com ícone do DS 0.5.3, status, frase na cor do produto, tags, "Ver o site", selo desativado "Em breve na App Store", Privacidade e Suporte do subdomínio e o endereço em texto pequeno. "Ainda no forno" foi para `/projetos`.
+- Home: dois cards lado a lado (Pawta e Koti), com ícone do DS 0.6.0, status, frase na cor do produto, tags, "Ver o site", selo desativado "Em breve na App Store", Privacidade e Suporte do subdomínio e o endereço em texto pequeno. "Ainda no forno" foi para `/projetos`.
 - `/projetos` (`/en/projects`): um bloco por app (o que é, para quem, 4 recursos, planos, botões) com celular ao lado, e "Ainda no forno" no fim. Título da aba "Toski Labs: Projetos". Dados em `src/data/projects.ts`.
 - Cor do produto só dentro do card: variáveis locais com o nome do token em `global.css` (`[data-product]`), com `TODO(ds)` e as regras de `@media` e `data-theme`. `Button` e `Pill` do DS herdam sem classes novas (o `@theme inline` lê `--toski-*` em tempo de uso). `--toski-tint` recebe o valor de `--toski-hero` do tema (cor do canvas).
-- Telas no celular: PetHealthTracker usa o snapshot do app (`calendar1.light/dark.png`, só em português; o `alt` em inglês avisa); Koti é um componente HTML/CSS estático (`KotiScreen.astro`, aba Hoje, PT e EN, textos em `projects.ts`). Decorativas: `role="img"` com `aria-label`, tamanho fixo, nada clicável.
+- Telas no celular: Pawta usa o snapshot do app (`pawta-calendario-claro/escuro.png`, só em português; o `alt` em inglês avisa); Koti é um componente HTML/CSS estático (`KotiScreen.astro`, aba Hoje, PT e EN, textos em `projects.ts`). Decorativas: `role="img"` com `aria-label`, tamanho fixo, nada clicável.
 - Privacidade: cobre só o site da Toski e lista a política de cada app. Suporte: contato da Toski e links para o suporte de cada app. As URLs `/privacidade` e `/suporte` continuam.
-- Black Friday: faixa e selo levam para a Home do subdomínio (`https://pethealth.toski-labs.com.br` e `/en`); selo lilás, faixa caramelo. Segue desligada até o app estar na App Store.
-- Rodapé: coluna Projetos com PetHealthTracker, Koti (subdomínios) e Estúdio.
+- Black Friday: faixa e selo levam para a Home do subdomínio (`https://pawta.toski-labs.com.br` e `/en`); selo lilás, faixa caramelo. Segue desligada até o app estar na App Store.
+- Rodapé: coluna Projetos com Pawta, Koti (subdomínios) e Estúdio.
 - JSON-LD: Organization com `@id` `https://toski-labs.com.br/#organization` e `ItemList` em `/projetos` com os dois `MobileApplication` (`@id` `…/#app` de cada site). O `koti-web` ainda usa `https://toski-labs.web.app/#toski-labs` e será ajustado à parte.
 - Domínio oficial: `https://toski-labs.com.br` (12 out 2026). `SITE`, canonical, hreflang, sitemap, `robots.txt`, Open Graph e JSON-LD usam esse endereço. Ver a seção "Domínio oficial" abaixo.
 - Saíram: `PetHealthTrackerPage`, `PhoneMock`, `PdfCard`, `FeatureCard`, `BlackFridayOffer`, `FaqItem`, as rotas do PetHealthTracker e as imagens `og/pethealthtracker-*`.
@@ -41,7 +41,7 @@ Cada app tem o próprio site (`pethealth.toski-labs.com.br`, `koti.toski-labs.co
 - axe (WCAG 2.0 a 2.2 A/AA e boas práticas): 0 violações em 15 páginas, 390 e 1280 px, claro e escuro, com o menu de configurações aberto.
 - Lighthouse (mediana de 3): 100/100/100/100 em `/`, `/en`, `/projetos` e `/en/projects`, celular e computador, claro e escuro. CLS 0 em todas, depois de pré-carregar a fonte Outfit (latin) no `BaseLayout` (antes `/projetos` no celular tinha 0,031 pela troca da fonte). Repetido no celular, claro e escuro, após o preload.
 - `npm run check` roda o `astro check` (`@astrojs/check` e `typescript` nas devDependencies): 0 erros.
-- 301 conferidos: `/pethealthtracker` e `/en/pethealthtracker` vão para o subdomínio.
+- 301 conferidos: `/pethealthtracker` e `/en/pethealthtracker` vão para o subdomínio (desde 24 out, direto para `pawta.toski-labs.com.br`; conferir de novo depois do deploy).
 
 ## Fase 0 — Fundação ✅ (5 out 2026)
 Feita: tokens em `src/styles/global.css`, Outfit local, SVGs em `src/assets/brand/`, favicon e apple-touch-icon, i18n em `src/i18n/ui.ts` (rotas, textos, `SUPPORT_EMAIL`), `BaseLayout`, `Header`, `Footer`, 8 rotas com página provisória (`Placeholder.astro`, some na Fase 2). Build gera `/privacidade.html` etc. (`build.format: 'file'`).
@@ -92,16 +92,16 @@ Desenhadas no canvas (página "Novidades") e implementadas:
 4. **Black Friday**: `src/data/campaigns.ts` (projeto, chave, `start`, `end`, textos, preços). Faixa no topo de todas as páginas (`CampaignBar`), selo no card do projeto na Home (`CampaignSeal`) e seção BLACK FRIDAY na página do PetHealthTracker (`BlackFridayOffer`), no visual da tela de Black Friday do app. Preencher `appStoreUrl`.
 
 ## Campanhas pelo Remote Config ✅ (5 out 2026)
-- Quem liga e desliga é o **Remote Config do projeto Firebase `toski-labs`** (app Web "site"), parâmetro `campanhas` (JSON), uma entrada por projeto: `{ "pethealthtracker": { "black_friday": true } }`. Promoção de um projeto só = ligar só a chave dele.
+- Quem liga e desliga é o **Remote Config do projeto Firebase `toski-labs`** (app Web "site"), parâmetro `campanhas` (JSON), uma entrada por projeto: `{ "pawta": { "black_friday": true } }` (até 24 out a chave era `pethealthtracker`). Promoção de um projeto só = ligar só a chave dele.
 - Uma campanha aparece quando **a data está dentro de `start`–`end`** e **a chave está ligada**. Fora das datas o site nem baixa o Firebase. Se o Remote Config falhar, nada aparece (padrão desligado). A última resposta fica guardada no navegador para a página não pular na volta.
 - Controle: `src/components/campaign/CampaignFlags.astro`; configuração do app Web: `src/lib/firebase.ts` (valores públicos).
-- Prévia sem ligar nada: abrir qualquer página com `?campanha=pethealthtracker.black_friday` (vale até fechar a aba).
+- Prévia sem ligar nada: abrir qualquer página com `?campanha=pawta.black_friday` (vale até fechar a aba).
 - O app do iPhone continua com o Remote Config do próprio projeto. **São dois interruptores por campanha.**
 
-### Passo a passo de uma campanha (ex.: Black Friday do PetHealthTracker)
+### Passo a passo de uma campanha (ex.: Black Friday do Pawta)
 1. App Store Connect: agendar as ofertas (introdutória/promocional do anual e preço temporário do vitalício).
 2. Projeto Firebase do app: ligar a campanha no Remote Config do app.
-3. Projeto Firebase `toski-labs` › Remote Config: em `campanhas`, pôr `"black_friday": true` dentro de `"pethealthtracker"` e **Publicar alterações**.
+3. Projeto Firebase `toski-labs` › Remote Config: em `campanhas`, pôr `"black_friday": true` dentro de `"pawta"` e **Publicar alterações**.
 4. Conferir no site (pode levar até 5 minutos para quem já estava com a página aberta).
 5. Depois do fim: desligar as duas chaves (o site já some sozinho pela data).
 Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue acessível pela Home).
@@ -145,13 +145,13 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 ### Falta
 **Conteúdo e revisão**
 1. Textos em PT e EN: primeira revisão feita (6 out); falta uma última leitura sua.
-2. Preços: a página do PetHealthTracker mostra "Em breve" / "Soon" até a precificação ser decidida (o teste de 7 dias continua). Na Black Friday (`src/data/campaigns.ts`) os preços estão em branco em PT e EN e o card mostra só o desconto (−50% / −30%); preencher `price` e `old` quando a monetização for definida, **antes de 27/11**.
+2. Preços: o site do Pawta mostra "Em breve" / "Soon" até a precificação ser decidida (o teste de 7 dias continua). Na Black Friday (`src/data/campaigns.ts`) os preços estão em branco em PT e EN e o card mostra só o desconto (−50% / −30%); preencher `price` e `old` quando a monetização for definida, **antes de 27/11**.
 3. Política: exclusão em até 30 dias confirmada; seção "Crianças" (não é direcionado a menores de 13 anos) adicionada. Falta nomear a rede de anúncios quando for escolhida (o texto já diz que o nome entra antes de os anúncios começarem) e a revisão jurídica.
 
 **App e anúncios**
-4. Link da App Store: página do PetHealthTracker ("Em breve na App Store") e `appStoreUrl: '#'` em `campaigns.ts`.
+4. Link da App Store: site do Pawta ("Em breve na App Store") e `appStoreUrl: '#'` em `campaigns.ts`.
 5. `public/app-ads.txt` antes de os anúncios entrarem.
-6. Black Friday (27–30/11): ofertas no App Store Connect, chave no Remote Config do app e do site; testar antes com `?campanha=pethealthtracker.black_friday`.
+6. Black Friday (27–30/11): ofertas no App Store Connect, chave no Remote Config do app e do site; testar antes com `?campanha=pawta.black_friday`.
 
 **Estúdio**
 7. ~~Toski DS no Estúdio~~ ✅ (6 out): o site usa `@toski-labs/ds` como fonte única; a faixa está publicada (`ds.ready: true`) com Storybook, GitHub, npm e o comando de instalação.
@@ -204,3 +204,6 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
   - [ ] https://toski-labs.web.app/en
 - Os relatórios de Desempenho e Páginas levam alguns dias para ter dados. Conferir no fim da semana.
 - Se a Toski Labs tiver domínio próprio no futuro, cadastrar também uma propriedade do tipo **Domínio** (verificação por DNS).
+
+## Pawta (24 out 2026)
+O app PetHealthTracker passou a se chamar **Pawta** (plano pago: **Pawta Plus**); o site dele foi para `pawta.toski-labs.com.br` e o `pethealth.toski-labs.com.br` só redireciona (301). Aqui mudaram: o projeto em `projects.ts` (`id: 'pawta'`, nome, links e textos), o card, o rodapé e `/projetos`, `[data-product='pawta']` no `global.css`, os snapshots `pawta-calendario-*`, a política (link para a do Pawta), as prévias do Estúdio (`~/pawta`), a campanha (`project: 'pawta'`, chave `pawta.black_friday`, textos com "Pawta Plus") e os 301 (`/pethealthtracker` direto para o endereço novo, mais `/pawta` e `/en/pawta`). O histórico acima (auditorias, Search Console, OG) fica com o nome da época.

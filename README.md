@@ -59,7 +59,7 @@ Inglês:
 - https://toski-labs.com.br/en/support
 - https://toski-labs.com.br/en/privacy
 
-O `toski-labs.web.app` continua respondendo, mas o endereço oficial é o `.com.br`. `/pethealthtracker` e `/en/pethealthtracker` redirecionam para o site do app em `pethealth.toski-labs.com.br`.
+O `toski-labs.web.app` continua respondendo, mas o endereço oficial é o `.com.br`. `/pethealthtracker`, `/en/pethealthtracker`, `/pawta` e `/en/pawta` redirecionam para o site do app em `pawta.toski-labs.com.br`.
 
 Os endereços de Suporte e Privacidade estão cadastrados na App Store e no Google: não mudar. `/wallpapers` redireciona para `/estudio/wallpapers`.
 
@@ -92,7 +92,7 @@ O botão Mobile baixa do próprio site; os de desktop baixam da release mais rec
 
 **Novo projeto:** adicione em `src/data/projects.ts`.
 
-**Ligar uma campanha:** datas e textos em `src/data/campaigns.ts`; a chave fica no Remote Config do projeto `toski-labs`, parâmetro `campanhas` (ex.: `{ "pethealthtracker": { "black_friday": true } }`). Para ver antes sem ligar nada: `?campanha=pethealthtracker.black_friday`.
+**Ligar uma campanha:** datas e textos em `src/data/campaigns.ts`; a chave fica no Remote Config do projeto `toski-labs`, parâmetro `campanhas` (ex.: `{ "pawta": { "black_friday": true } }`). Para ver antes sem ligar nada: `?campanha=pawta.black_friday`.
 
 **Publicar partes do Estúdio:** `themes.ready` e `ds.ready` em `src/data/studio.ts`. Com `false`, aparece no `npm run dev` mas fica fora do site publicado e do sitemap.
 

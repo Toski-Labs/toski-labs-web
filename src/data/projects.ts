@@ -1,7 +1,7 @@
 import type { Lang } from '../i18n/ui';
 
 /** Projetos da Toski Labs. Um projeto novo entra aqui e aparece na Home e em Projetos. Cada um tem o próprio site, num subdomínio. */
-export type ProductId = 'pethealth' | 'koti';
+export type ProductId = 'pawta' | 'koti';
 
 export interface Feature {
   /** Caminho do desenho (viewBox 24, traço) do canvas aprovado. */
@@ -45,12 +45,12 @@ const features = (list: [keyof typeof ICONS, string, string][]): Feature[] => li
 
 export const projects: Project[] = [
   {
-    id: 'pethealth',
-    name: 'PetHealthTracker',
-    host: 'pethealth.toski-labs.com.br',
+    id: 'pawta',
+    name: 'Pawta',
+    host: 'pawta.toski-labs.com.br',
     urls: {
-      pt: { site: 'https://pethealth.toski-labs.com.br', privacy: 'https://pethealth.toski-labs.com.br/privacidade', support: 'https://pethealth.toski-labs.com.br/suporte' },
-      en: { site: 'https://pethealth.toski-labs.com.br/en', privacy: 'https://pethealth.toski-labs.com.br/en/privacy', support: 'https://pethealth.toski-labs.com.br/en/support' },
+      pt: { site: 'https://pawta.toski-labs.com.br', privacy: 'https://pawta.toski-labs.com.br/privacidade', support: 'https://pawta.toski-labs.com.br/suporte' },
+      en: { site: 'https://pawta.toski-labs.com.br/en', privacy: 'https://pawta.toski-labs.com.br/en/privacy', support: 'https://pawta.toski-labs.com.br/en/support' },
     },
     status: { pt: 'Em desenvolvimento', en: 'In development' },
     platform: { pt: 'iPhone · iOS 18+', en: 'iPhone · iOS 18+' },
@@ -75,8 +75,8 @@ export const projects: Project[] = [
       en: 'anyone looking after one pet or many who wants to stop keeping notes on paper, in a notes app or in a spreadsheet.',
     },
     plans: {
-      pt: 'Grátis para 1 pet. Plus com pets ilimitados, PDF e calendários do iPhone e do Google; 7 dias de teste, sem cartão.',
-      en: 'Free for 1 pet. Plus adds unlimited pets, PDFs and iPhone and Google calendars; 7-day trial, no card needed.',
+      pt: 'Grátis para 1 pet. Pawta Plus com pets ilimitados, PDF e calendários do iPhone e do Google; 7 dias de teste, sem cartão.',
+      en: 'Free for 1 pet. Pawta Plus adds unlimited pets, PDFs and iPhone and Google calendars; 7-day trial, no card needed.',
     },
     features: {
       pt: features([
@@ -93,8 +93,8 @@ export const projects: Project[] = [
       ]),
     },
     screenLabel: {
-      pt: 'Calendário do PetHealthTracker: o mês com as bolinhas de cada pet e os cuidados do dia',
-      en: 'PetHealthTracker calendar (the screen is in Portuguese): the month with each pet’s dots and the day’s care items',
+      pt: 'Calendário do Pawta: o mês com as bolinhas de cada pet e os cuidados do dia',
+      en: 'Pawta calendar (the screen is in Portuguese): the month with each pet’s dots and the day’s care items',
     },
   },
   {
