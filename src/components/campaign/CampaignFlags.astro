@@ -50,7 +50,7 @@
     }
   };
 
-  // Prévia pela URL: ?campanha=pethealthtracker.black_friday (vale até fechar a aba).
+  // Prévia pela URL: ?campanha=pawta.black_friday (vale até fechar a aba).
   const previewParam = new URLSearchParams(location.search).get('campanha');
   if (previewParam) store.set(sessionStorage, PREVIEW_KEY, previewParam);
   const preview = store.get(sessionStorage, PREVIEW_KEY);

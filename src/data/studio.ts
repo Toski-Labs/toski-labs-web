@@ -95,12 +95,12 @@ export const sampleCode: [string, Role][][] = [
 /** Terminal: [texto, cor, negrito?]. 'cursor' desenha o cursor. */
 type TermColor = 'x' | 'muted' | 'red' | 'green' | 'yellow' | 'blue' | 'magenta' | 'cyan' | 'cursor';
 export const sampleTerminal: [string, TermColor, boolean?][][] = [
-  [['paçoca', 'yellow', true], ['@toski ', 'muted'], ['~/pethealthtracker ', 'blue', true], ['(main) ', 'magenta'], ['$ ', 'muted'], ['git status', 'x']],
+  [['paçoca', 'yellow', true], ['@toski ', 'muted'], ['~/pawta ', 'blue', true], ['(main) ', 'magenta'], ['$ ', 'muted'], ['git status', 'x']],
   [['On branch ', 'x'], ['main', 'cyan']],
   [['Changes to be committed:', 'x']],
   [['        modified:   Sources/Home/HomeView.swift', 'green']],
   [['Changes not staged for commit:', 'x']],
   [['        modified:   Sources/Pets/PetCard.swift', 'red']],
   [],
-  [['paçoca', 'yellow', true], ['@toski ', 'muted'], ['~/pethealthtracker ', 'blue', true], ['(main) ', 'magenta'], ['$ ', 'muted'], [' ', 'cursor']],
+  [['paçoca', 'yellow', true], ['@toski ', 'muted'], ['~/pawta ', 'blue', true], ['(main) ', 'magenta'], ['$ ', 'muted'], [' ', 'cursor']],
 ];

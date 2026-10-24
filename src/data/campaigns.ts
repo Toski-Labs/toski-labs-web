@@ -5,12 +5,12 @@ import type { Lang } from '../i18n/ui';
  *
  * Quem liga e desliga é o Remote Config do projeto Firebase toski-labs, no parâmetro
  * `campanhas` (JSON, uma entrada por projeto), por exemplo:
- *   { "pethealthtracker": { "black_friday": true } }
+ *   { "pawta": { "black_friday": true } }
  *
  * Uma campanha aparece no navegador só quando as duas coisas valem ao mesmo tempo:
  * a data está entre `start` e `end` (horário de Brasília) e a chave está ligada.
  * Fora da janela o site nem carrega o Firebase. Se o Remote Config falhar, nada aparece.
- * Para conferir antes de ligar: abra qualquer página com ?campanha=pethealthtracker.black_friday
+ * Para conferir antes de ligar: abra qualquer página com ?campanha=pawta.black_friday
  * (vale até fechar a aba e ignora data e chave).
  *
  * Os preços são os da App Store (ver decisões de produto); o mensal nunca tem desconto.
@@ -64,20 +64,20 @@ export interface Campaign {
 
 export const blackFriday: Campaign = {
   id: 'black-friday-2026',
-  project: 'pethealthtracker',
+  project: 'pawta',
   flag: 'black_friday',
   start: '2026-11-27T00:00:00-03:00',
   // Mesma data da tela de Black Friday do app ("Só até 30 de novembro, 23:59").
   end: '2026-11-30T23:59:59-03:00',
-  url: { pt: 'https://pethealth.toski-labs.com.br', en: 'https://pethealth.toski-labs.com.br/en' },
+  url: { pt: 'https://pawta.toski-labs.com.br', en: 'https://pawta.toski-labs.com.br/en' },
   appStoreUrl: '#',
   copy: {
     pt: {
       tag: 'BLACK FRIDAY',
-      bar: '50% no primeiro ano do PetHealthTracker Plus anual.',
+      bar: '50% no primeiro ano do Pawta Plus anual.',
       barCta: 'Ver oferta',
-      kicker: 'PetHealthTracker Plus · App Store',
-      title: 'O maior desconto do ano no PetHealthTracker Plus.',
+      kicker: 'Pawta Plus · App Store',
+      title: 'O maior desconto do ano no Pawta Plus.',
       lead: 'Pets ilimitados, PDFs e sem anúncios. O anual sai pela metade no primeiro ano e depois renova pelo valor normal.',
       until: 'Só até 30 de novembro, 23:59 (horário de Brasília)',
       sticker: 'no anual',
@@ -95,10 +95,10 @@ export const blackFriday: Campaign = {
     },
     en: {
       tag: 'BLACK FRIDAY',
-      bar: '50% off the first year of PetHealthTracker Plus (yearly).',
+      bar: '50% off the first year of Pawta Plus (yearly).',
       barCta: 'See the offer',
-      kicker: 'PetHealthTracker Plus · App Store',
-      title: 'The biggest discount of the year on PetHealthTracker Plus.',
+      kicker: 'Pawta Plus · App Store',
+      title: 'The biggest discount of the year on Pawta Plus.',
       lead: 'Unlimited pets, PDFs and no ads. Yearly is half price for the first year, then renews at the regular price.',
       until: 'Only until November 30, 11:59 PM (Brasília time)',
       sticker: 'yearly plan',

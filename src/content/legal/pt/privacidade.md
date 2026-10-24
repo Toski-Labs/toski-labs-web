@@ -12,8 +12,8 @@ A Toski Labs é um laboratório de tecnologia de Recife, responsável pelo site 
 
 Os apps têm política própria, no site de cada um:
 
-- **PetHealthTracker**
-  [Política de Privacidade do PetHealthTracker](https://pethealth.toski-labs.com.br/privacidade)
+- **Pawta**
+  [Política de Privacidade do Pawta](https://pawta.toski-labs.com.br/privacidade)
 - **Koti**
   [Política de Privacidade do Koti](https://koti.toski-labs.com.br/privacidade)
 
