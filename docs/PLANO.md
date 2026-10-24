@@ -216,12 +216,22 @@ Halloween e Natal também neste site, com o mesmo parâmetro e as mesmas datas d
 - Ordem: `?tema=` (prévia até fechar a aba; `nenhum` esconde, `auto` volta) > `ativo: false` > `forcar` (respeita `sites`) > datas.
 - Sem piscar: script inline no `<head>` (`src/lib/datas-script.mjs`, gerado das mesmas funções que os testes cobrem, minificado, ~2,5 KB, ~1 KB comprimido) lê a última resposta guardada (`toski-datas`) ou o padrão e marca o `<html>` com `data-tema`, `data-tema-enfeites`, `data-tema-icone`, `data-tema-faixa-fechada`; troca o favicon.
 - O Remote Config (mesma busca da campanha, `src/lib/remote-config.ts`) só é baixado quando há uma data na janela ou um `forcar` guardado, e nunca na prévia. Por isso um `forcar` fora de qualquer janela não chega a este site (para ver fora da data, `?tema=`).
-- O que entra: faixa no topo (PT e EN, link para o site do Pawta, X lembrado por temporada); enfeites em volta do círculo da Paçoca (nunca na coluna do texto); a bolinha da Paçoca vira abóbora ou bola de árvore (opção B, com o mesmo pulo); favicon da data (fundo café no Halloween, verde no Natal); ícone do Pawta da data no card da Home.
+- O que entra: faixa no topo (PT e EN, X lembrado por temporada; desde o PR dos fantasminhas fala do laboratório e não tem link); enfeites em volta do círculo da Paçoca (nunca na coluna do texto); a bolinha da Paçoca vira abóbora ou bola de árvore (opção B, com o mesmo pulo); favicon da data (fundo café no Halloween, verde no Natal); ícone do Pawta da data no card da Home.
 - Black Friday no mesmo dia: só a faixa da Black Friday; enfeites, favicon e ícone continuam.
 - Tudo decorativo com `aria-hidden`, parado com "reduzir movimento", imagens como fundo só com o tema ativo (fora da data nada é baixado), claro e escuro, celular e computador. Open Graph de sempre.
 - Testes trazidos do `pethealth-web`: `npm test` (lógica e script do `<head>` num navegador de mentira), `check:seo` (adaptado aos títulos daqui, mais as checagens das datas) e `check:axe` (15 páginas × claro/escuro × 390/1280 × sem data/Halloween/Natal, sobreposição, downloads, Black Friday e X). `npm run ci` roda tudo.
 
+**Fantasminhas (24 out)**
+- Halloween sem esperar o S.18: `public/datas/halloween/fantasminha.svg` recortado do quadro `SzSiteHalloween` (desenho e cores; SVG sem CSS, para o site do Pawta copiar) e `icone-pawta.svg` do quadro `SzIcones` (ícone do card). Três fantasminhas (grande, médio e pequeno, opacidade 1/0,9/0,8) com o movimento do canvas (`szFloat`: 3,2 s, sobe e balança ±4°); lugares separados no computador (cantos em volta do círculo) e no celular (menores, nos lados).
+- Textos da faixa passam a falar do laboratório ("Feliz Halloween da Toski Labs! O laboratório está fantasiado até 31/10." / "Boas festas da Toski Labs! O laboratório já entrou no clima de Natal.", e os equivalentes em inglês), sem o link para o site do Pawta. O Pawta segue no ícone da data, no card dele.
+
 **Falta**
-- Enfeites e ícone do Pawta da data: vêm do S.18 (`public/datas/<tema>/` no `pethealth-web`). Copiar para `public/datas/<tema>/` e preencher `claro`/`escuro` em `src/data/datas.ts` (lugares já definidos). Se não chegarem até 29/10, decidir se sai só com faixa, favicon e bolinha.
+- Natal: bengalinhas, guirlanda e ícone do Pawta vêm do S.18 (`public/datas/natal/` no `pethealth-web`). Copiar e preencher `claro`/`escuro` em `src/data/datas.ts` (lugares já definidos).
 
 **TODO(ds)**: levar para o Toski DS o script do `<head>`, a leitura das datas (`datas-especiais.mjs`) e os SVGs dos enfeites, para os dois sites não se separarem.
+
+## Cache do HTML (24 out 2026)
+- Problema: com `cleanUrls`, a regra `**/*.html` do `firebase.json` nunca casava (o endereço é `/projetos`, não `/projetos.html`), e as páginas saíam com o padrão do Firebase, `max-age=3600`. Depois de um deploy, quem tinha aberto o site na última hora ficava com o HTML antigo apontando para arquivos de `/_astro/` que já não existiam (imagens quebradas e nome antigo do projeto em `/projetos`, depois do deploy do #4). Sitemap e `robots.txt` também ficavam com 1 hora.
+- Agora: `**` com `Cache-Control: no-cache` (o navegador confere a cada visita; com ETag, volta 304 sem baixar de novo) e `/_astro/**` (nome com hash) com `public, max-age=31536000, immutable`, por último. Quando duas regras definem o mesmo cabeçalho, o Firebase usa a de baixo (conferido no ar: as imagens de `/_astro/` saíam com os 7 dias da regra de imagens, não com o `immutable`).
+- Favicon, `apple-touch-icon`, `/og/` e `/datas/` também passam a `no-cache` (não têm hash; trocar um desenho chega na hora).
+- `npm run check:cache` (no `npm run ci`) confere os cabeçalhos pelo `serve.mjs`.

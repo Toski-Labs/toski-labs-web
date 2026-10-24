@@ -1,16 +1,14 @@
 ---
 /**
- * Faixa da data especial no topo de todas as páginas, com link para o site do Pawta.
+ * Faixa da data especial no topo de todas as páginas: fala do laboratório, sem link.
  * Uma faixa por tema, todas escondidas; o CSS mostra a do data-tema do <html> (sem JavaScript, sem piscar).
  * Fica logo depois da faixa da campanha: se a Black Friday estiver no ar, ela ganha e esta some (global.css).
  * O X é lembrado por temporada (DatasEspeciais.astro).
  */
 import { datas, temas } from '../../data/datas';
-import { projects } from '../../data/projects';
 import { getLang } from '../../i18n/ui';
 
 const lang = getLang(Astro.currentLocale);
-const pawta = projects.find((p) => p.id === 'pawta')!;
 ---
 
 {
@@ -20,7 +18,6 @@ const pawta = projects.find((p) => p.id === 'pawta')!;
       <div class="toski-date-bar relative" data-para={tema} role="region" aria-label={c.label}>
         <div class="page flex min-h-13 flex-wrap items-center justify-center gap-x-3.5 gap-y-1.5 py-2.5 pr-16 text-center text-[15px]">
           <span>{c.text}</span>
-          <a href={pawta.urls[lang].site} class="toski-date-bar-link font-semibold">{c.cta}</a>
         </div>
         <button type="button" aria-label={c.close} data-data-fechar class="toski-date-bar-close absolute top-1 right-2 flex size-11 items-center justify-center rounded-full">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>

@@ -355,22 +355,12 @@ span.toski-icone-data {
 .toski-date-bar[data-para='halloween'] {
   background: #120d0a;
   color: var(--color-papel);
-  --bar-link: #a9b4e8;
-  --bar-link-hover: #c9d0f2;
   --bar-close: #cdb9a3;
 }
 .toski-date-bar[data-para='natal'] {
   background: var(--toski-hero);
   color: var(--toski-ink);
-  --bar-link: var(--toski-accent-text);
-  --bar-link-hover: var(--toski-accent-hover);
   --bar-close: var(--toski-muted);
-}
-.toski-date-bar-link {
-  color: var(--bar-link);
-}
-.toski-date-bar-link:hover {
-  color: var(--bar-link-hover);
 }
 .toski-date-bar-close {
   color: var(--bar-close);
@@ -379,21 +369,35 @@ span.toski-icone-data {
   color: inherit;
 }
 
-/* Enfeites em volta do círculo da Paçoca: flutuam devagar, parados com "reduzir movimento". */
+/* Enfeites em volta do círculo da Paçoca. Lugar e tamanho no style (--top/--left/--w no computador, -sm no celular).
+   Flutuam devagar como no canvas (szFloat do SzSiteHalloween: 3,2 s, sobe ~8 px balançando ±4°), parados com
+   "reduzir movimento". */
 :root[data-tema='halloween'][data-tema-enfeites] span.toski-enfeite[data-para='halloween'],
 :root[data-tema='natal'][data-tema-enfeites] span.toski-enfeite[data-para='natal'] {
   display: block;
   position: absolute;
+  top: var(--top-sm);
+  left: var(--left-sm);
+  width: var(--w-sm);
   pointer-events: none;
   background: var(--img) center / contain no-repeat;
-  animation: toski-enfeite-flutua 4.2s var(--toski-ease-in-out) infinite;
+  animation: toski-enfeite-flutua 3.2s ease-in-out infinite;
+  @media (width >= 48rem) {
+    top: var(--top);
+    left: var(--left);
+    width: var(--w);
+  }
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }
 }
 @keyframes toski-enfeite-flutua {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
   50% {
-    transform: translateY(-7%) rotate(-3deg);
+    transform: translateY(-15%) rotate(4deg);
   }
 }
 

@@ -44,7 +44,9 @@ for (const p of pages) {
     for (const attr of ['src', 'href', 'srcset']) if (el.getAttribute(attr)?.includes('/datas/')) errors.push(`${w}: <${el.rawTagName} ${attr}> carrega ${el.getAttribute(attr)} direto`);
   for (const bar of p.root.querySelectorAll('.toski-date-bar')) {
     if (bar.getAttribute('role') !== 'region' || !bar.getAttribute('aria-label')) errors.push(`${w}: faixa da data sem role="region" e aria-label`);
-    if (!bar.querySelector('a[href^="https://pawta.toski-labs.com.br"]')) errors.push(`${w}: faixa da data sem link para o site do Pawta`);
+    // A faixa fala do laboratório e não leva a outro lugar (o Pawta aparece pelo ícone da data no card dele).
+    if (bar.querySelector('a')) errors.push(`${w}: faixa da data com link`);
+    if (!/^(Feliz Halloween|Happy Halloween|Boas festas|Happy holidays) (da|from) Toski Labs!/.test(bar.querySelector('span')?.text ?? '')) errors.push(`${w}: texto da faixa fora do combinado: ${bar.querySelector('span')?.text}`);
   }
   for (const el of p.root.querySelectorAll('.toski-enfeite, .toski-bolinha-data, .toski-icone-data'))
     if (el.getAttribute('aria-hidden') !== 'true') errors.push(`${w}: enfeite sem aria-hidden="true"`);
