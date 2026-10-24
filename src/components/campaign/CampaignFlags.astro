@@ -12,7 +12,8 @@
 ---
 
 <script>
-  import { CAMPAIGNS_PARAM, firebaseConfig } from '../../lib/firebase';
+  import { CAMPAIGNS_PARAM } from '../../lib/firebase';
+  import { fetchRemoteConfig } from '../../lib/remote-config';
 
   type Flags = Record<string, Record<string, boolean>>;
   const CACHE_KEY = 'toski-campanhas';
@@ -71,14 +72,8 @@
 
     (async () => {
       try {
-        const [{ initializeApp }, rc] = await Promise.all([import('firebase/app'), import('firebase/remote-config')]);
-        const remoteConfig = rc.getRemoteConfig(initializeApp(firebaseConfig));
-        remoteConfig.settings.minimumFetchIntervalMillis = import.meta.env.DEV ? 0 : 5 * 60 * 1000;
-        remoteConfig.settings.fetchTimeoutMillis = 4000;
-        remoteConfig.defaultConfig = { [CAMPAIGNS_PARAM]: '{}' };
-        await rc.fetchAndActivate(remoteConfig);
-        const raw = rc.getValue(remoteConfig, CAMPAIGNS_PARAM).asString();
-        const flags = parse(raw) ?? {};
+        const values = await fetchRemoteConfig();
+        const flags = parse(values[CAMPAIGNS_PARAM]) ?? {};
         store.set(localStorage, CACHE_KEY, JSON.stringify(flags));
         apply(flags);
       } catch {

@@ -25,6 +25,8 @@ Precisa de Node 22.12 ou mais novo.
 | `npm run dev`     | Servidor local em `localhost:4321`                 |
 | `npm run build`   | Gera o site em `dist/`                             |
 | `npm run preview` | Abre o `dist/` localmente, igual ao publicado      |
+| `npm test`        | Testes das datas especiais (script do `<head>`)    |
+| `npm run ci`      | `astro check`, build, testes, SEO e axe (contraste) |
 | `npm run deploy`  | Gera o site e publica no Firebase Hosting          |
 
 ## Publicando
@@ -71,14 +73,15 @@ src/
 ├── components/
 │   ├── brand/       MascotHero, PhoneMock, PdfCard, Wordmark
 │   ├── campaign/    faixa, selo e oferta de campanhas (Black Friday)
+│   ├── datas/       faixa e Remote Config das datas especiais (Halloween, Natal)
 │   ├── pages/       uma página por arquivo, com os textos PT/EN
 │   ├── studio/      prévias de editor e terminal, faixa do Toski DS
 │   └── ui/          FeatureCard e FaqItem (o resto vem do Toski DS)
 ├── content/legal/   política de privacidade em Markdown (pt e en)
-├── data/            projetos, campanhas, wallpapers e Estúdio
+├── data/            projetos, campanhas, datas especiais, wallpapers e Estúdio
 ├── i18n/ui.ts       rotas equivalentes PT↔EN e textos comuns
 ├── layouts/         BaseLayout (head, Open Graph, hreflang, tema)
-├── lib/firebase.ts  configuração pública do app Web (Remote Config)
+├── lib/             Firebase (Remote Config) e lógica das datas especiais
 └── pages/           rotas finas que chamam os componentes de página
 ```
 
@@ -93,6 +96,8 @@ O botão Mobile baixa do próprio site; os de desktop baixam da release mais rec
 **Novo projeto:** adicione em `src/data/projects.ts`.
 
 **Ligar uma campanha:** datas e textos em `src/data/campaigns.ts`; a chave fica no Remote Config do projeto `toski-labs`, parâmetro `campanhas` (ex.: `{ "pawta": { "black_friday": true } }`). Para ver antes sem ligar nada: `?campanha=pawta.black_friday`.
+
+**Datas especiais (Halloween, Natal):** ligam sozinhas pelas datas. Quem manda é o parâmetro `datas_especiais` do Remote Config do projeto `toski-labs`, o mesmo do site do Pawta (formato em `src/lib/datas-especiais.mjs`); se ele faltar ou vier inválido, vale o padrão embutido. Visual em `src/data/datas.ts`, arquivos em `public/datas/<tema>/`. Para ver antes: `?tema=halloween`, `?tema=natal`, `?tema=nenhum` (até fechar a aba; `?tema=auto` volta ao normal).
 
 **Publicar partes do Estúdio:** `themes.ready` e `ds.ready` em `src/data/studio.ts`. Com `false`, aparece no `npm run dev` mas fica fora do site publicado e do sitemap.
 

@@ -1,0 +1,62 @@
+---
+/**
+ * Datas especiais no navegador, depois do script do <head> (que já marcou o <html> sem piscar):
+ * 1. X da faixa: some e fica lembrado até a próxima temporada.
+ * 2. Remote Config (`datas_especiais`): só é baixado quando alguma data está na janela (pelo padrão embutido ou
+ *    pela última resposta guardada) ou quando há um `forcar` guardado; nunca durante a prévia (?tema=).
+ *    A resposta válida fica guardada para a próxima visita e já vale nesta página.
+ *    Parâmetro ausente ou JSON inválido apaga o guardado: volta o padrão embutido.
+ */
+---
+
+<script>
+  import { aplicar, CHAVES, hojeBrasilia, naJanela, OPCOES, PADRAO, validar } from '../../lib/datas-especiais.mjs';
+  import { DATES_PARAM } from '../../lib/firebase';
+  import { fetchRemoteConfig } from '../../lib/remote-config';
+
+  type Config = typeof PADRAO;
+
+  const root = document.documentElement;
+  const ler = (area: 'localStorage' | 'sessionStorage', key: string) => {
+    try {
+      return window[area].getItem(key);
+    } catch {
+      return null;
+    }
+  };
+  const parse = (raw: string | null): Config | null => {
+    try {
+      return validar(JSON.parse(raw ?? '')) as Config | null;
+    } catch {
+      return null;
+    }
+  };
+
+  for (const button of document.querySelectorAll('[data-data-fechar]')) {
+    button.addEventListener('click', () => {
+      try {
+        localStorage.setItem(CHAVES.fechada, `${root.dataset.tema}-${root.dataset.temaAno}`);
+      } catch {}
+      root.setAttribute('data-tema-faixa-fechada', '');
+    });
+  }
+
+  const hoje = hojeBrasilia(Date.now()).md;
+  const cache = parse(ler('localStorage', CHAVES.cache));
+  const emJanela = (cfg: Config | null) => !!cfg && Object.values(cfg.temas).some((t) => naJanela(hoje, t));
+
+  if (!ler('sessionStorage', CHAVES.previa) && (emJanela(PADRAO) || emJanela(cache) || !!cache?.forcar)) {
+    fetchRemoteConfig()
+      .then((values) => {
+        const cfg = parse(values[DATES_PARAM]);
+        try {
+          if (cfg) localStorage.setItem(CHAVES.cache, JSON.stringify(cfg));
+          else localStorage.removeItem(CHAVES.cache);
+        } catch {}
+        aplicar(OPCOES, Date.now());
+      })
+      .catch(() => {
+        // Sem resposta: fica o que o <head> decidiu (guardado ou padrão).
+      });
+  }
+</script>

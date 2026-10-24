@@ -321,3 +321,103 @@
   --toski-accent-text: #D9A6CC;
   --toski-link: #E8C2DD;
 }
+
+/*
+  Datas especiais (Halloween, Natal…). O script do <head> (src/lib/datas-especiais.mjs) marca o <html> com
+  data-tema, data-tema-enfeites, data-tema-icone e data-tema-faixa-fechada; tudo aqui depende só disso (sem piscar).
+  As imagens entram como fundo só nas regras de tema ativo: fora da data nada é baixado.
+  Cada elemento traz --img-claro (e --img-escuro, se houver) no style. Um tema novo ganha uma linha em cada lista.
+  Fora de @layer de propósito: precisa valer sobre as classes utilitárias (ex.: [&_span]:block do ProductIcon).
+  TODO(ds): levar os enfeites e estas regras para o Toski DS junto com o script do <head>.
+*/
+.toski-date-bar,
+span.toski-enfeite,
+span.toski-bolinha-data,
+span.toski-icone-data {
+  display: none;
+  --img: var(--img-claro);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) :is(.toski-enfeite, .toski-bolinha-data, .toski-icone-data) {
+    --img: var(--img-escuro, var(--img-claro));
+  }
+}
+:root[data-theme='dark'] :is(.toski-enfeite, .toski-bolinha-data, .toski-icone-data) {
+  --img: var(--img-escuro, var(--img-claro));
+}
+
+/* Faixa do topo. A da Black Friday vem antes no HTML e, quando aparece, ganha: esta só aparece se não vier depois
+   de uma faixa de campanha visível. */
+:root[data-tema='halloween']:not([data-tema-faixa-fechada]) .toski-date-bar[data-para='halloween']:not(.toski-campaign-bar:not([hidden]) ~ *),
+:root[data-tema='natal']:not([data-tema-faixa-fechada]) .toski-date-bar[data-para='natal']:not(.toski-campaign-bar:not([hidden]) ~ *) {
+  display: block;
+}
+.toski-date-bar[data-para='halloween'] {
+  background: #120d0a;
+  color: var(--color-papel);
+  --bar-link: #a9b4e8;
+  --bar-link-hover: #c9d0f2;
+  --bar-close: #cdb9a3;
+}
+.toski-date-bar[data-para='natal'] {
+  background: var(--toski-hero);
+  color: var(--toski-ink);
+  --bar-link: var(--toski-accent-text);
+  --bar-link-hover: var(--toski-accent-hover);
+  --bar-close: var(--toski-muted);
+}
+.toski-date-bar-link {
+  color: var(--bar-link);
+}
+.toski-date-bar-link:hover {
+  color: var(--bar-link-hover);
+}
+.toski-date-bar-close {
+  color: var(--bar-close);
+}
+.toski-date-bar-close:hover {
+  color: inherit;
+}
+
+/* Enfeites em volta do círculo da Paçoca: flutuam devagar, parados com "reduzir movimento". */
+:root[data-tema='halloween'][data-tema-enfeites] span.toski-enfeite[data-para='halloween'],
+:root[data-tema='natal'][data-tema-enfeites] span.toski-enfeite[data-para='natal'] {
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  background: var(--img) center / contain no-repeat;
+  animation: toski-enfeite-flutua 4.2s var(--toski-ease-in-out) infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+@keyframes toski-enfeite-flutua {
+  50% {
+    transform: translateY(-7%) rotate(-3deg);
+  }
+}
+
+/* Bolinha da Paçoca: a do DS some e entra a da data, com o mesmo pulo (toski-ball, parado com "reduzir movimento").
+   Subida de 14 no desenho = 36,84% da bolinha (38 de altura). */
+:root[data-tema][data-tema-enfeites] .toski-hero-mascot svg [data-ball] {
+  visibility: hidden;
+}
+:root[data-tema='halloween'][data-tema-enfeites] span.toski-bolinha-data[data-para='halloween'],
+:root[data-tema='natal'][data-tema-enfeites] span.toski-bolinha-data[data-para='natal'] {
+  display: block;
+  position: absolute;
+  top: 64.57%;
+  left: 23.24%;
+  width: 11.3%;
+  aspect-ratio: 1;
+  pointer-events: none;
+  background: var(--img) center / contain no-repeat;
+  --toski-motion-ball-rise: 36.84%;
+}
+
+/* Ícone do Pawta da data no card da Home, por cima do de sempre. */
+:root[data-tema='halloween'][data-tema-icone] span.toski-icone-data[data-para='halloween'],
+:root[data-tema='natal'][data-tema-icone] span.toski-icone-data[data-para='natal'] {
+  display: block;
+  background: var(--img) center / cover no-repeat;
+}

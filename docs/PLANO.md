@@ -207,3 +207,21 @@ Menu do cabeçalho agora: Projetos · Wallpapers · Suporte (o "Sobre" segue ace
 
 ## Pawta (24 out 2026)
 O app PetHealthTracker passou a se chamar **Pawta** (plano pago: **Pawta Plus**); o site dele foi para `pawta.toski-labs.com.br` e o `pethealth.toski-labs.com.br` só redireciona (301). Aqui mudaram: o projeto em `projects.ts` (`id: 'pawta'`, nome, links e textos), o card, o rodapé e `/projetos`, `[data-product='pawta']` no `global.css`, os snapshots `pawta-calendario-*`, a política (link para a do Pawta), as prévias do Estúdio (`~/pawta`), a campanha (`project: 'pawta'`, chave `pawta.black_friday`, textos com "Pawta Plus") e os 301 (`/pethealthtracker` direto para o endereço novo, mais `/pawta` e `/en/pawta`). O histórico acima (auditorias, Search Console, OG) fica com o nome da época.
+
+## Datas especiais (S.19, 24 out 2026)
+Halloween e Natal também neste site, com o mesmo parâmetro e as mesmas datas do site do Pawta (S.8, S.15, S.18). Sem quadro no canvas: visual proposto e aprovado na Etapa 1.
+
+**Decisões**
+- Remote Config do projeto `toski-labs`, parâmetro `datas_especiais` (formato combinado com o `pethealth-web`): `ativo`, `forcar` e `temas.<tema>` com `inicio`/`fim` (MM-DD, Brasília, incluídos; fim menor que o início vira o ano), `enfeites`, `icone` e `sites` (`"pawta"`, `"toski"`). Um tema vale para os dois sites; cada site desenha o seu. JSON ausente, inválido ou lento: vale o padrão embutido (`PADRAO` em `src/lib/datas-especiais.mjs`).
+- Ordem: `?tema=` (prévia até fechar a aba; `nenhum` esconde, `auto` volta) > `ativo: false` > `forcar` (respeita `sites`) > datas.
+- Sem piscar: script inline no `<head>` (`src/lib/datas-script.mjs`, gerado das mesmas funções que os testes cobrem, minificado, ~2,5 KB, ~1 KB comprimido) lê a última resposta guardada (`toski-datas`) ou o padrão e marca o `<html>` com `data-tema`, `data-tema-enfeites`, `data-tema-icone`, `data-tema-faixa-fechada`; troca o favicon.
+- O Remote Config (mesma busca da campanha, `src/lib/remote-config.ts`) só é baixado quando há uma data na janela ou um `forcar` guardado, e nunca na prévia. Por isso um `forcar` fora de qualquer janela não chega a este site (para ver fora da data, `?tema=`).
+- O que entra: faixa no topo (PT e EN, link para o site do Pawta, X lembrado por temporada); enfeites em volta do círculo da Paçoca (nunca na coluna do texto); a bolinha da Paçoca vira abóbora ou bola de árvore (opção B, com o mesmo pulo); favicon da data (fundo café no Halloween, verde no Natal); ícone do Pawta da data no card da Home.
+- Black Friday no mesmo dia: só a faixa da Black Friday; enfeites, favicon e ícone continuam.
+- Tudo decorativo com `aria-hidden`, parado com "reduzir movimento", imagens como fundo só com o tema ativo (fora da data nada é baixado), claro e escuro, celular e computador. Open Graph de sempre.
+- Testes trazidos do `pethealth-web`: `npm test` (lógica e script do `<head>` num navegador de mentira), `check:seo` (adaptado aos títulos daqui, mais as checagens das datas) e `check:axe` (15 páginas × claro/escuro × 390/1280 × sem data/Halloween/Natal, sobreposição, downloads, Black Friday e X). `npm run ci` roda tudo.
+
+**Falta**
+- Enfeites e ícone do Pawta da data: vêm do S.18 (`public/datas/<tema>/` no `pethealth-web`). Copiar para `public/datas/<tema>/` e preencher `claro`/`escuro` em `src/data/datas.ts` (lugares já definidos). Se não chegarem até 29/10, decidir se sai só com faixa, favicon e bolinha.
+
+**TODO(ds)**: levar para o Toski DS o script do `<head>`, a leitura das datas (`datas-especiais.mjs`) e os SVGs dos enfeites, para os dois sites não se separarem.
