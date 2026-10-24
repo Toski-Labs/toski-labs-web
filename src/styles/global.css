@@ -355,22 +355,12 @@ span.toski-icone-data {
 .toski-date-bar[data-para='halloween'] {
   background: #120d0a;
   color: var(--color-papel);
-  --bar-link: #a9b4e8;
-  --bar-link-hover: #c9d0f2;
   --bar-close: #cdb9a3;
 }
 .toski-date-bar[data-para='natal'] {
   background: var(--toski-hero);
   color: var(--toski-ink);
-  --bar-link: var(--toski-accent-text);
-  --bar-link-hover: var(--toski-accent-hover);
   --bar-close: var(--toski-muted);
-}
-.toski-date-bar-link {
-  color: var(--bar-link);
-}
-.toski-date-bar-link:hover {
-  color: var(--bar-link-hover);
 }
 .toski-date-bar-close {
   color: var(--bar-close);

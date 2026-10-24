@@ -31,7 +31,8 @@ export interface Enfeite {
 }
 
 export interface DataEspecial {
-  faixa: Record<Lang, { label: string; text: string; cta: string; close: string }>;
+  /** Faixa do topo: fala do laboratório (o Pawta aparece pelo ícone da data no card dele). */
+  faixa: Record<Lang, { label: string; text: string; close: string }>;
   enfeites: Enfeite[];
   /** Ícone do Pawta da data, no card da Home (do S.18). Vazio = fica o ícone de sempre. */
   iconePawta: { claro: string; escuro?: string };
@@ -40,8 +41,8 @@ export interface DataEspecial {
 export const datas: Record<Tema, DataEspecial> = {
   halloween: {
     faixa: {
-      pt: { label: 'Halloween', text: 'Halloween no laboratório: o Pawta está fantasiado até 31/10.', cta: 'Ver o site do Pawta', close: 'Fechar' },
-      en: { label: 'Halloween', text: 'Halloween at the lab: Pawta is in costume until Oct 31.', cta: 'Visit Pawta’s site', close: 'Close' },
+      pt: { label: 'Halloween', text: 'Feliz Halloween da Toski Labs! O laboratório está fantasiado até 31/10.', close: 'Fechar' },
+      en: { label: 'Halloween', text: 'Happy Halloween from Toski Labs! The lab is in costume until Oct 31.', close: 'Close' },
     },
     // Fantasminhas fora do círculo, em cantos opostos.
     // TODO(S.18): preencher `claro` (e `escuro`) com os SVGs de public/datas/halloween/ do pethealth-web.
@@ -54,8 +55,8 @@ export const datas: Record<Tema, DataEspecial> = {
   },
   natal: {
     faixa: {
-      pt: { label: 'Natal', text: 'Boas festas da Toski Labs! O Pawta já entrou no clima de Natal.', cta: 'Ver o site do Pawta', close: 'Fechar' },
-      en: { label: 'Christmas', text: 'Happy holidays from Toski Labs! Pawta is all set for Christmas.', cta: 'Visit Pawta’s site', close: 'Close' },
+      pt: { label: 'Natal', text: 'Boas festas da Toski Labs! O laboratório já entrou no clima de Natal.', close: 'Fechar' },
+      en: { label: 'Christmas', text: 'Happy holidays from Toski Labs! The lab is all set for Christmas.', close: 'Close' },
     },
     // Bengalinhas cruzadas no alto, à esquerda, e a guirlanda abraçando o círculo embaixo, à direita
     // (fora do caminho da bolinha, que fica embaixo à esquerda).
