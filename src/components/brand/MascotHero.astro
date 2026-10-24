@@ -30,11 +30,15 @@ const { class: className } = Astro.props;
               data-para={tema}
               aria-hidden="true"
               style={{
-                top: `${e.top}%`,
-                left: `${e.left}%`,
-                width: `${e.width}%`,
+                '--top': `${e.computador.top}%`,
+                '--left': `${e.computador.left}%`,
+                '--w': `${e.computador.width}%`,
+                '--top-sm': `${e.celular.top}%`,
+                '--left-sm': `${e.celular.left}%`,
+                '--w-sm': `${e.celular.width}%`,
                 aspectRatio: `1 / ${e.ratio}`,
                 animationDelay: `${e.delay ?? 0}s`,
+                opacity: e.opacity ?? 1,
                 '--img-claro': arquivoDe(tema, e.claro),
                 ...(e.escuro && { '--img-escuro': arquivoDe(tema, e.escuro) }),
               }}
