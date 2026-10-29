@@ -238,3 +238,11 @@ Halloween e Natal também neste site, com o mesmo parâmetro e as mesmas datas d
 - Agora: `**` com `Cache-Control: no-cache` (o navegador confere a cada visita; com ETag, volta 304 sem baixar de novo) e `/_astro/**` (nome com hash) com `public, max-age=31536000, immutable`, por último. Quando duas regras definem o mesmo cabeçalho, o Firebase usa a de baixo (conferido no ar: as imagens de `/_astro/` saíam com os 7 dias da regra de imagens, não com o `immutable`).
 - Favicon, `apple-touch-icon`, `/og/` e `/datas/` também passam a `no-cache` (não têm hash; trocar um desenho chega na hora).
 - `npm run check:cache` (no `npm run ci`) confere os cabeçalhos pelo `serve.mjs`.
+
+## Card do Koti na Home (S.20, bug, 28 out 2026)
+- Problema: no tema escuro, o ícone do Koti aparecia como o desenho solto (teto, bolinha e porta), sem o quadrado arredondado com fundo; e os selos ("Em desenvolvimento" e "iPhone · iOS 18+ · navegador") desciam para baixo do ícone. O card do Pawta é a referência.
+- Causa do ícone: o `ProductIcon.astro` mostra no escuro a variante `dark` do DS, que vem com fundo transparente de propósito (no iOS 18 o próprio sistema põe o fundo escuro). No site ninguém punha esse fundo. O Pawta só parecia certo por causa do ícone da data (Halloween), que já tem fundo; fora das datas ele tinha o mesmo problema.
+- Causa dos selos: no `ProjectCard.astro`, a linha do ícone tinha `sm:flex-wrap` e o grupo de selos `sm:flex-none`. Com o texto de plataforma do Koti, mais longo, a linha quebrava e os selos iam para baixo do ícone.
+- Correção: a camada `data-art="dark"` do `ProductIcon` ganha `bg-background` (token do DS, `#231B17` no escuro, o fundo da página), dentro do mesmo arredondado e `overflow-hidden`, como o iOS faz com os ícones escuros. Os SVGs do DS não mudam. O ícone da data continua por cima. Vale para a Home, `/projetos` e `/suporte`.
+- Os selos ficam sempre na coluna da direita do ícone (`flex-1 min-w-0 flex-wrap justify-end`, sem os `sm:`); se não couberem numa linha, quebram entre si nessa coluna. O texto da plataforma do Koti não muda.
+- Conferido lado a lado com o Pawta em 1280 e 390 px, claro e escuro, `/` e `/en/`, com Halloween e com `?tema=nenhum`; `/projetos` e `/suporte` nos dois temas. O claro não muda (o ícone claro já tem fundo).
