@@ -2,6 +2,7 @@
 /**
  * Ícone do app (do DS) no tema da página: claro ou escuro. O do Pawta troca pelo ícone da data especial quando houver
  * (global.css), em todo lugar onde aparece: card da Home, /projetos e /suporte.
+ * O escuro do DS vem com fundo transparente (no iOS 18 o sistema põe o fundo); aqui o fundo escuro entra na camada dele.
  */
 import { ProductIcon } from '@toski-labs/ds';
 import type { ProductId } from '../../data/projects';
@@ -19,7 +20,7 @@ const icones = product === 'pawta' ? temas.filter((tema) => datasEspeciais[tema]
 
 <span class:list={['relative block shrink-0 overflow-hidden [&_span]:block [&_span]:size-full [&_svg]:size-full', className]}>
   <span data-art="light"><ProductIcon product={product} variant="light" size={size} /></span>
-  <span data-art="dark"><ProductIcon product={product} variant="dark" size={size} /></span>
+  <span data-art="dark" class="bg-background"><ProductIcon product={product} variant="dark" size={size} /></span>
   {
     icones.map((tema) => {
       const { claro, escuro } = datasEspeciais[tema].iconePawta;
